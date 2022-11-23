@@ -9,7 +9,6 @@ interface AuthorizationTokenObj {
 }
 
 export const FetchAuthToken = async (email: string, password: string): Promise<AuthorizationTokenObj> => {
-  console.log(email, password)
   const body = {
     email: email,
     password: password
@@ -20,6 +19,30 @@ export const FetchAuthToken = async (email: string, password: string): Promise<A
     }
   }
   const token = axios.post(BASE_URL + '/sessions', body, headers).then((response) => {
+    const res: AuthorizationTokenObj = {
+      authorizationToken: response.data.token,
+      rememberToken: response.data.remember_token
+    }
+    return res
+  })
+  return token
+}
+
+export const SignUpWithSocialAccounts = async (email: string, onetimeToken: string): Promise<AuthorizationTokenObj> => {
+  const body = {
+    email: email
+  }
+  const headerParam = {
+    params: {
+      onetime_token: onetimeToken,
+      type: 'google'
+    },
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  const token = axios.post(BASE_URL + '/users/create_with_social_accounts', body, headerParam).then((response) => {
     const res: AuthorizationTokenObj = {
       authorizationToken: response.data.token,
       rememberToken: response.data.remember_token

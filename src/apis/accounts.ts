@@ -28,6 +28,26 @@ export const FetchAuthToken = async (email: string, password: string): Promise<A
   return token
 }
 
+export const FetchAuthTokenWithRememberToken = async (email: string, rememberToken: string): Promise<AuthorizationTokenObj> => {
+  const body = {
+    email: email,
+    remember_token: rememberToken
+  }
+  const headers = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  const token = axios.post(BASE_URL + '/sessions/remember_me', body, headers).then((response) => {
+    const res: AuthorizationTokenObj = {
+      authorizationToken: response.data.token,
+      rememberToken: response.data.remember_token
+    }
+    return res
+  })
+  return token
+}
+
 export const SignUpWithSocialAccounts = async (email: string, onetimeToken: string): Promise<AuthorizationTokenObj> => {
   const body = {
     email: email

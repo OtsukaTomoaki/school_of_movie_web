@@ -21,6 +21,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/signup_google',
     name: 'signup_google',
     component: () => import('../views/SignUpWithOauthProvider.vue')
+  },
+  {
+    path: '/signin_with_token',
+    name: 'signin_with_token',
+    component: () => import('../views/SignInWithToken.vue')
   }
 ]
 

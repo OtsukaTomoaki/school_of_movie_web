@@ -1,4 +1,5 @@
 <template>
+  <HeaderItem></HeaderItem>
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
@@ -6,6 +7,17 @@
   </nav>
   <router-view/>
 </template>
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component'
+import HeaderItem from '@/globals/HeaderItem.vue' // @ is an alias to /src
+
+@Options({
+  components: {
+    HeaderItem
+  }
+})
+export default class HomeView extends Vue {}
+</script>
 
 <style>
 #app {

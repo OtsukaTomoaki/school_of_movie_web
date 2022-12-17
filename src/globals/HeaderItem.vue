@@ -1,7 +1,7 @@
 <template>
   <div class="header-container">
     <span class="header-title">Funny Cats</span>
-    <span>{{email}}</span>
+    <span>{{name}}</span>
   </div>
 </template>
 
@@ -13,23 +13,28 @@ import { FetchProfile } from '@/apis/accounts'
 import { useStore } from 'vuex'
 // import useCounter from '../composables/useProfile'
 
+interface Profile {
+  name: string;
+  email: string;
+}
+
 export default {
   components: {
   },
-  data: function () {
-    return {
-      email: ''
+  data: function ():Profile {
+    const res: Profile = {
+      email: '',
+      name: ''
     }
+    return res
   },
   props: {
   },
-  setup () {
+  async mounted (this: Profile) {
     const store = useStore()
-    setTimeout(async function ():Promise<void> {
-      const profile = await FetchProfile(store)
-      console.log(profile)
-      // this.email = profile.email
-    }, 0)
+    const profile = await FetchProfile(store)
+    console.log(profile)
+    this.name = profile.name
   }
 }
 </script>

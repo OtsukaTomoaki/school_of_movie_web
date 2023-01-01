@@ -1,7 +1,12 @@
 <template>
   <div class="header-container">
     <span class="header-title">Funny Cats</span>
-    <span>{{name}}</span>
+
+    <router-link to="/profile">
+      <img class="avatar-image" src="http://localhost:3000/api/v1/users/download_avatar_image">
+      <span>{{name}}</span>
+    </router-link>
+
   </div>
 </template>
 
@@ -51,5 +56,9 @@ export default {
   left: 0%;
   font-weight: 800;
   font-size: large;
+}
+.avatar-image {
+  width: 20px;
+  height: auto;
 }
 </style>

@@ -26,6 +26,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/signin_with_token',
     name: 'signin_with_token',
     component: () => import('../views/SignInWithToken.vue')
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: () => import('../views/ProfileView.vue')
   }
 ]
 

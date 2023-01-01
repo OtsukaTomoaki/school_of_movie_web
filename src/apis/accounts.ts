@@ -3,6 +3,9 @@ import VueAxios from 'vue-axios'
 import { useStore } from 'vuex'
 import { GET_AUTHORIZATION_TOKEN } from '@/store/mutation-types'
 
+axios.defaults.headers.withCredentials = true
+axios.defaults.headers.crossorigin = true
+
 const BASE_URL = 'http://localhost:3000/api/v1'
 
 interface AuthorizationTokenObj {

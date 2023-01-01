@@ -1,6 +1,4 @@
 import axios from 'axios'
-import VueAxios from 'vue-axios'
-import { useStore } from 'vuex'
 import { GET_AUTHORIZATION_TOKEN } from '@/store/mutation-types'
 
 axios.defaults.headers.withCredentials = true

@@ -3,8 +3,10 @@
     <span class="header-title">Funny Cats</span>
 
     <router-link to="/profile">
-      <img class="avatar-image" src="http://localhost:3000/api/v1/users/download_avatar_image">
-      <span>{{name}}</span>
+      <v-avatar size="20">
+        <img class="avatar-image" src="http://localhost:3000/api/v1/users/download_avatar_image" />
+      </v-avatar>
+      <span>{{ name }}</span>
     </router-link>
 
   </div>
@@ -48,7 +50,6 @@ export default {
 .header-container {
   position: absolute;
   top: 0%;
-  background-color: aqua;
   width: 100%;
 }
 .header-title {

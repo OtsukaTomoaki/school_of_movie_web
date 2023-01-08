@@ -1,5 +1,15 @@
 <template>
-  <div class="profile">
-    <h1>This is an profile page</h1>
-  </div>
+  <ProfileForm />
 </template>
+
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component'
+import ProfileForm from '@/components/ProfileForm.vue'
+
+@Options({
+  components: {
+    ProfileForm
+  }
+})
+export default class SignIn extends Vue { }
+</script>

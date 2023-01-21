@@ -16,6 +16,10 @@
 import { ref, defineComponent } from 'vue'
 import ActionCable from 'actioncable'
 
+interface Talk {
+  message: string;
+}
+
 const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
 const chatChannel = cable.subscriptions.create(
   {
@@ -48,9 +52,9 @@ export default defineComponent({
         message: this.speak
       })
     },
-    received: function (data:any) {
+    received: function (data: Talk) {
       this.messages.push(data.message)
-      console.log('recived:' + data.message)
+      this.speak = ''
     }
   }
 })

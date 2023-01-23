@@ -1,5 +1,10 @@
 <template>
     <div>
+        <div>
+          <li v-for="message in messages" v-bind:key="message.id">
+            {{ message }}
+          </li>
+        </div>
         <label>Speak:</label>
         <input v-model="speak" type="text" />
         <button v-on:click=onclick>Send Message</button>
@@ -11,16 +16,15 @@
 import { ref, defineComponent } from 'vue'
 import ActionCable from 'actioncable'
 
+interface Talk {
+  message: string;
+}
+
 const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
 const chatChannel = cable.subscriptions.create(
   {
     channel: 'RoomChannel',
     room: 'チャットルーム'
-  },
-  {
-    received (data) {
-      console.log('recived:' + data.message)
-    }
   }
 )
 
@@ -28,24 +32,30 @@ export default defineComponent({
   name: 'SpeakForm',
   data: function () {
     return {
+      messages: [],
       chatChannel: null
     }
   },
   setup () {
     const speak = ref('')
-
-    const onclick = async () => {
-      chatChannel.perform('speak', {
-        message: speak.value
-      })
-    }
     return {
-      speak,
-      onclick
+      speak
     }
   },
   created: function () {
     this.chatChannel = chatChannel
+    this.chatChannel.received = this.received
+  },
+  methods: {
+    onclick: async function () {
+      chatChannel.perform('speak', {
+        message: this.speak
+      })
+    },
+    received: function (data: Talk) {
+      this.messages.push(data.message)
+      this.speak = ''
+    }
   }
 })
 </script>

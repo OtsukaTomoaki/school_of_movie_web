@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { GET_AUTHORIZATION_TOKEN } from '@/store/mutation-types'
 
 axios.defaults.headers.withCredentials = true
 axios.defaults.headers.crossorigin = true

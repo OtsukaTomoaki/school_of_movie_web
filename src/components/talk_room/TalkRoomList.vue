@@ -29,7 +29,7 @@
 <script lang="ts">
 import * as cGridAll from 'vue-cheetah-grid'
 import { FetchTalkRooms, TalkRoom } from '@/apis/talk_rooms'
-import { Router, useRoute, useRouter } from 'vue-router'
+import { Router, useRouter } from 'vue-router'
 
 interface Grid {
   records: TalkRoom[];

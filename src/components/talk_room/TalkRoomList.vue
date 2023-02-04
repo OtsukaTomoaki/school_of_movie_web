@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     onClickRecord: function (event: any, router: Router) {
-      router.push(`/talk_rooms?id=${event.id}`)
+      router.push(`/talk_rooms/message?id=${event.id}`)
     }
   }
 }

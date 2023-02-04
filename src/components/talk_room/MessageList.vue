@@ -2,9 +2,14 @@
 <template>
   <div>
       <div>
-        <li v-for="message in messages" v-bind:key="message.id">
-          message:{{ message.content }}
-        </li>
+        <div v-for="message in messages" v-bind:key="message.id">
+          <v-card dark>
+            <div class="font-weight-normal">
+              <strong>{{ message.user.name }}</strong> @{{ message.createdAt }}
+            </div>
+            <div>{{ message.content }}</div>
+          </v-card>
+        </div>
       </div>
       <label>Speak:</label>
       <input v-model="speak" type="text" />
@@ -26,26 +31,33 @@ const chatChannel = cable.subscriptions.create(
     id: props.talkRoomId
   }
 )
-interface Talk {
-  message: string;
-}
 const speak = ref('')
 
-chatChannel.received = function (data: Talk) {
-  messages.value.push(data.message)
+chatChannel.received = function (data) {
+  const broadcastMessage = data.message
+  console.log(broadcastMessage)
+  const addingMessage: Message = {
+    id: broadcastMessage.id,
+    talkRoomId: broadcastMessage.talk_room_id,
+    user: {
+      id: broadcastMessage.user.id,
+      name: broadcastMessage.user.name
+    },
+    content: broadcastMessage.content,
+    createdAt: broadcastMessage.created_at,
+    updatedAt: broadcastMessage.updated_at
+  }
+  messages.value.push(addingMessage)
   speak.value = ''
 }
 
 const messages = ref([])
 
 onMounted(async () => {
-  console.log(props.talkRoomId)
-  console.log(messages.value)
   messages.value = await FetchMessages(props.talkRoomId)
 })
 
 const onclick = function () {
-  console.log(speak.value)
   chatChannel.perform('speak', {
     message: speak.value
   })

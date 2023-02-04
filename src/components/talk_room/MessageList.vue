@@ -3,7 +3,7 @@
   <div>
       <div>
         <li v-for="message in messages" v-bind:key="message.id">
-          message:{{ message }}
+          message:{{ message.content }}
         </li>
       </div>
       <label>Speak:</label>
@@ -22,7 +22,8 @@ const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
 const chatChannel = cable.subscriptions.create(
   {
     channel: 'RoomChannel',
-    room: 'チャットルーム'
+    room: 'チャットルーム',
+    id: props.talkRoomId
   }
 )
 interface Talk {
@@ -31,7 +32,6 @@ interface Talk {
 const speak = ref('')
 
 chatChannel.received = function (data: Talk) {
-  console.log('recived!' + data.message)
   messages.value.push(data.message)
   speak.value = ''
 }
@@ -41,6 +41,7 @@ const messages = ref([])
 onMounted(async () => {
   console.log(props.talkRoomId)
   console.log(messages.value)
+  messages.value = await FetchMessages(props.talkRoomId)
 })
 
 const onclick = function () {

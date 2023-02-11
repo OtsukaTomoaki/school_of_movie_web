@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <MessageList :talkRoomId="talkRoomId"></MessageList>
-  </div>
+  <MessageList :talkRoomId="talkRoomId"></MessageList>
 </template>
 
 <script lang="ts">
@@ -24,3 +22,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style>
+.cheetah-grid>canvas {
+  position: relative !important;
+}
+</style>

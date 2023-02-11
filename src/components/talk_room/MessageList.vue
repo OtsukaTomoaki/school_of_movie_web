@@ -1,19 +1,23 @@
 <!-- eslint-disable no-redeclare -->
 <template>
-  <div>
-      <div>
+  <div class="message-container">
+      <div class="message-list">
         <div v-for="message in messages" v-bind:key="message.id">
-          <v-card dark>
-            <div class="font-weight-normal">
-              <strong>{{ message.user.name }}</strong> @{{ message.createdAt }}
-            </div>
-            <div>{{ message.content }}</div>
-          </v-card>
+          <div class="message-content">
+            <v-card dark>
+              <div class="font-weight-normal">
+                <strong>{{ message.user.name }}</strong> @{{ message.createdAt }}
+              </div>
+              <div>{{ message.content }}</div>
+            </v-card>
+          </div>
         </div>
       </div>
-      <label>Speak:</label>
-      <input v-model="speak" type="text" />
-      <button v-on:click=onclick>Send Message</button>
+      <div class="send-message-form">
+        <label>Speak:</label>
+        <input v-model="speak" type="text" />
+        <button v-on:click=onclick>Send Message</button>
+      </div>
   </div>
 </template>
 
@@ -63,3 +67,24 @@ const onclick = function () {
   })
 }
 </script>
+
+<style scoped>
+.message-container {
+  display: block;
+}
+
+.message-list {
+  height: calc(100vh - 160px);
+  overflow-y: scroll;
+}
+
+.message-content {
+  padding: 5px;
+}
+
+.send-message-form {
+  border: 1px solid #999;
+  padding: 10px;
+  height: 60px;
+}
+</style>

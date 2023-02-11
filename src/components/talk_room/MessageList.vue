@@ -1,7 +1,7 @@
 <!-- eslint-disable no-redeclare -->
 <template>
   <div class="message-container">
-      <div class="message-list">
+      <div ref="messageList" class="message-list">
         <div v-for="message in messages" v-bind:key="message.id">
           <div class="message-content">
             <v-card dark>
@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { FetchMessages, Message } from '@/apis/messages'
-import { ref, defineProps, onMounted } from 'vue'
+import { ref, watch, defineProps, onMounted } from 'vue'
 import ActionCable from 'actioncable'
 
 const props = defineProps<{talkRoomId: string}>()
@@ -39,7 +39,6 @@ const speak = ref('')
 
 chatChannel.received = function (data) {
   const broadcastMessage = data.message
-  console.log(broadcastMessage)
   const addingMessage: Message = {
     id: broadcastMessage.id,
     talkRoomId: broadcastMessage.talk_room_id,
@@ -56,9 +55,18 @@ chatChannel.received = function (data) {
 }
 
 const messages = ref([])
+const messageList = ref()
 
-onMounted(async () => {
+onMounted(async function () {
   messages.value = await FetchMessages(props.talkRoomId)
+
+  watch(messages.value, () => {
+    setTimeout(() => {
+      messageList.value.scrollTop = messageList.value.scrollHeight
+    })
+  }, {
+    immediate: true
+  })
 })
 
 const onclick = function () {
@@ -66,6 +74,7 @@ const onclick = function () {
     message: speak.value
   })
 }
+
 </script>
 
 <style scoped>

@@ -1,16 +1,18 @@
 <template>
-  <div id="app">
-    Home
+  <div>
+    <TalkRoomList></TalkRoomList>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import TalkRoomList from '@/components/talk_room/TalkRoomList.vue'
 
 export default defineComponent({
-  name: 'HomeView',
+  name: 'TalkRoomView',
 
   components: {
+    TalkRoomList
   },
   data: function () {
     return {

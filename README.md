@@ -1,4 +1,4 @@
-# project_manage_web
+# funny_cats_web
 
 ## Project setup
 ```

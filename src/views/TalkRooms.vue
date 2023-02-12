@@ -1,5 +1,6 @@
 <template>
   <div>
+    <input type="button" value="作成" />
     <TalkRoomList></TalkRoomList>
   </div>
 </template>

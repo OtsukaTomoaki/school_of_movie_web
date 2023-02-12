@@ -1,5 +1,4 @@
 <template>
-  <label>トークルームの一覧</label>
   <div style="height: 500px; solid 1px #ddd;">
     <c-grid :data="records"
     :frozen-col-count="1"

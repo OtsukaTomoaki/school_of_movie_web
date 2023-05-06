@@ -4,15 +4,18 @@
     <FormModal v-bind:show=show @close="onclose">
       <CreateTalkRoomForm></CreateTalkRoomForm>
     </FormModal>
-    <TalkRoomList></TalkRoomList>
+    <Suspense>
+      <TalkRoomList v-bind:talkRooms=state.talkRooms></TalkRoomList>
+    </Suspense>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, reactive, onMounted } from 'vue'
 import TalkRoomList from '@/components/talk_room/TalkRoomList.vue'
 import CreateTalkRoomForm from '@/components/talk_room/CreateTalkRoomForm.vue'
 import FormModal from '@/components/FormModal.vue'
+import { FetchTalkRooms, TalkRoom } from '@/apis/talk_rooms'
 
 export default defineComponent({
   name: 'TalkRoomView',
@@ -30,6 +33,14 @@ export default defineComponent({
 </script>
 
 <script setup lang="ts">
+const state = reactive({
+  talkRooms: []
+})
+onMounted(async () => {
+  state.talkRooms = await FetchTalkRooms()
+  console.log(state.talkRooms)
+})
+
 const show = ref(false)
 
 const onclick = function () {

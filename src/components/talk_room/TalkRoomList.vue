@@ -1,5 +1,4 @@
 <template>
-  <label>トークルームの一覧</label>
   <div style="height: 500px; solid 1px #ddd;">
     <c-grid :data="records"
     :frozen-col-count="1"
@@ -19,7 +18,7 @@
       <c-grid-button-column
       caption="SHOW REC"
       width="120"
-      @click="(event: Event) => onClickRecord(event, $router)"
+      @click="(event: TalkRoom) => onClickRecord(event)"
     />
     </c-grid>
   </div>
@@ -27,9 +26,10 @@
 </template>
 
 <script lang="ts">
+import { onMounted, ref, defineProps } from 'vue'
 import * as cGridAll from 'vue-cheetah-grid'
 import { FetchTalkRooms, TalkRoom } from '@/apis/talk_rooms'
-import { Router, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 interface Grid {
   records: TalkRoom[];
@@ -39,26 +39,24 @@ export default {
   name: 'TalkRoomList',
   components: {
     ...cGridAll
-  },
-  setup () {
-    const router = useRouter()
-    return router
-  },
-  data: function () {
-    const record : Grid = {
-      records: []
-    }
-    return record
-  },
-  async mounted (this: Grid) {
-    const talkRooms = await FetchTalkRooms()
-    this.records = talkRooms
-  },
-  methods: {
-    onClickRecord: function (event: any, router: Router) {
-      router.push(`/talk_rooms/message?id=${event.id}`)
-    }
   }
+}
+</script>
+
+<script setup lang="ts">
+const router = useRouter()
+const props = defineProps({
+  talkRooms: []
+})
+const records = ref(props.talkRooms)
+
+onMounted(async function (this: Grid) {
+  // console.log('mounted!!Q!')
+  // console.log(props.talkRooms)
+  setTimeout(() => { records.value = props.talkRooms }, 1000)
+})
+const onClickRecord = function (event: TalkRoom) {
+  router.push(`/talk_rooms/message?id=${event.id}`)
 }
 </script>
 

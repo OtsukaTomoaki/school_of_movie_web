@@ -2,6 +2,7 @@
   <HeaderItem></HeaderItem>
   <nav>
     <router-link to="/">Home</router-link> |
+    <router-link to="/movies">Movie</router-link> |
     <router-link to="/talk_rooms">Talk</router-link> |
     <router-link to="/signin">SignIn</router-link>
   </nav>

@@ -33,6 +33,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/ProfileView.vue')
   },
   {
+    path: '/movies',
+    name: 'movies',
+    component: () => import('../views/movies/MovieView.vue')
+  },
+  {
     path: '/talk_rooms',
     name: 'talk_rooms',
     component: () => import('../views/TalkRooms.vue')

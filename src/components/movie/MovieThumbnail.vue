@@ -1,9 +1,9 @@
 <template>
   <div class="movie-thumbnail" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+    <div :class="['overview', { 'is-visible': showOverview }]">{{ movie.overview }}</div>
     <img :src="posterUrl" :alt="movie.title" />
     <span :title="movie.title" class="movie-thumbnail-title">{{ truncatedTitle }}</span>
     <p>{{ genreNames }}</p>
-    <div :class="['overview', { 'is-visible': showOverview }]">{{ movie.overview }}</div>
   </div>
 </template>
 
@@ -45,6 +45,7 @@ const genreNames = props.movie.movieGenres.map((genre) => genre.name).join(', ')
 <style scoped>
 .movie-thumbnail {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -72,15 +73,23 @@ const genreNames = props.movie.movieGenres.map((genre) => genre.name).join(', ')
   text-align: center;
 }
 
-.overview.is-visible {
-  display: inline-block;
+.overview {
+  display: none;
+  position: absolute;
   left: 0;
-  height: 40%;
-  width: 90%;
-  position: flex;
+  height: 0%;
+  max-width: 90px;
+  margin: 0 -50% 0 0;
   background-color: rgba(0, 0, 0, 0.8);
   color: #fff;
   font-size: 0.9rem;
   z-index: 1;
+  translate: 0.3s;
+}
+
+.overview.is-visible {
+  translate: 0.3s;
+  display: block;
+  opacity: 0.9;
 }
 </style>

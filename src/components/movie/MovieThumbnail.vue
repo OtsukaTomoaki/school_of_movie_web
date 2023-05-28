@@ -1,9 +1,9 @@
 <template>
   <div class="movie-thumbnail" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
-    <div :class="['overview', { 'is-visible': showOverview }]">{{ movie.overview }}</div>
     <img :src="posterUrl" :alt="movie.title" />
     <span :title="movie.title" class="movie-thumbnail-title">{{ truncatedTitle }}</span>
     <p>{{ genreNames }}</p>
+    <div :class="['overview', { 'is-visible': showOverview }]">{{ movie.overview }}</div>
   </div>
 </template>
 
@@ -77,14 +77,12 @@ const genreNames = props.movie.movieGenres.map((genre) => genre.name).join(', ')
   display: none;
   position: absolute;
   left: 0;
+  width: 100%;
   height: 0%;
-  max-width: 90px;
-  margin: 0 -50% 0 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: black;
   color: #fff;
   font-size: 0.9rem;
   z-index: 1;
-  translate: 0.3s;
 }
 
 .overview.is-visible {

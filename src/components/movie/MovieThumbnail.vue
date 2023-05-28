@@ -3,7 +3,7 @@
     <img :src="posterUrl" :alt="movie.title" />
     <span :title="movie.title" class="movie-thumbnail-title">{{ truncatedTitle }}</span>
     <p>{{ genreNames }}</p>
-    <div :class="['overview', { 'is-visible': showOverview }]">{{ movie.overview }}</div>
+    <!-- <div :class="['overview', { 'is-visible': showOverview }]">{{ movie.overview }}</div> -->
   </div>
 </template>
 

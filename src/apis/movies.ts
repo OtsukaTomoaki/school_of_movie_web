@@ -6,8 +6,10 @@ axios.defaults.headers.crossorigin = true
 
 const BASE_URL = 'http://localhost:3000/api/v1'
 
-export const FetchMovies = async (): Promise<Movie[]> => {
-  const headerParam = {
+export const FetchMovies = async (q: string = null): Promise<Movie[]> => {
+  const query = q ? `?q=${q}` : ''
+  console.log(query)
+  const params = {
     headers: {
       'Content-Type': 'application/json'
     },
@@ -15,7 +17,7 @@ export const FetchMovies = async (): Promise<Movie[]> => {
     crossorigin: true
   }
 
-  const movies: Promise<Movie[]> = axios.get(BASE_URL + '/movies', headerParam).then((response) => {
+  const movies: Promise<Movie[]> = axios.get(BASE_URL + `/movies${query}`, params).then((response) => {
     return response.data.movies.map((movie: any) => {
       const res:Movie = {
         id: movie.id,

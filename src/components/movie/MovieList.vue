@@ -1,5 +1,6 @@
 <template>
   <div>
+    <MovieSearchForm></MovieSearchForm>
     <div v-for="movie in movies" :key="movie.id"  class="movie_thumbnail_wrap">
       <MovieThumbnail :movie="movie"></MovieThumbnail>
     </div>
@@ -11,12 +12,14 @@ import { ref, watch, defineProps, onMounted } from 'vue'
 import MovieThumbnail from '@/components/movie/MovieThumbnail.vue'
 import { FetchMovies } from '@/apis/movies'
 import { Movie } from '@/apis/types'
+import MovieSearchForm from '@/components/organisms/movie/MovieSearchForm.vue'
 
 export default {
   name: 'MovieThumbnail',
 
   components: {
-    MovieThumbnail
+    MovieThumbnail,
+    MovieSearchForm
   }
 }
 </script>

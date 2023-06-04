@@ -1,30 +1,19 @@
 <template>
   <div>
-    <MovieSearchForm></MovieSearchForm>
+    <MovieSearchForm @result="updateMovies"></MovieSearchForm>
     <div v-for="movie in movies" :key="movie.id"  class="movie_thumbnail_wrap">
       <MovieThumbnail :movie="movie"></MovieThumbnail>
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { ref, watch, defineProps, onMounted } from 'vue'
 import MovieThumbnail from '@/components/movie/MovieThumbnail.vue'
 import { FetchMovies } from '@/apis/movies'
 import { Movie } from '@/apis/types'
 import MovieSearchForm from '@/components/organisms/movie/MovieSearchForm.vue'
 
-export default {
-  name: 'MovieThumbnail',
-
-  components: {
-    MovieThumbnail,
-    MovieSearchForm
-  }
-}
-</script>
-
-<script setup lang="ts">
 const movies = ref([])
 
 const props = defineProps({
@@ -33,6 +22,9 @@ const props = defineProps({
 onMounted(async function () {
   movies.value = await FetchMovies()
 })
+const updateMovies = async (newMovies: any[]) => {
+  movies.value = newMovies
+}
 </script>
 
 <style scoped>

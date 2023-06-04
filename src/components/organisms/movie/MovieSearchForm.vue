@@ -5,27 +5,24 @@
   </div>
 </template>
 
-<script lang="ts">
-import { ref, onMounted } from 'vue'
+<script setup lang="ts">
+import { ref, onMounted, defineProps, defineEmits } from 'vue'
 import SearchForm from '@/components/molecules/SearchForm.vue'
 import { FetchMovies } from '@/apis/movies'
 
-export default {
-  name: 'MovieSearchForm',
-  components: {
-    SearchForm
-  }
-}
-</script>
+const props = defineProps({
+  movies: []
+})
 
-<script setup lang="ts">
 console.log('MovieSearchForm setup')
 const searchText = ref('a')
+
+const emits = defineEmits<{(e: 'result', movies: any[]): void}>()
 
 const search = async (searchQuery: string) => {
   console.log(searchQuery)
   const movies = await FetchMovies(searchQuery)
-  console.log(searchQuery, movies)
+  emits('result', movies)
 }
 
 onMounted(async function () {

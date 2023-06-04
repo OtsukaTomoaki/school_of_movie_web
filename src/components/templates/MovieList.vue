@@ -4,7 +4,7 @@
     <div v-for="movie in movies" :key="movie.id"  class="movie_thumbnail_wrap">
       <MovieThumbnail :movie="movie"></MovieThumbnail>
     </div>
-    <CustomPagination :totalPages="10" @page-changed="changePage"></CustomPagination>
+    <CustomPagination :totalPages="totalCount" @page-changed="changePage"></CustomPagination>
   </div>
 </template>
 
@@ -12,7 +12,6 @@
 import { ref, watch, defineProps, onMounted } from 'vue'
 import MovieThumbnail from '@/components/movie/MovieThumbnail.vue'
 import { FetchMovies } from '@/apis/movies'
-import { Movie } from '@/movieTypes'
 import MovieSearchForm from '@/components/organisms/movie/MovieSearchForm.vue'
 import CustomPagination from '../molecules/CustomPagination.vue'
 import { useRouter } from 'vue-router'
@@ -44,7 +43,8 @@ const changePage = (page: number) => {
 const RefreshMovies = async (q: string = null, page = 1) => {
   const { movies: newMovies, totalCount: newTotalCount } = await FetchMovies(q, page)
   movies.value = newMovies
-  totalCount.value = newTotalCount
+  totalCount.value = Math.ceil(newTotalCount / 10)
+  console.log('Fetched totalCount:', newTotalCount)
 }
 const getCurrentQuery = () => {
   const query = router.currentRoute.value.query
@@ -52,6 +52,10 @@ const getCurrentQuery = () => {
   const page = query.page ? Number(query.page) : 1
   return { searchQuery, page }
 }
+watch(router.currentRoute, async (to, from) => {
+  const { searchQuery, page } = getCurrentQuery()
+  RefreshMovies(searchQuery, page)
+})
 </script>
 
 <style scoped>

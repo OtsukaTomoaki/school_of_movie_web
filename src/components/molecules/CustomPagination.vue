@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref } from 'vue'
+import { defineProps, defineEmits, ref, onMounted } from 'vue'
 import PageButton from '@/components/atoms/CustomPageButton.vue'
 
 const props = defineProps({
@@ -29,4 +29,7 @@ const changePage = (page: number) => {
   currentPage.value = page
   emit('page-changed', page)
 }
+onMounted(() => {
+  console.log('CustomPagination mounted', props.totalPages)
+})
 </script>

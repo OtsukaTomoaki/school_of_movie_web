@@ -38,7 +38,7 @@ export const FetchMovies = async (q: string = null, page = 1): Promise<{movies: 
         }
         return res
       }),
-      totalCount: response.data.total_count
+      totalCount: response.data.meta.total_count
     }
   })
   return movies

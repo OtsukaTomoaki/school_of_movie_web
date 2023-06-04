@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { defineProps, defineComponent, defineExpose, ref } from 'vue'
-import { Movie } from '@/apis/types'
+import { Movie } from '@/movieTypes'
 
 export default defineComponent({
   name: 'MovieThumbnail'

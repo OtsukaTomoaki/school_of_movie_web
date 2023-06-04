@@ -1,11 +1,10 @@
 <template>
-  <div>!!!!!!!!!!</div>
   <MovieThumbnail></MovieThumbnail>
 </template>
 
 <script lang="ts">
 import { ref, watch, defineProps, onMounted, defineComponent } from 'vue'
-import MovieThumbnail from '@/components/movie/MovieList.vue'
+import MovieThumbnail from '@/components/templates/MovieList.vue'
 
 export default defineComponent({
   name: 'MovieView',

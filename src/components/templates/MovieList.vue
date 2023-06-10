@@ -1,5 +1,6 @@
 <template>
   <div>
+    <notifications />
     <MovieSearchForm @result="updateMovies"></MovieSearchForm>
     <div v-for="movie in movies" :key="movie.id"  class="movie_thumbnail_wrap">
       <MovieThumbnail :movie="movie"></MovieThumbnail>
@@ -10,6 +11,8 @@
 
 <script setup lang="ts">
 import { ref, watch, defineProps, onMounted, computed } from 'vue'
+import { notify } from '@kyvg/vue3-notification'
+
 import MovieThumbnail from '@/components/molecules/MovieThumbnail.vue'
 import { FetchMovies } from '@/apis/movies'
 import { BackgroundJob as BackgroundJobType } from '@/backgroundJobs'
@@ -21,6 +24,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const movies = ref([])
 const totalCount = ref(0)
+const backgroundJobForFetchNewMovie = ref<BackgroundJob>(null)
 
 const props = defineProps({
   movies: []
@@ -71,12 +75,21 @@ watch(router.currentRoute, async (to, from) => {
 })
 
 const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
-  const backgroundJobWorker = new BackgroundJob(backgroundJob)
-  backgroundJobWorker.startPolling(async (compleatedJob) => {
+  if (backgroundJobForFetchNewMovie.value) {
+    backgroundJobForFetchNewMovie.value.stopPolling()
+  }
+
+  backgroundJobForFetchNewMovie.value = new BackgroundJob(backgroundJob)
+  backgroundJobForFetchNewMovie.value.startPolling(async (compleatedJob) => {
     const { searchQuery: q, page } = getCurrentQuery()
     const { movies: newMovies, totalCount: newTotalCount } = await FetchMovies(q, page)
 
-    if (newTotalCount !== totalCount.value) {
+    const addedCount = newTotalCount - totalCount.value
+    if (addedCount) {
+      notify({
+        text: `${addedCount}件の映画が追加されました`,
+        type: 'success'
+      })
       movies.value = newMovies
       totalCount.value = newTotalCount
     }

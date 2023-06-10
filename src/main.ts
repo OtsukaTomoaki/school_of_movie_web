@@ -5,6 +5,7 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import ActionCableVue from 'actioncable-vue'
+import Notifications from '@kyvg/vue3-notification'
 
 const actionCableVueOptions = {
   debug: true,
@@ -20,4 +21,5 @@ createApp(App)
   .use(store)
   .use(vuetify)
   .use(ActionCableVue, actionCableVueOptions)
+  .use(Notifications)
   .mount('#app')

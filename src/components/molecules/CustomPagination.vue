@@ -5,6 +5,7 @@
       :page-count="totalPages"
       :prev-text="'<'"
       :next-text="'>'"
+      :break-view-text="'...'"
       :click-handler="changePage"
       :container-class="'pagination justify-content-center'"
       :page-class="'page-item'"
@@ -13,6 +14,8 @@
       :prev-link-class="'page-link'"
       :next-class="'page-item'"
       :next-link-class="'page-link'"
+      :break-view-class="'page-break-item'"
+      :break-view-link-class="'page-break-link'"
       :first-last-button="true"
       :first-button-text="'<<'"
       :last-button-text="'>>'"
@@ -52,16 +55,24 @@ onMounted(() => {
 .page-item {
   cursor: pointer;
   display: inline-block;
-  width: auto;
-  padding: 5px 10px;
+  width: 60px;
   margin: 0 5px;
+}
+.page-break-item {
+  cursor: default;
+}
+
+.page-item .page-link {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .page-item.active {
   background-color: #ccc;
 }
 
-.page-item:hover {
+.page-item:hover:not(.page-break-item) {
   background-color: #ccc;
 }
 </style>

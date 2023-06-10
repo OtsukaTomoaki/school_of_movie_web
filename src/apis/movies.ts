@@ -1,12 +1,13 @@
 import axios from 'axios'
 import { Movie } from '@/movieTypes'
+import { BackgroundJob } from '@/backgroundJobs'
 
 axios.defaults.headers.withCredentials = true
 axios.defaults.headers.crossorigin = true
 
 const BASE_URL = 'http://localhost:3000/api/v1'
 
-export const FetchMovies = async (q: string = null, page = 1): Promise<{movies: Movie[], totalCount: number}> => {
+export const FetchMovies = async (q: string = null, page = 1): Promise<{movies: Movie[], totalCount: number, backgroundJob: BackgroundJob}> => {
   const query = new URLSearchParams()
   if (q) {
     query.append('q', q)
@@ -21,7 +22,7 @@ export const FetchMovies = async (q: string = null, page = 1): Promise<{movies: 
     crossorigin: true
   }
 
-  const movies: Promise<{movies: Movie[], totalCount: number}> = axios.get(BASE_URL + `/movies?${query.toString()}`, params).then((response) => {
+  const movies: Promise<{movies: Movie[], totalCount: number, backgroundJob: BackgroundJob}> = axios.get(BASE_URL + `/movies?${query.toString()}`, params).then((response) => {
     return {
       movies: response.data.movies.map((movie: any) => {
         const res: Movie = {
@@ -38,7 +39,15 @@ export const FetchMovies = async (q: string = null, page = 1): Promise<{movies: 
         }
         return res
       }),
-      totalCount: response.data.meta.total_count
+      totalCount: response.data.meta.total_count,
+      backgroundJob: {
+        id: response.data.meta.background_job.id,
+        status: response.data.meta.background_job.status,
+        progress: response.data.meta.background_job.progress,
+        total: response.data.meta.background_job.total,
+        createdAt: response.data.meta.background_job.created_at,
+        finishedAt: response.data.meta.background_job.finished_at
+      }as BackgroundJob
     }
   })
   return movies

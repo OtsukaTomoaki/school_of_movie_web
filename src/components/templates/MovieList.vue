@@ -4,14 +4,16 @@
     <div v-for="movie in movies" :key="movie.id"  class="movie_thumbnail_wrap">
       <MovieThumbnail :movie="movie"></MovieThumbnail>
     </div>
-    <CustomPagination :totalPages="totalCount" @page-changed="changePage"></CustomPagination>
+    <CustomPagination :totalPages="tatalPages" @page-changed="changePage"></CustomPagination>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, defineProps, onMounted } from 'vue'
-import MovieThumbnail from '@/components/movie/MovieThumbnail.vue'
+import { ref, watch, defineProps, onMounted, computed } from 'vue'
+import MovieThumbnail from '@/components/molecules/MovieThumbnail.vue'
 import { FetchMovies } from '@/apis/movies'
+import { BackgroundJob as BackgroundJobType } from '@/backgroundJobs'
+import { BackgroundJob } from '@/classes/BackgroundJob'
 import MovieSearchForm from '@/components/organisms/movie/MovieSearchForm.vue'
 import CustomPagination from '../molecules/CustomPagination.vue'
 import { useRouter } from 'vue-router'
@@ -41,11 +43,18 @@ const changePage = (page: number) => {
   RefreshMovies(searchQuery, page)
 }
 const RefreshMovies = async (q: string = null, page = 1) => {
-  const { movies: newMovies, totalCount: newTotalCount } = await FetchMovies(q, page)
+  const { movies: newMovies, totalCount: newTotalCount, backgroundJob: newBackgroundJob } = await FetchMovies(q, page)
   movies.value = newMovies
-  totalCount.value = Math.ceil(newTotalCount / 10)
-  console.log('Fetched totalCount:', newTotalCount)
+  totalCount.value = newTotalCount
+  if (newBackgroundJob) {
+    setBackgroundJobPolling(newBackgroundJob)
+  }
 }
+
+const tatalPages = computed(() => {
+  return Math.ceil(totalCount.value / 10)
+})
+
 const getCurrentQuery = () => {
   const query = router.currentRoute.value.query
   const searchQuery = query.q ? String(query.q) : ''
@@ -55,7 +64,24 @@ const getCurrentQuery = () => {
 watch(router.currentRoute, async (to, from) => {
   const { searchQuery, page } = getCurrentQuery()
   RefreshMovies(searchQuery, page)
+
+  if (to.query.page !== from.query.page) {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 })
+
+const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
+  const backgroundJobWorker = new BackgroundJob(backgroundJob)
+  backgroundJobWorker.startPolling(async (compleatedJob) => {
+    const { searchQuery: q, page } = getCurrentQuery()
+    const { movies: newMovies, totalCount: newTotalCount } = await FetchMovies(q, page)
+
+    if (newTotalCount !== totalCount.value) {
+      movies.value = newMovies
+      totalCount.value = newTotalCount
+    }
+  })
+}
 </script>
 
 <style scoped>

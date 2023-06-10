@@ -38,7 +38,7 @@ const currentPage = ref(1)
 
 const changePage = (page: number) => {
   console.log('changePage', page)
-  if (page < 1 || page !== props.totalPages) {
+  if (page < 1 || page <= props.totalPages) {
     currentPage.value = page
     emit('page-changed', page)
   }

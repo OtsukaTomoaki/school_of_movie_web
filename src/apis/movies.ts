@@ -40,7 +40,7 @@ export const FetchMovies = async (q: string = null, page = 1): Promise<{movies: 
         return res
       }),
       totalCount: response.data.meta.total_count,
-      backgroundJob: {
+      backgroundJob: response.data.meta.background_job && {
         id: response.data.meta.background_job.id,
         status: response.data.meta.background_job.status,
         progress: response.data.meta.background_job.progress,

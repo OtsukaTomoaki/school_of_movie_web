@@ -9,6 +9,7 @@ export class BackgroundJob implements BackgroundJobType {
   createdAt: Date
   finishedAt: Date
   jobType: string
+  timer: number
 
   constructor (backgroundJob: BackgroundJobType) {
     this.id = backgroundJob.id
@@ -18,6 +19,7 @@ export class BackgroundJob implements BackgroundJobType {
     this.createdAt = backgroundJob.createdAt
     this.finishedAt = backgroundJob.finishedAt
     this.jobType = backgroundJob.jobType
+    this.timer = null
   }
 
   isJobCompleted (): boolean {
@@ -28,7 +30,7 @@ export class BackgroundJob implements BackgroundJobType {
     if (this.isJobCompleted()) {
       return
     }
-    const timer = setInterval(async () => {
+    this.timer = setInterval(async () => {
       const newBackgroundJob = await FetchBackgroundJob(this.id)
 
       if (newBackgroundJob) {
@@ -37,13 +39,17 @@ export class BackgroundJob implements BackgroundJobType {
       console.log('status:', this.status)
 
       if (this.isJobCompleted()) {
-        clearInterval(timer)
+        clearInterval(this.timer)
         callback(newBackgroundJob)
       }
       maxRetryCount--
       if (maxRetryCount <= 0) {
-        clearInterval(timer)
+        clearInterval(this.timer)
       }
     }, interval)
+  }
+
+  stopPolling (): void {
+    clearInterval(this.timer)
   }
 }

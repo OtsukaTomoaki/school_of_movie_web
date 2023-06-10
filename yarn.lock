@@ -1303,6 +1303,11 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
+"@kyvg/vue3-notification@^2.9.1":
+  "integrity" "sha512-FsY8g25tQetr3etnarxHtCeNFKssH8sheFu13LyL2JJmOOel437QqKV5n4RBDDDTIo55iKgIVYXeojliXYdEhw=="
+  "resolved" "https://registry.npmjs.org/@kyvg/vue3-notification/-/vue3-notification-2.9.1.tgz"
+  "version" "2.9.1"
+
 "@leichtgewicht/ip-codec@^2.0.1":
   "integrity" "sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A=="
   "resolved" "https://registry.npmjs.org/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz"

@@ -1,22 +1,23 @@
 <template>
-  <div class="movie-thumbnail" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
-    <img :src="posterUrl" :alt="movie.title" />
-    <span :title="movie.title" class="movie-thumbnail-title">{{ truncatedTitle }}</span>
-    <p>{{ genreNames }}</p>
-    <!-- <div :class="['overview', { 'is-visible': showOverview }]">{{ movie.overview }}</div> -->
+  <div class="movie-thumbnail-wrap">
+    <div class="movie-thumbnail" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+      <!-- <div class></div> -->
+      <div class="movie-poster-image-wrap">
+        <img :src="posterUrl" :alt="movie.title" />
+      </div>
+      <span :title="movie.title" class="movie-thumbnail-title">{{ truncatedTitle }}</span>
+      <!-- <p>{{ genreNames }}</p> -->
+      <!-- <div :class="['overview', { 'is-visible': showOverview }]">{{ movie.overview }}</div> -->
+      <BadgeList :badges="movie.movieGenres.map((genre) => genre.name)" class="genre-badge-list"></BadgeList>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { defineProps, defineComponent, defineExpose, ref } from 'vue'
 import { Movie } from '@/movieTypes'
+import BadgeList from '@/components/molecules/BadgeList.vue'
 
-export default defineComponent({
-  name: 'MovieThumbnail'
-})
-</script>
-
-<script setup lang="ts">
 const props = defineProps<{
   movie: Movie;
 }>()
@@ -36,14 +37,18 @@ const posterUrl = `https://image.tmdb.org/t/p/w500${props.movie.posterPath}`
 
 const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slice(0, 20)}...` : props.movie.title
 
-const genreNames = props.movie.movieGenres.map((genre) => genre.name).join(', ')
-
 // defineExpose({ onMouseEnter, onMouseLeave })
 
 </script>
 
 <style scoped>
+
+.movie-thumbnail-wrap {
+
+}
 .movie-thumbnail {
+  width: 200px;
+  height: auto;
   display: flex;
   position: relative;
   flex-direction: column;
@@ -54,6 +59,7 @@ const genreNames = props.movie.movieGenres.map((genre) => genre.name).join(', ')
   border-radius: 4px;
   background-color: #fff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  overflow: visible;
 }
 
 .movie-thumbnail img {
@@ -89,5 +95,19 @@ const genreNames = props.movie.movieGenres.map((genre) => genre.name).join(', ')
   translate: 0.3s;
   display: block;
   opacity: 0.9;
+}
+
+.genre-badge-list {
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  margin-top: -10px;
+}
+
+.movie-poster-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding-top: 10px;
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
   <div class="movie-thumbnail-wrap">
     <div class="movie-thumbnail" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+      <span :title="movie.title" class="movie-thumbnail-title">{{ truncatedTitle }}</span>
       <!-- <div class></div> -->
       <div class="movie-poster-image-wrap">
         <img :src="posterUrl" :alt="movie.title" />
       </div>
-      <span :title="movie.title" class="movie-thumbnail-title">{{ truncatedTitle }}</span>
       <!-- <p>{{ genreNames }}</p> -->
       <!-- <div :class="['overview', { 'is-visible': showOverview }]">{{ movie.overview }}</div> -->
       <BadgeList :badges="movie.movieGenres.map((genre) => genre.name)" class="genre-badge-list"></BadgeList>
@@ -48,7 +48,7 @@ const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slic
 }
 .movie-thumbnail {
   width: 200px;
-  height: auto;
+  height: 350px;
   display: flex;
   position: relative;
   flex-direction: column;
@@ -68,9 +68,11 @@ const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slic
 }
 
 .movie-thumbnail-title {
-  font-size: 1px;
-  font-weight: bold;
+  font-size: 2px;
+  font-weight: 900;
   margin: 0.5rem 0;
+  color: #3C486B;
+  padding: 0;
 }
 
 .movie-thumbnail p {

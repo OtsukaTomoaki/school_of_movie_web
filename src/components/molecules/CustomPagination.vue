@@ -56,6 +56,7 @@ onMounted(() => {
   display: inline-block;
   width: 60px;
   margin: 0 5px;
+  font-weight: 800;
 }
 .page-break-item {
   cursor: default;
@@ -68,10 +69,12 @@ onMounted(() => {
 }
 
 .page-item.active {
-  background-color: #ccc;
+  color: #3C486B;
+  opacity: 0.5;
+  border-bottom: #F0F0F0 2px solid;
 }
 
 .page-item:hover:not(.page-break-item) {
-  background-color: #ccc;
+  background-color: #F9D949;
 }
 </style>

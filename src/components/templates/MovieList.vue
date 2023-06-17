@@ -13,7 +13,7 @@
 import { ref, watch, defineProps, onMounted, computed } from 'vue'
 import { notify } from '@kyvg/vue3-notification'
 
-import MovieThumbnail from '@/components/molecules/MovieThumbnail.vue'
+import MovieThumbnail from '@/components/organisms/MovieThumbnail.vue'
 import { FetchMovies } from '@/apis/movies'
 import { BackgroundJob as BackgroundJobType } from '@/backgroundJobs'
 import { BackgroundJob } from '@/classes/BackgroundJob'
@@ -100,12 +100,7 @@ const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
 <style scoped>
 .movie_thumbnail_wrap {
   display: inline-block;
-  width: 200px;
-  height: 300px;
   margin: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
   overflow: hidden;
-  box-shadow: 0 0 5px #ccc;
 }
 </style>

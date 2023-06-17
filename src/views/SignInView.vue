@@ -8,7 +8,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import IdPassForm from '@/components/IdPassForm.vue'
-import SigninGoogle from '@/components/SigninGoogle.vue'
+import SigninGoogle from '@/components/molecules/SigninGoogle.vue'
 
 @Options({
   components: {

@@ -21,9 +21,10 @@ const props = defineProps({
 <style scoped>
 .search-button {
   /* ボタンのスタイルを定義します。 */
-  background-color: aqua;
-  border: 1px solid #ccc;
+  background-color: #F9D949;
+  border: 1px solid #F0F0F0;
+  color: #3C486B;
   border-radius: 25px;
-  padding: 5px 10px;
+  padding: 10px 15px;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="movie-page-container">
     <notifications />
     <MovieSearchForm @result="updateMovies"></MovieSearchForm>
     <div v-for="movie in movies" :key="movie.id"  class="movie_thumbnail_wrap">
@@ -98,6 +98,10 @@ const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
 </script>
 
 <style scoped>
+.movie-page-container {
+  margin: 0 auto;
+  width: 90%;
+}
 .movie_thumbnail_wrap {
   display: inline-block;
   margin: 10px;

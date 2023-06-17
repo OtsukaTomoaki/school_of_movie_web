@@ -21,12 +21,26 @@ export default class HomeView extends Vue {}
 </script>
 
 <style>
+body {
+  background-color: #2c3e50;
+}
+a {
+  color: #F0F0F0;
+}
+input {
+  border-radius: 25px;
+  padding: 10px 15px;
+  border: 1px solid #F0F0F0;
+  background-color: #F0F0F0;
+  color: #3C486B;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #F0F0F0;
+
 }
 
 nav {
@@ -35,7 +49,6 @@ nav {
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
 }
 
 nav a.router-link-exact-active {

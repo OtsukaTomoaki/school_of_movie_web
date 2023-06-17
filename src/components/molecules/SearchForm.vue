@@ -36,6 +36,7 @@ const submitSearch = () => {
   justify-content: space-between;
   border: 1px solid #ccc;
   border-radius: 25px;
-  padding: 5px 10px;
+  padding: 0;
+  background-color: #F0F0F0;
 }
 </style>

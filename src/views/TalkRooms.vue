@@ -14,7 +14,7 @@
 import { defineComponent, ref, reactive, onMounted } from 'vue'
 import TalkRoomList from '@/components/talk_room/TalkRoomList.vue'
 import CreateTalkRoomForm from '@/components/talk_room/CreateTalkRoomForm.vue'
-import FormModal from '@/components/FormModal.vue'
+import FormModal from '@/components/organisms/FormModal.vue'
 import { FetchTalkRooms, TalkRoom } from '@/apis/talk_rooms'
 
 export default defineComponent({

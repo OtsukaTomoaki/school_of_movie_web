@@ -1,6 +1,9 @@
 <template>
   <div class="modal-content" v-if="movie">
-    <img :src="`https://image.tmdb.org/t/p/w500${movie.posterPath}`" alt="">
+    <PreviewImage
+      :src="`https://image.tmdb.org/t/p/w500${movie.posterPath}`"
+      :alt="movie.title" />
+    <!-- <img :src="`https://image.tmdb.org/t/p/w500${movie.posterPath}`" alt=""> -->
     <div class="movie-description">
       <div class="movie-description-title">
         {{ movie.title }}
@@ -9,7 +12,11 @@
         {{ movie.releaseDate.split('T')[0] }}
       </div>
       <div class="movie-description-vote-average">
-        {{ movie.voteAverage }}
+        <star-rating
+        :increment="0.01"
+        :rating="(movie.voteAverage / 2)"
+        :star-size="20"
+        :read-only="true"></star-rating>
       </div>
       <div class="movie-description-genres">
         <BadgeList :badges="movie.movieGenres.map((genre: any) => genre.name)"></BadgeList>
@@ -23,9 +30,11 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, onMounted, ref, watch } from 'vue'
+import { defineProps, onMounted, ref, watch } from 'vue'
 import { FetchMovie } from '@/apis/movies'
 import BadgeList from '@/components/molecules/BadgeList.vue'
+import PreviewImage from '@/components/molecules/PreviewImage.vue'
+
 const props = defineProps({
   movieId: {
     type: String,
@@ -33,11 +42,6 @@ const props = defineProps({
   }
 })
 const movie = ref(null)
-const emits = defineEmits(['close'])
-
-const closeModal = () => {
-  emits('close')
-}
 
 onMounted(async function () {
   if (!props.movieId) {

@@ -6,6 +6,7 @@ import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import ActionCableVue from 'actioncable-vue'
 import Notifications from '@kyvg/vue3-notification'
+import VueStarRating from 'vue-star-rating'
 
 const actionCableVueOptions = {
   debug: true,
@@ -22,4 +23,5 @@ createApp(App)
   .use(vuetify)
   .use(ActionCableVue, actionCableVueOptions)
   .use(Notifications)
+  .component('star-rating', VueStarRating)
   .mount('#app')

@@ -123,7 +123,6 @@ const closeMovieModal = () => {
 .movie_thumbnail_wrap {
   display: inline-block;
   margin: 10px;
-  overflow: hidden;
 }
 
 .movie_thumbnail_wrap :hover {

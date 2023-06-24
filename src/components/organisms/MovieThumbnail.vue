@@ -1,5 +1,13 @@
 <template>
   <div class="movie-thumbnail-wrap">
+    <div class="movie-rating-wrap">
+      <star-rating
+      :increment="0.01"
+      :rating="(movie.voteAverage / 2)"
+      :star-size="20"
+      :read-only="true"
+      :show-rating="false"></star-rating>
+    </div>
     <div class="movie-thumbnail" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
       <span :title="movie.title" class="movie-thumbnail-title">{{ truncatedTitle }}</span>
       <!-- <div class></div> -->
@@ -44,7 +52,9 @@ const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slic
 <style scoped>
 
 .movie-thumbnail-wrap {
-
+  position: relative;
+  overflow: visible;
+  display: block;
 }
 .movie-thumbnail {
   width: 200px;
@@ -111,5 +121,17 @@ const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slic
   width: 100%;
   height: 100%;
   padding-top: 10px;
+}
+
+.movie-rating-wrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: auto;
+  z-index: 1;
+  border-radius: 0 0 0 4px;
+  margin-right: -5px;
+  margin-top: -5px;
+  display: inline-block;
 }
 </style>

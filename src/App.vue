@@ -42,7 +42,7 @@ input {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #F0F0F0;
-
+  font-family: 'Caveat', cursive;
 }
 
 nav {

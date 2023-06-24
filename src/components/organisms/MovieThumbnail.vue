@@ -1,14 +1,22 @@
 <template>
-  <div class="movie-thumbnail-wrap">
+  <div class="movie-thumbnail-container">
+    <div class="movie-rating-wrap">
+      <star-rating
+      :increment="0.01"
+      :rating="(movie.voteAverage / 2)"
+      :star-size="20"
+      :read-only="true"
+      :show-rating="false"></star-rating>
+    </div>
     <div class="movie-thumbnail" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
       <span :title="movie.title" class="movie-thumbnail-title">{{ truncatedTitle }}</span>
       <!-- <div class></div> -->
       <div class="movie-poster-image-wrap">
         <img :src="posterUrl" :alt="movie.title" />
       </div>
-      <!-- <p>{{ genreNames }}</p> -->
-      <!-- <div :class="['overview', { 'is-visible': showOverview }]">{{ movie.overview }}</div> -->
-      <BadgeList :badges="movie.movieGenres.map((genre) => genre.name)" class="genre-badge-list"></BadgeList>
+      <div class="movie-genre-wrapper">
+        <BadgeList :badges="movie.movieGenres.map((genre) => genre.name)" class="genre-badge-list"></BadgeList>
+      </div>
     </div>
   </div>
 </template>
@@ -43,11 +51,14 @@ const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slic
 
 <style scoped>
 
-.movie-thumbnail-wrap {
-
+.movie-thumbnail-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
 }
 .movie-thumbnail {
-  width: 200px;
+  min-width: 200px;
+  width: 100%;
   height: 350px;
   display: flex;
   position: relative;
@@ -109,7 +120,32 @@ const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slic
 .movie-poster-image-wrap {
   position: relative;
   width: 100%;
+  height: calc(100% - 2rem);
+}
+
+.movie-poster-image-wrap img {
+  position: relative;
+  width: 100%;
   height: 100%;
-  padding-top: 10px;
+}
+
+.movie-rating-wrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: auto;
+  z-index: 1;
+  border-radius: 0 0 0 4px;
+  margin-right: -5px;
+  margin-top: -5px;
+  display: inline-block;
+}
+
+.movie-genre-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  margin-top: -10px;
 }
 </style>

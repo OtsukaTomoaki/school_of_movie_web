@@ -20,6 +20,6 @@ const props = defineProps({
 .badge-list {
   width: 100%;
   flex-wrap: wrap;
-  gap: 5px;
+  text-align:left;
 }
 </style>

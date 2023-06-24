@@ -2,10 +2,14 @@
   <div class="movie-page-container">
     <notifications />
     <MovieSearchForm @result="updateMovies"></MovieSearchForm>
-    <div v-for="movie in movies" :key="movie.id"  class="movie_thumbnail_wrap">
+    <div v-for="movie in movies" :key="movie.id" class="movie_thumbnail_wrap" @click="onThumbnailClick(movie.id)">
       <MovieThumbnail :movie="movie"></MovieThumbnail>
     </div>
     <CustomPagination :totalPages="tatalPages" @page-changed="changePage"></CustomPagination>
+    <!-- <MovieModal v-if="showMovieModal" @close="closeMovieModal" class="movie_modal"></MovieModal> -->
+    <FormModal v-bind:show=showMovieModal @close="closeMovieModal">
+      <MoviePreview :movieId="selectedMovieId" />
+    </FormModal>
   </div>
 </template>
 
@@ -20,11 +24,15 @@ import { BackgroundJob } from '@/classes/BackgroundJob'
 import MovieSearchForm from '@/components/organisms/movie/MovieSearchForm.vue'
 import CustomPagination from '../molecules/CustomPagination.vue'
 import { useRouter } from 'vue-router'
+import MoviePreview from '@/components/organisms/MoviePreview.vue'
+import FormModal from '@/components/organisms/FormModal.vue'
 
 const router = useRouter()
 const movies = ref([])
 const totalCount = ref(0)
 const backgroundJobForFetchNewMovie = ref<BackgroundJob>(null)
+const showMovieModal = ref(false)
+const selectedMovieId = ref(null)
 
 const props = defineProps({
   movies: []
@@ -95,6 +103,16 @@ const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
     }
   })
 }
+
+const onThumbnailClick = (movieId: string) => {
+  selectedMovieId.value = movieId
+  showMovieModal.value = true
+}
+const closeMovieModal = () => {
+  console.log('closeMovieModal')
+  selectedMovieId.value = null
+  showMovieModal.value = false
+}
 </script>
 
 <style scoped>
@@ -107,4 +125,9 @@ const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
   margin: 10px;
   overflow: hidden;
 }
+
+.movie_thumbnail_wrap :hover {
+  cursor: pointer;
+}
+
 </style>

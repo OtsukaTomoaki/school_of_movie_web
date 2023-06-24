@@ -7,20 +7,10 @@
   </teleport>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { defineComponent, defineProps, defineEmits, onMounted, ref } from 'vue'
 import { Vue } from 'vue-class-component'
 
-export default defineComponent({
-  name: 'FromModal',
-  data: function () {
-    return {
-    }
-  }
-})
-</script>
-
-<script setup lang="ts">
 const props = defineProps({
   show: Boolean
 })
@@ -28,7 +18,6 @@ const show = ref(props.show)
 const emits = defineEmits(['close'])
 
 const onclick = function (this: Vue) {
-  console.log('clicked!!')
   show.value = false
   emits('close')
 }
@@ -46,6 +35,7 @@ const onclick = function (this: Vue) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  z-index: 99;
 }
 
 .modal-content {
@@ -62,7 +52,10 @@ const onclick = function (this: Vue) {
   background-color: white;
   width: 600px;
   height: auto;
+  max-height: 100%;
   border-radius: 20px;
   padding: 20px;
+  z-index: 100;
+  overflow: scroll;
 }
 </style>

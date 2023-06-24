@@ -25,6 +25,7 @@
     "vue-cheetah-grid": "^1.8.6",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.3",
+    "vue-star-rating": "^2.1.0",
     "vuejs-paginate": "^2.1.0",
     "vuejs-paginate-next": "^1.0.2",
     "vuetify": "^3.0.0-beta.0",

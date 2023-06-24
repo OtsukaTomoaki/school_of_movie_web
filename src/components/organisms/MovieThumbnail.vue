@@ -14,9 +14,9 @@
       <div class="movie-poster-image-wrap">
         <img :src="posterUrl" :alt="movie.title" />
       </div>
-      <!-- <p>{{ genreNames }}</p> -->
-      <!-- <div :class="['overview', { 'is-visible': showOverview }]">{{ movie.overview }}</div> -->
-      <BadgeList :badges="movie.movieGenres.map((genre) => genre.name)" class="genre-badge-list"></BadgeList>
+      <div class="movie-genre-wrapper">
+        <BadgeList :badges="movie.movieGenres.map((genre) => genre.name)" class="genre-badge-list"></BadgeList>
+      </div>
     </div>
   </div>
 </template>
@@ -133,5 +133,13 @@ const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slic
   margin-right: -5px;
   margin-top: -5px;
   display: inline-block;
+}
+
+.movie-genre-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  margin-top: -10px;
 }
 </style>

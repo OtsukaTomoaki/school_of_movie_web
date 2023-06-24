@@ -21,6 +21,8 @@ export default class HomeView extends Vue {}
 </script>
 
 <style>
+@import 'https://fonts.googleapis.com/css2?family=Caveat&display=swap';
+
 body {
   background-color: #2c3e50;
 }

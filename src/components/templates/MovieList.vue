@@ -2,10 +2,14 @@
   <div class="movie-page-container">
     <notifications />
     <MovieSearchForm @result="updateMovies"></MovieSearchForm>
-    <div v-for="movie in movies" :key="movie.id" class="movie_thumbnail_wrap" @click="onThumbnailClick(movie.id)">
-      <MovieThumbnail :movie="movie"></MovieThumbnail>
+    <div class="movie-list-container">
+      <div v-for="movie in movies" :key="movie.id" class="movie_thumbnail_wrap" @click="onThumbnailClick(movie.id)">
+        <MovieThumbnail :movie="movie"></MovieThumbnail>
+      </div>
     </div>
-    <CustomPagination :totalPages="tatalPages" @page-changed="changePage"></CustomPagination>
+    <div class="pagenation-container">
+      <CustomPagination :totalPages="tatalPages" @page-changed="changePage"></CustomPagination>
+    </div>
     <!-- <MovieModal v-if="showMovieModal" @close="closeMovieModal" class="movie_modal"></MovieModal> -->
     <FormModal v-bind:show=showMovieModal @close="closeMovieModal">
       <MoviePreview :movieId="selectedMovieId" />
@@ -119,14 +123,29 @@ const closeMovieModal = () => {
 .movie-page-container {
   margin: 0 auto;
   width: 90%;
+  display: block;
+  height: calc(100vh - 90px);
 }
-.movie_thumbnail_wrap {
+
+.movie-list-container {
+  padding: 20px 0;
+  height: calc(100% - 100px);
+  overflow: scroll;
+  display: block;
+}
+
+.movie-list-container .movie_thumbnail_wrap {
   display: inline-block;
   margin: 10px;
 }
-
 .movie_thumbnail_wrap :hover {
   cursor: pointer;
 }
 
+.pagenation-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+}
 </style>

@@ -28,4 +28,10 @@ const props = defineProps({
   justify-content: center;
   align-items: center;
 }
+
+.image-wrap img {
+  max-width: 300px;
+  height: auto;
+  object-fit: cover;
+}
 </style>

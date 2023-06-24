@@ -132,6 +132,7 @@ const closeMovieModal = () => {
   height: calc(100% - 100px);
   overflow: scroll;
   display: block;
+  text-align: left;
 }
 
 .movie-list-container .movie-thumbnail-wrap {

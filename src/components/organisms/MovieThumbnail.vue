@@ -1,5 +1,5 @@
 <template>
-  <div class="movie-thumbnail-wrap">
+  <div class="movie-thumbnail-container">
     <div class="movie-rating-wrap">
       <star-rating
       :increment="0.01"
@@ -51,13 +51,14 @@ const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slic
 
 <style scoped>
 
-.movie-thumbnail-wrap {
+.movie-thumbnail-container {
   position: relative;
-  overflow: visible;
-  display: block;
+  display: inline-block;
+  width: 100%;
 }
 .movie-thumbnail {
-  width: 200px;
+  min-width: 200px;
+  width: 100%;
   height: 350px;
   display: flex;
   position: relative;
@@ -119,8 +120,13 @@ const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slic
 .movie-poster-image-wrap {
   position: relative;
   width: 100%;
+  height: calc(100% - 2rem);
+}
+
+.movie-poster-image-wrap img {
+  position: relative;
+  width: 100%;
   height: 100%;
-  padding-top: 10px;
 }
 
 .movie-rating-wrap {

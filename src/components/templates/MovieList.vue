@@ -3,7 +3,7 @@
     <notifications />
     <MovieSearchForm @result="updateMovies"></MovieSearchForm>
     <div class="movie-list-container">
-      <div v-for="movie in movies" :key="movie.id" class="movie_thumbnail_wrap" @click="onThumbnailClick(movie.id)">
+      <div v-for="movie in movies" :key="movie.id" class="movie-thumbnail-wrap" @click="onThumbnailClick(movie.id)">
         <MovieThumbnail :movie="movie"></MovieThumbnail>
       </div>
     </div>
@@ -134,11 +134,13 @@ const closeMovieModal = () => {
   display: block;
 }
 
-.movie-list-container .movie_thumbnail_wrap {
+.movie-list-container .movie-thumbnail-wrap {
   display: inline-block;
-  margin: 10px;
+  margin: 5px;
+  width: calc((100% / 4) - 10px);
+  padding: 10px;
 }
-.movie_thumbnail_wrap :hover {
+.movie-thumbnail-wrap :hover {
   cursor: pointer;
 }
 

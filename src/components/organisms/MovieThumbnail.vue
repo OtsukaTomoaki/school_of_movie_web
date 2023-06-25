@@ -10,10 +10,7 @@
     </div>
     <div class="movie-thumbnail" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
       <span :title="movie.title" class="movie-thumbnail-title">{{ truncatedTitle }}</span>
-      <!-- <div class></div> -->
-      <div class="movie-poster-image-wrap">
-        <img :src="posterUrl" :alt="movie.title" />
-      </div>
+      <ThumbnailImage :src="posterUrl" :alt="movie.title" />
       <div class="movie-genre-wrapper">
         <BadgeList :badges="movie.movieGenres.map((genre) => genre.name)" class="genre-badge-list"></BadgeList>
       </div>
@@ -25,6 +22,7 @@
 import { defineProps, defineComponent, defineExpose, ref } from 'vue'
 import { Movie } from '@/movieTypes'
 import BadgeList from '@/components/molecules/BadgeList.vue'
+import ThumbnailImage from '@/components/molecules/ThumbnailImage.vue'
 
 const props = defineProps<{
   movie: Movie;
@@ -73,11 +71,6 @@ const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slic
   overflow: visible;
 }
 
-.movie-thumbnail img {
-  width: 100%;
-  height: auto;
-}
-
 .movie-thumbnail-title {
   font-size: 2px;
   font-weight: 900;
@@ -115,18 +108,6 @@ const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slic
   left: 0;
   z-index: 1;
   margin-top: -10px;
-}
-
-.movie-poster-image-wrap {
-  position: relative;
-  width: 100%;
-  height: calc(100% - 2rem);
-}
-
-.movie-poster-image-wrap img {
-  position: relative;
-  width: 100%;
-  height: 100%;
 }
 
 .movie-rating-wrap {

@@ -138,8 +138,25 @@ const closeMovieModal = () => {
 .movie-list-container .movie-thumbnail-wrap {
   display: inline-block;
   margin: 5px;
-  width: calc((100% / 4) - 10px);
   padding: 10px;
+  @media screen and (min-width:420px) {
+    width: calc((100% / 2) - 10px);
+  };
+  @media screen and (min-width:600px) {
+    width: calc((100% / 3) - 10px);
+  };
+  @media screen and (min-width:800px) {
+    width: calc((100% / 4) - 10px);
+  };
+  @media screen and (min-width:1280px) {
+    width: calc((100% / 5) - 10px);
+  };
+  @media screen and (min-width:1800px) {
+    width: calc((100% / 6) - 10px);
+  };
+  @media screen and (min-width:1900px) {
+    width: 300px;
+  };
 }
 .movie-thumbnail-wrap :hover {
   cursor: pointer;

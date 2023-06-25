@@ -5,7 +5,7 @@
     </div>
 
     <div class="header-title">
-      <div>SCHOOL OF MOVIE</div>
+      <a href="/">SCHOOL OF MOVIE</a>
     </div>
 
     <router-link to="/profile" class="profile">
@@ -61,6 +61,12 @@ onMounted(async function () {
   font-size: large;
   font-family: 'Caveat', cursive;
   font-size: 50px;
+  color: #F9D949;
+  -webkit-text-stroke: #2c3e50 1px;
+}
+
+.header-title a {
+  text-decoration: none;
   color: #F9D949;
   -webkit-text-stroke: #2c3e50 1px;
 }

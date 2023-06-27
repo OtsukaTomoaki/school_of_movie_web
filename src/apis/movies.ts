@@ -1,11 +1,10 @@
 import axios from 'axios'
 import { Movie } from '@/movieTypes'
 import { BackgroundJob } from '@/backgroundJobs'
+import { BASE_URL } from './base'
 
 axios.defaults.headers.withCredentials = true
 axios.defaults.headers.crossorigin = true
-
-const BASE_URL = 'http://localhost:3000/api/v1'
 
 export const FetchMovie = async (id: string): Promise<Movie> => {
   const params = {
@@ -33,12 +32,13 @@ export const FetchMovie = async (id: string): Promise<Movie> => {
   return movie
 }
 
-export const FetchMovies = async (q: string = null, page = 1): Promise<{movies: Movie[], totalCount: number, backgroundJob: BackgroundJob}> => {
+export const FetchMovies = async (q: string = null, page = 1, perPage = 50): Promise<{movies: Movie[], totalCount: number, backgroundJob: BackgroundJob}> => {
   const query = new URLSearchParams()
   if (q) {
     query.append('q', q)
   }
   query.append('page', page.toString())
+  query.append('per_page', perPage.toString())
   const params = {
     headers: {
       'Content-Type': 'application/json'

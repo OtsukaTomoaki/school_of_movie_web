@@ -68,7 +68,7 @@ const RefreshMovies = async (q: string = null, page = 1) => {
 }
 
 const tatalPages = computed(() => {
-  return Math.ceil(totalCount.value / 10)
+  return Math.ceil(totalCount.value / 50)
 })
 
 const getCurrentQuery = () => {

@@ -45,9 +45,6 @@ const changePage = (page: number) => {
     emit('page-changed', page)
   }
 }
-onMounted(() => {
-  console.log('CustomPagination mounted', props.totalPages)
-})
 </script>
 
 <style>

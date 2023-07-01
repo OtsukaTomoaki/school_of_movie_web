@@ -32,10 +32,14 @@ export const FetchMovie = async (id: string): Promise<Movie> => {
   return movie
 }
 
-export const FetchMovies = async (q: string = null, page = 1, perPage = 50): Promise<{movies: Movie[], totalCount: number, backgroundJob: BackgroundJob}> => {
+export const FetchMovies = async (q: string = null, movieGenreIds: string[] = [], searchGenreAnd = false, page = 1, perPage = 50): Promise<{movies: Movie[], totalCount: number, backgroundJob: BackgroundJob}> => {
   const query = new URLSearchParams()
   if (q) {
     query.append('q', q)
+  }
+  if (movieGenreIds && movieGenreIds.length > 0) {
+    query.append('genre_ids', movieGenreIds.join(','))
+    query.append('search_genre_and', searchGenreAnd.toString())
   }
   query.append('page', page.toString())
   query.append('per_page', perPage.toString())

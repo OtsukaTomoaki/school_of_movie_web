@@ -59,7 +59,7 @@ const changePage = (page: number) => {
   RefreshMovies(searchQuery, page)
 }
 const RefreshMovies = async (q: string = null, page = 1) => {
-  const { movies: newMovies, totalCount: newTotalCount, backgroundJob: newBackgroundJob } = await FetchMovies(q, page)
+  const { movies: newMovies, totalCount: newTotalCount, backgroundJob: newBackgroundJob } = await FetchMovies(q, null, false, page)
   movies.value = newMovies
   totalCount.value = newTotalCount
   if (newBackgroundJob) {
@@ -77,11 +77,12 @@ const getCurrentQuery = () => {
   const page = query.page ? Number(query.page) : 1
   return { searchQuery, page }
 }
-watch(router.currentRoute, async (to, from) => {
+watch(router.currentRoute.value.query, async (to, from) => {
   const { searchQuery, page } = getCurrentQuery()
   RefreshMovies(searchQuery, page)
-
-  if (to.query.page !== from.query.page) {
+  console.log('to.page', to.page)
+  console.log('from.page', from.page)
+  if (to.page !== from.page) {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 })
@@ -94,7 +95,7 @@ const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
   backgroundJobForFetchNewMovie.value = new BackgroundJob(backgroundJob)
   backgroundJobForFetchNewMovie.value.startPolling(async (compleatedJob) => {
     const { searchQuery: q, page } = getCurrentQuery()
-    const { movies: newMovies, totalCount: newTotalCount } = await FetchMovies(q, page)
+    const { movies: newMovies, totalCount: newTotalCount } = await FetchMovies(q, null, false, page)
 
     const addedCount = newTotalCount - totalCount.value
     if (addedCount) {

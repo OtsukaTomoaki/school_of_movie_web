@@ -39,7 +39,7 @@ onMounted(async function () {
   const profile = await FetchProfile(store)
   console.log(profile)
   const page = Math.ceil(Math.random() * 100)
-  const { movies } = await FetchMovies(null, page)
+  const { movies } = await FetchMovies(null, null, false, page)
   const images = movies.map((movie: any) => {
     return 'https://image.tmdb.org/t/p/w200/' + movie.posterPath
   })

@@ -15,14 +15,19 @@
 
 <script setup lang="ts">
 import { ref, onMounted, defineProps, defineEmits } from 'vue'
+import { useStore } from 'vuex'
+
 import SearchForm from '@/components/molecules/SearchForm.vue'
 import { FetchMovies } from '@/apis/movies'
 import { useRouter } from 'vue-router'
 import CustomButton from '@/components/atoms/CustomButton.vue'
 import MovieDetailSearch, { MovieDetailSearchType } from '@/components/organisms/MovieDetailSearch.vue'
 import FormModal from '@/components/organisms/FormModal.vue'
+import { MovieSearchConditionType } from '@/movieSearchConditionType'
+import { UPDATE_MOVIE_SEARCH_CONDITIONS } from '@/store/mutation-types'
 
 const router = useRouter()
+const store = useStore()
 const showMovieDetailSearchModal = ref(false)
 
 // const props = defineProps({
@@ -31,36 +36,28 @@ const showMovieDetailSearchModal = ref(false)
 const currentQuery = router.currentRoute.value.query.q ? String(router.currentRoute.value.query.q) : ''
 const searchText = ref(currentQuery)
 
-const emits = defineEmits<{(e: 'result', movies: any[]): void}>()
+const emits = defineEmits<{(e: 'result', movies: MovieSearchConditionType): void}>()
 
 const onSubmit = async (searchQuery: string) => {
-  router.push({ query: { q: searchQuery } })
-  await searchMovie()
+  await searchMovie(searchQuery, null, null)
 }
 
 const searchDetailResult = async (searchDetail: MovieDetailSearchType) => {
   console.log(searchDetail)
   showMovieDetailSearchModal.value = false
-  if (searchDetail.movieGenreIds.length > 0) {
-    console.log(searchDetail.movieGenreIds.join(','))
-    router.push({
-      query: {
-        genre_ids: searchDetail.movieGenreIds.join(','),
-        genre_and: searchDetail.searchGenreAnd ? 'true' : 'false'
-      }
-    })
-  }
-  setTimeout(() => {
-    searchMovie()
-  }, 100)
+  searchMovie(null, searchDetail.movieGenreIds, searchDetail.searchGenreAnd)
 }
 
-const searchMovie = async () => {
-  const query = router.currentRoute.value.query.q as string
-  const genreIds = (router.currentRoute.value.query.genre_ids as string)?.split(',')
-  const genreAnd = router.currentRoute.value.query.genre_and as string === 'true'
-  const { movies } = await FetchMovies(query, genreIds, genreAnd)
-  emits('result', movies)
+const searchMovie = async (query: string, genreIds: string[], genreAnd: boolean) => {
+  // const { movies } = await FetchMovies(query, genreIds, genreAnd)
+
+  const searchConditions: MovieSearchConditionType = {
+    q: query,
+    movieGenreIds: genreIds,
+    searchGenreAnd: genreAnd
+  }
+  store.commit(UPDATE_MOVIE_SEARCH_CONDITIONS, searchConditions)
+  emits('result', searchConditions)
 }
 
 const openMovieDetailSearchModal = () => {

@@ -20,6 +20,7 @@
 <script setup lang="ts">
 import { ref, watch, defineProps, onMounted, computed } from 'vue'
 import { notify } from '@kyvg/vue3-notification'
+import { useStore } from 'vuex'
 
 import MovieThumbnail from '@/components/organisms/MovieThumbnail.vue'
 import { FetchMovies } from '@/apis/movies'
@@ -30,8 +31,11 @@ import CustomPagination from '../molecules/CustomPagination.vue'
 import { useRouter } from 'vue-router'
 import MoviePreview from '@/components/organisms/MoviePreview.vue'
 import FormModal from '@/components/organisms/FormModal.vue'
+import { MovieSearchConditionType } from '@/movieSearchConditionType'
+import { GET_MOVIE_SEARCH_CONDITIONS } from '@/store/mutation-types'
 
 const router = useRouter()
+const store = useStore()
 const movies = ref([])
 const totalCount = ref(0)
 const backgroundJobForFetchNewMovie = ref<BackgroundJob>(null)
@@ -42,11 +46,11 @@ const props = defineProps({
   movies: []
 })
 onMounted(async function () {
-  const { searchQuery, page } = getCurrentQuery()
-  RefreshMovies(searchQuery, page)
+  const { page } = getCurrentQuery()
+  RefreshMovies(page)
 })
-const updateMovies = async (newMovies: any[]) => {
-  movies.value = newMovies
+const updateMovies = async (searchConditions: MovieSearchConditionType) => {
+  await RefreshMovies()
 }
 const changePage = (page: number) => {
   router.push({
@@ -55,11 +59,13 @@ const changePage = (page: number) => {
       page: page
     }
   })
-  const { searchQuery } = getCurrentQuery()
-  RefreshMovies(searchQuery, page)
+  console.log('page', page)
+  RefreshMovies(page)
 }
-const RefreshMovies = async (q: string = null, page = 1) => {
-  const { movies: newMovies, totalCount: newTotalCount, backgroundJob: newBackgroundJob } = await FetchMovies(q, null, false, page)
+const RefreshMovies = async (page = 1) => {
+  const searchConditions = store.getters[GET_MOVIE_SEARCH_CONDITIONS]
+  console.log('searchConditions', searchConditions)
+  const { movies: newMovies, totalCount: newTotalCount, backgroundJob: newBackgroundJob } = await FetchMovies(searchConditions, page)
   movies.value = newMovies
   totalCount.value = newTotalCount
   if (newBackgroundJob) {
@@ -73,13 +79,12 @@ const tatalPages = computed(() => {
 
 const getCurrentQuery = () => {
   const query = router.currentRoute.value.query
-  const searchQuery = query.q ? String(query.q) : ''
   const page = query.page ? Number(query.page) : 1
-  return { searchQuery, page }
+  return { page }
 }
 watch(router.currentRoute.value.query, async (to, from) => {
-  const { searchQuery, page } = getCurrentQuery()
-  RefreshMovies(searchQuery, page)
+  const { page } = getCurrentQuery()
+  RefreshMovies(page)
   console.log('to.page', to.page)
   console.log('from.page', from.page)
   if (to.page !== from.page) {
@@ -94,8 +99,8 @@ const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
 
   backgroundJobForFetchNewMovie.value = new BackgroundJob(backgroundJob)
   backgroundJobForFetchNewMovie.value.startPolling(async (compleatedJob) => {
-    const { searchQuery: q, page } = getCurrentQuery()
-    const { movies: newMovies, totalCount: newTotalCount } = await FetchMovies(q, null, false, page)
+    const { page } = getCurrentQuery()
+    const { movies: newMovies, totalCount: newTotalCount } = await FetchMovies(null)
 
     const addedCount = newTotalCount - totalCount.value
     if (addedCount) {

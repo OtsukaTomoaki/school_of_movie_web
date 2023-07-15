@@ -5,7 +5,7 @@
       </SearchForm>
     </div>
     <div class="custom-search-form">
-      <CustomButton :text="'genre'" @click="openMovieDetailSearchModal"></CustomButton>
+      <CustomIconButton :type="'settings'" @click="openMovieDetailSearchModal"></CustomIconButton>
     </div>
     <FormModal v-bind:show=showMovieDetailSearchModal @close="closeMovieDetailSearchModal">
       <MovieDetailSearch @result="searchDetailResult" />
@@ -19,7 +19,7 @@ import { useStore } from 'vuex'
 
 import SearchForm from '@/components/molecules/SearchForm.vue'
 import { useRouter } from 'vue-router'
-import CustomButton from '@/components/atoms/CustomButton.vue'
+import CustomIconButton from '@/components/atoms/CustomIconButton.vue'
 import MovieDetailSearch, { MovieDetailSearchType } from '@/components/organisms/MovieDetailSearch.vue'
 import FormModal from '@/components/organisms/FormModal.vue'
 import { MovieSearchConditionType } from '@/movieSearchConditionType'
@@ -71,9 +71,9 @@ const closeMovieDetailSearchModal = () => {
   padding: 0;
 }
 .search-form {
-  width: 90%;
+  width: 95%;
 }
 .custom-search-form {
-  width: 10%;
+  width: 5%;
 }
 </style>

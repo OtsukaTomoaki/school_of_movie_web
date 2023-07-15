@@ -7,6 +7,7 @@ import { loadFonts } from './plugins/webfontloader'
 import ActionCableVue from 'actioncable-vue'
 import Notifications from '@kyvg/vue3-notification'
 import VueStarRating from 'vue-star-rating'
+import VueFeather from 'vue-feather'
 
 const actionCableVueOptions = {
   debug: true,
@@ -24,4 +25,5 @@ createApp(App)
   .use(ActionCableVue, actionCableVueOptions)
   .use(Notifications)
   .component('star-rating', VueStarRating)
+  .component('vue-feather', VueFeather)
   .mount('#app')

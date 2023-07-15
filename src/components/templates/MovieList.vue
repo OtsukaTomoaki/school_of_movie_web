@@ -59,7 +59,6 @@ const changePage = (page: number) => {
       page: page
     }
   })
-  console.log('page', page)
   RefreshMovies(page)
 }
 const RefreshMovies = async (page = 1) => {

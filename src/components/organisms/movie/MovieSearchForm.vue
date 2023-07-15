@@ -14,11 +14,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineProps, defineEmits } from 'vue'
+import { ref, defineEmits } from 'vue'
 import { useStore } from 'vuex'
 
 import SearchForm from '@/components/molecules/SearchForm.vue'
-import { FetchMovies } from '@/apis/movies'
 import { useRouter } from 'vue-router'
 import CustomButton from '@/components/atoms/CustomButton.vue'
 import MovieDetailSearch, { MovieDetailSearchType } from '@/components/organisms/MovieDetailSearch.vue'
@@ -30,9 +29,6 @@ const router = useRouter()
 const store = useStore()
 const showMovieDetailSearchModal = ref(false)
 
-// const props = defineProps({
-//   movies: []
-// })
 const currentQuery = router.currentRoute.value.query.q ? String(router.currentRoute.value.query.q) : ''
 const searchText = ref(currentQuery)
 
@@ -43,14 +39,11 @@ const onSubmit = async (searchQuery: string) => {
 }
 
 const searchDetailResult = async (searchDetail: MovieDetailSearchType) => {
-  console.log(searchDetail)
   showMovieDetailSearchModal.value = false
   searchMovie(null, searchDetail.movieGenreIds, searchDetail.searchGenreAnd)
 }
 
 const searchMovie = async (query: string, genreIds: string[], genreAnd: boolean) => {
-  // const { movies } = await FetchMovies(query, genreIds, genreAnd)
-
   const searchConditions: MovieSearchConditionType = {
     q: query,
     movieGenreIds: genreIds,

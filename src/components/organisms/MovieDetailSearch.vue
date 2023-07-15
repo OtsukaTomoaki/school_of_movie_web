@@ -20,7 +20,6 @@
 <script setup lang="ts">
 import { onMounted, ref, defineEmits } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
 import { FetchMovieGenres } from '@/apis/movie_genres'
 import CustomButton from '@/components/atoms/CustomButton.vue'
 import { GET_MOVIE_SEARCH_CONDITIONS } from '@/store/mutation-types'

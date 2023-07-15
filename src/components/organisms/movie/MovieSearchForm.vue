@@ -23,7 +23,7 @@ import CustomButton from '@/components/atoms/CustomButton.vue'
 import MovieDetailSearch, { MovieDetailSearchType } from '@/components/organisms/MovieDetailSearch.vue'
 import FormModal from '@/components/organisms/FormModal.vue'
 import { MovieSearchConditionType } from '@/movieSearchConditionType'
-import { UPDATE_MOVIE_SEARCH_CONDITIONS } from '@/store/mutation-types'
+import { UPDATE_MOVIE_SEARCH_CONDITIONS, GET_MOVIE_SEARCH_CONDITIONS } from '@/store/mutation-types'
 
 const router = useRouter()
 const store = useStore()
@@ -34,23 +34,24 @@ const searchText = ref(currentQuery)
 
 const emits = defineEmits<{(e: 'result', movies: MovieSearchConditionType): void}>()
 
-const onSubmit = async (searchQuery: string) => {
-  await searchMovie(searchQuery, null, null)
+const onSubmit = (searchQuery: string) => {
+  searchMovie(searchQuery, null, null)
 }
 
-const searchDetailResult = async (searchDetail: MovieDetailSearchType) => {
+const searchDetailResult = (searchDetail: MovieDetailSearchType) => {
   showMovieDetailSearchModal.value = false
   searchMovie(null, searchDetail.movieGenreIds, searchDetail.searchGenreAnd)
 }
 
-const searchMovie = async (query: string, genreIds: string[], genreAnd: boolean) => {
-  const searchConditions: MovieSearchConditionType = {
-    q: query,
-    movieGenreIds: genreIds,
-    searchGenreAnd: genreAnd
+const searchMovie = (query: string, genreIds: string[], genreAnd: boolean) => {
+  const alreadySettingMovieSearchConditions = store.getters[GET_MOVIE_SEARCH_CONDITIONS]
+  const newSearchConditions: MovieSearchConditionType = {
+    q: query ?? alreadySettingMovieSearchConditions?.q,
+    movieGenreIds: genreIds ?? alreadySettingMovieSearchConditions?.movieGenreIds,
+    searchGenreAnd: genreAnd ?? alreadySettingMovieSearchConditions?.searchGenreAnd
   }
-  store.commit(UPDATE_MOVIE_SEARCH_CONDITIONS, searchConditions)
-  emits('result', searchConditions)
+  store.commit(UPDATE_MOVIE_SEARCH_CONDITIONS, newSearchConditions)
+  emits('result', newSearchConditions)
 }
 
 const openMovieDetailSearchModal = () => {

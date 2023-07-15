@@ -19,9 +19,11 @@
 
 <script setup lang="ts">
 import { onMounted, ref, defineEmits } from 'vue'
+import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { FetchMovieGenres } from '@/apis/movie_genres'
 import CustomButton from '@/components/atoms/CustomButton.vue'
+import { GET_MOVIE_SEARCH_CONDITIONS } from '@/store/mutation-types'
 
 export interface MovieDetailSearchType {
   movieGenreIds: string[]
@@ -32,18 +34,19 @@ const movieGenres = ref([])
 const selectedMovieGenres = ref([])
 const searchGenreAnd = ref(false)
 
-const router = useRouter()
+const store = useStore()
 const emits = defineEmits<{(e: 'result', movieDetailSearch: MovieDetailSearchType): void}>()
 
 onMounted(async () => {
+  const alreadySettingMovieSearchConditions = store.getters[GET_MOVIE_SEARCH_CONDITIONS]
   movieGenres.value = (await FetchMovieGenres()).map((movieGenre: any) => {
     return {
       id: movieGenre.id,
       name: movieGenre.name,
-      selected: router.currentRoute.value.query.genre_ids?.includes(movieGenre.id)
+      selected: alreadySettingMovieSearchConditions?.movieGenreIds?.includes(movieGenre.id)
     }
   })
-  selectedMovieGenres.value = (router.currentRoute.value.query.genre_ids as string)?.split(',') || []
+  selectedMovieGenres.value = alreadySettingMovieSearchConditions?.movieGenreIds
 })
 
 const onSubmit = () => {

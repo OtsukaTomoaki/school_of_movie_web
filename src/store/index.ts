@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 import log from './log'
 import Authorization from './authorization'
-import { UPDATE_AUTHORIZATION_TOKEN } from './mutation-types'
+import movieSearchConditions from './movieSearchConditions'
 
 import createPersistedState from 'vuex-persistedstate'
 
@@ -16,7 +16,8 @@ export default createStore({
   actions: {
   },
   modules: {
-    authorization: Authorization
+    authorization: Authorization,
+    movieSearchConditions: movieSearchConditions
   },
   plugins: [createPersistedState(), log]
 })

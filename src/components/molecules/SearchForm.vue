@@ -1,7 +1,7 @@
 <template>
   <div class="text-button-component">
     <CustomSearchText v-model="searchQuery"></CustomSearchText>
-    <CustomButton text="Search" @click="submitSearch"/>
+    <CustomButton text="Search" @click="submitSearch" v-bind:primary='true'/>
   </div>
 </template>
 

@@ -1,11 +1,23 @@
 import axios from 'axios'
 import { Movie } from '@/movieTypes'
 import { BackgroundJob } from '@/backgroundJobs'
+import { BASE_URL } from './base'
+import { MovieSearchConditionType } from '@/movieSearchConditionType'
 
 axios.defaults.headers.withCredentials = true
 axios.defaults.headers.crossorigin = true
 
-const BASE_URL = 'http://localhost:3000/api/v1'
+export class MovieSearchConditon implements MovieSearchConditionType {
+  q: string
+  movieGenreIds: string[]
+  searchGenreAnd: boolean
+
+  constructor (q: string = null, movieGenreIds: string[] = [], searchGenreAnd = false) {
+    this.q = q
+    this.movieGenreIds = movieGenreIds
+    this.searchGenreAnd = searchGenreAnd
+  }
+}
 
 export const FetchMovie = async (id: string): Promise<Movie> => {
   const params = {
@@ -33,12 +45,24 @@ export const FetchMovie = async (id: string): Promise<Movie> => {
   return movie
 }
 
-export const FetchMovies = async (q: string = null, page = 1): Promise<{movies: Movie[], totalCount: number, backgroundJob: BackgroundJob}> => {
+const GenerateMovieSearchConditionQuery = (movieSearchCondition: MovieSearchConditionType): URLSearchParams => {
   const query = new URLSearchParams()
-  if (q) {
-    query.append('q', q)
+  if (movieSearchCondition?.q) {
+    query.append('q', movieSearchCondition.q)
   }
+  if (movieSearchCondition?.movieGenreIds && movieSearchCondition.movieGenreIds?.length > 0) {
+    query.append('genre_ids', movieSearchCondition.movieGenreIds.join(','))
+    query.append('search_genre_and', movieSearchCondition.searchGenreAnd.toString())
+  }
+
+  return query
+}
+
+export const FetchMovies = async (movieSearchCondition: MovieSearchConditionType, page = 1, perPage = 50): Promise<{movies: Movie[], totalCount: number, backgroundJob: BackgroundJob}> => {
+  const query = GenerateMovieSearchConditionQuery(movieSearchCondition)
   query.append('page', page.toString())
+  query.append('per_page', perPage.toString())
+
   const params = {
     headers: {
       'Content-Type': 'application/json'

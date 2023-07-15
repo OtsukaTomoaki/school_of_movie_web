@@ -1,7 +1,4 @@
-export interface MovieGenre {
-  id: string,
-  name: string
-}
+import { MovieGenre } from './movieGenreTypes'
 
 export interface Movie {
   id: string,

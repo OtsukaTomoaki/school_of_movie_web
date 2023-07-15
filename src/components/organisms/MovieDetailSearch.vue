@@ -46,6 +46,7 @@ onMounted(async () => {
     }
   })
   selectedMovieGenres.value = alreadySettingMovieSearchConditions?.movieGenreIds
+  searchGenreAnd.value = alreadySettingMovieSearchConditions?.searchGenreAnd
 })
 
 const onSubmit = () => {

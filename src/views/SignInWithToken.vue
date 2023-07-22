@@ -3,8 +3,6 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
-import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { FetchAuthTokenWithRememberToken } from '@/apis/accounts'

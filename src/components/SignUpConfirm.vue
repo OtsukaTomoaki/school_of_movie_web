@@ -14,7 +14,6 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
 import { ref, defineComponent } from 'vue'
 
 export default {

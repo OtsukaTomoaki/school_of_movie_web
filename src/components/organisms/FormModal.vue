@@ -9,7 +9,6 @@
 
 <script setup lang="ts">
 import { defineComponent, defineProps, defineEmits, onMounted, ref } from 'vue'
-import { Vue } from 'vue-class-component'
 
 const props = defineProps({
   show: Boolean
@@ -17,7 +16,7 @@ const props = defineProps({
 const show = ref(props.show)
 const emits = defineEmits(['close'])
 
-const onclick = function (this: Vue) {
+const onclick = function () {
   show.value = false
   emits('close')
 }

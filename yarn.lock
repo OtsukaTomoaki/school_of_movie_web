@@ -8823,11 +8823,6 @@
   dependencies:
     "cheetah-grid" "^1.8.6"
 
-"vue-class-component@^8.0.0-0":
-  "integrity" "sha512-w1nMzsT/UdbDAXKqhwTmSoyuJzUXKrxLE77PCFVuC6syr8acdFDAq116xgvZh9UCuV0h+rlCtxXolr3Hi3HyPQ=="
-  "resolved" "https://registry.npmjs.org/vue-class-component/-/vue-class-component-8.0.0-rc.1.tgz"
-  "version" "8.0.0-rc.1"
-
 "vue-cli-plugin-vuetify@~2.5.8":
   "integrity" "sha512-uqi0/URJETJBbWlQHD1l0pnY7JN8Ytu+AL1fw50HFlGByPa8/xx+mq19GkFXA9FcwFT01IqEc/TkxMPugchomg=="
   "resolved" "https://registry.npmjs.org/vue-cli-plugin-vuetify/-/vue-cli-plugin-vuetify-2.5.8.tgz"

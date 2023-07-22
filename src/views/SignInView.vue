@@ -5,16 +5,8 @@
     <SigninGoogle />
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+<script setup lang="ts">
 import IdPassForm from '@/components/IdPassForm.vue'
 import SigninGoogle from '@/components/molecules/SigninGoogle.vue'
 
-@Options({
-  components: {
-    IdPassForm,
-    SigninGoogle
-  }
-})
-export default class SignIn extends Vue { }
 </script>

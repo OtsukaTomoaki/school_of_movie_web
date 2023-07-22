@@ -8,16 +8,9 @@
   </nav>
   <router-view/>
 </template>
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component'
-import HeaderItem from '@/globals/HeaderItem.vue' // @ is an alias to /src
 
-@Options({
-  components: {
-    HeaderItem
-  }
-})
-export default class HomeView extends Vue {}
+<script setup lang="ts">
+import HeaderItem from '@/globals/HeaderItem.vue' // @ is an alias to /src
 </script>
 
 <style>

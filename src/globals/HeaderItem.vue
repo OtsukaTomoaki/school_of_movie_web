@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { Options, Vue } from 'vue-class-component'
 import { ref, onMounted } from 'vue'
 
 import { FetchProfile } from '@/apis/accounts'

@@ -5,7 +5,7 @@
     </div>
 
     <div class="header-title">
-      <a href="/">SCHOOL OF MOVIE</a>
+      <a href="/" @click="onTitleClicked">SCHOOL OF MOVIE</a>
     </div>
 
     <router-link to="/profile" class="profile">
@@ -18,15 +18,16 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 import { FetchProfile } from '@/apis/accounts'
 import { FetchMovies } from '@/apis/movies'
 
-import { useStore } from 'vuex'
-import MovieSearchForm from '@/components/organisms/movie/MovieSearchForm.vue'
-// import useCounter from '../composables/useProfile'
+import { UPDATE_MOVIE_SEARCH_CONDITIONS } from '@/store/mutation-types'
 
 const backgroundImagePaths = ref([])
+const store = useStore()
 
 interface Profile {
   name: string;
@@ -37,13 +38,17 @@ onMounted(async function () {
   const store = useStore()
   const profile = await FetchProfile(store)
   console.log(profile)
-  const page = Math.ceil(Math.random() * 100)
   const { movies } = await FetchMovies(null)
   const images = movies.map((movie: any) => {
     return 'https://image.tmdb.org/t/p/w200/' + movie.posterPath
   })
   backgroundImagePaths.value = images
 })
+
+const onTitleClicked = () => {
+  console.log('title clicked')
+  store.commit(UPDATE_MOVIE_SEARCH_CONDITIONS, null )
+}
 </script>
 
 <style scoped>

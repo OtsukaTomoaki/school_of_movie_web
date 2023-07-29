@@ -5,8 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-
 defineProps({
   src: {
     type: String,
@@ -17,11 +15,6 @@ defineProps({
     required: false
   }
 })
-
-onMounted(() => {
-  console.log('mounted')
-})
-
 </script>
 
 <style scoped>

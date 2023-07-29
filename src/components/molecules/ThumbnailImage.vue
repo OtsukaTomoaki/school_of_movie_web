@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 
-const props = defineProps({
+defineProps({
   src: {
     type: String,
     required: true

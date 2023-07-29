@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineComponent, defineExpose, ref } from 'vue'
+import { ref } from 'vue'
 import { Movie } from '@/movieTypes'
 import BadgeList from '@/components/molecules/BadgeList.vue'
 import ThumbnailImage from '@/components/molecules/ThumbnailImage.vue'

@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import Paginate from 'vuejs-paginate-next'
 
 const props = defineProps({

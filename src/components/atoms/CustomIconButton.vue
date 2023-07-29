@@ -7,7 +7,6 @@
 </template>
 
 <script lang="ts">
-import { defineProps } from 'vue'
 export default {
   name: 'CustomButton'
 }

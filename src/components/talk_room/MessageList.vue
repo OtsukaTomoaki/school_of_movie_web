@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { FetchMessages, Message } from '@/apis/messages'
-import { ref, watch, defineProps, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import ActionCable from 'actioncable'
 
 const props = defineProps<{talkRoomId: string}>()

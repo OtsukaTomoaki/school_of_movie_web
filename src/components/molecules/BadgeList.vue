@@ -5,10 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import Badge from '@/components/atoms/CustomBadge.vue'
 
-const props = defineProps({
+defineProps({
   badges: {
     type: Array,
     required: true

@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 
 const props = defineProps({
   modelValue: {

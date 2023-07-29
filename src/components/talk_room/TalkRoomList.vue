@@ -26,9 +26,9 @@
 </template>
 
 <script lang="ts">
-import { onMounted, ref, defineProps } from 'vue'
+import { onMounted, ref } from 'vue'
 import * as cGridAll from 'vue-cheetah-grid'
-import { FetchTalkRooms, TalkRoom } from '@/apis/talk_rooms'
+import { TalkRoom } from '@/apis/talk_rooms'
 import { useRouter } from 'vue-router'
 
 interface Grid {

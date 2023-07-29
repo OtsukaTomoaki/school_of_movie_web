@@ -48,11 +48,15 @@ onMounted(async () => {
     return {
       id: movieGenre.id,
       name: movieGenre.name,
-      selected: alreadySettingMovieSearchConditions?.movieGenreIds?.includes(movieGenre.id)
+      selected: alreadySettingMovieSearchConditions?.movieGenreIds ?? alreadySettingMovieSearchConditions.movieGenreIds.includes(movieGenre.id)
     }
   })
-  selectedMovieGenres.value = alreadySettingMovieSearchConditions?.movieGenreIds
-  searchGenreAnd.value = alreadySettingMovieSearchConditions?.searchGenreAnd
+  if (alreadySettingMovieSearchConditions.value?.movieGenreIds?.length > 0) {
+    selectedMovieGenres.value = alreadySettingMovieSearchConditions?.movieGenreIds
+    searchGenreAnd.value = alreadySettingMovieSearchConditions?.searchGenreAnd
+  } else {
+    searchGenreAnd.value = false
+  }
 })
 
 const onSubmit = () => {

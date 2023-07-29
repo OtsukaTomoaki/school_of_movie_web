@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, defineProps, onMounted, computed } from 'vue'
+import { ref, watch, onMounted, computed } from 'vue'
 import { notify } from '@kyvg/vue3-notification'
 import { useStore } from 'vuex'
 
@@ -42,7 +42,7 @@ const backgroundJobForFetchNewMovie = ref<BackgroundJob>(null)
 const showMovieModal = ref(false)
 const selectedMovieId = ref(null)
 
-const props = defineProps({
+defineProps({
   movies: []
 })
 onMounted(async function () {
@@ -50,6 +50,7 @@ onMounted(async function () {
   RefreshMovies(page)
 })
 const updateMovies = async (searchConditions: MovieSearchConditionType) => {
+  console.log('searchConditions', searchConditions)
   await RefreshMovies()
 }
 const changePage = (page: number) => {
@@ -97,8 +98,7 @@ const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
   }
 
   backgroundJobForFetchNewMovie.value = new BackgroundJob(backgroundJob)
-  backgroundJobForFetchNewMovie.value.startPolling(async (compleatedJob) => {
-    const { page } = getCurrentQuery()
+  backgroundJobForFetchNewMovie.value.startPolling(async () => {
     const { movies: newMovies, totalCount: newTotalCount } = await FetchMovies(null)
 
     const addedCount = newTotalCount - totalCount.value

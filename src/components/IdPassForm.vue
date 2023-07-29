@@ -15,7 +15,6 @@
 </template>
 
 <script lang="ts">
-// import { Options, Vue } from 'vue-class-component'
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'

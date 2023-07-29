@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { FetchMovie } from '@/apis/movies'
 import BadgeList from '@/components/molecules/BadgeList.vue'
 import PreviewImage from '@/components/molecules/PreviewImage.vue'

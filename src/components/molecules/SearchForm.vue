@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, onMounted, defineEmits, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import CustomSearchText from '@/components/atoms/CustomSearchText.vue'
 import CustomButton from '@/components/atoms/CustomButton.vue'
 

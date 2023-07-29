@@ -3,14 +3,13 @@
 </template>
 
 <script lang="ts">
-import { defineProps } from 'vue'
 export default {
   name: 'CustomButton'
 }
 </script>
 
 <script setup lang="ts">
-const props = defineProps({
+defineProps({
   text: {
     type: String,
     required: true

@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits } from 'vue'
+import { ref } from 'vue'
 import { useStore } from 'vuex'
 
 import SearchForm from '@/components/molecules/SearchForm.vue'

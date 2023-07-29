@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, defineEmits } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import { FetchMovieGenres } from '@/apis/movie_genres'
 import CustomButton from '@/components/atoms/CustomButton.vue'

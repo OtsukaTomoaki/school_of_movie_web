@@ -1,18 +1,24 @@
 <template>
-  <div v-for="movieGenre in movieGenres" :key="movieGenre.id">
-    <input type="checkbox" :id="movieGenre.id" :value="movieGenre.id" v-model="selectedMovieGenres" />
-    {{ movieGenre.name }}
-  </div>
-  <div class="search_by_movie_genre_optional_containar">
-    <input type="radio" :value="false" v-model="searchGenreAnd" />
-    <label>いづれかのジャンルに一致したもの全てを結果に含める</label>
-  </div>
-  <div class="search_by_movie_genre_optional_containar">
-    <!-- <input type="checkbox" :value="searchGenreAnd" v-model="searchGenreAnd" />
-    <label>全てのジャンルに一致したもののみ結果に含める</label> -->
-    <input type="radio" :value="true" v-model="searchGenreAnd" />
-    <label>全てのジャンルに一致したもののみ結果に含める</label>
-  </div>
+  <fieldset class="detail-search-content">
+    <legend>ジャンル</legend>
+    <div class="genre-checkbox-list-wrapper">
+      <div v-for="movieGenre in movieGenres" :key="movieGenre.id" class="genre-content">
+        <input type="checkbox" :id="movieGenre.id" :value="movieGenre.id" v-model="selectedMovieGenres" />
+        {{ movieGenre.name }}
+      </div>
+    </div>
+
+    <div class="search_by_movie_genre_optional_containar">
+      <input type="radio" :value="false" v-model="searchGenreAnd" />
+      <label>いづれかのジャンルに一致したもの全てを結果に含める</label>
+    </div>
+    <div class="search_by_movie_genre_optional_containar">
+      <!-- <input type="checkbox" :value="searchGenreAnd" v-model="searchGenreAnd" />
+      <label>全てのジャンルに一致したもののみ結果に含める</label> -->
+      <input type="radio" :value="true" v-model="searchGenreAnd" />
+      <label>全てのジャンルに一致したもののみ結果に含める</label>
+    </div>
+  </fieldset>
 
   <CustomButton text="Search" @click="onSubmit" v-bind:primary='true'/>
 </template>
@@ -60,6 +66,25 @@ const onSubmit = () => {
 </script>
 
 <style scoped>
+.detail-search-content {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.genre-content {
+  display: inline-block;
+  width: 50%;
+}
+
+.genre-checkbox-list-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
 .search_by_movie_genre_optional_containar {
   display: block;
 }

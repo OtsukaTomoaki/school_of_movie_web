@@ -1,16 +1,17 @@
 <template>
   <HeaderItem></HeaderItem>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/movies">Movie</router-link> |
-    <router-link to="/talk_rooms">Talk</router-link> |
-    <router-link to="/signin">SignIn</router-link>
-  </nav>
-  <router-view/>
+
+  <div class="main-container">
+    <router-view/>
+  </div>
+  <div class="footer-container">
+    <FooterItem></FooterItem>
+  </div>
 </template>
 
 <script setup lang="ts">
 import HeaderItem from '@/globals/HeaderItem.vue' // @ is an alias to /src
+import FooterItem from '@/globals/FooterItem.vue' // @ is an alias to /src
 </script>
 
 <style>
@@ -38,10 +39,15 @@ input {
   font-family: 'Caveat', cursive;
 }
 
-nav {
-  padding: 30px;
+.main-container {
+  margin-top: 40px;
 }
-
+.footer-container {
+  position: absolute;
+  top: calc(100% + 10px);
+  text-align: center;
+  width: 100%;
+}
 nav a {
   font-weight: bold;
 }

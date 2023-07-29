@@ -132,7 +132,7 @@ const closeMovieModal = () => {
   margin: 0 auto;
   width: 90%;
   display: block;
-  height: calc(100vh - 90px);
+  height: calc(100vh - 20px);
 }
 
 .movie-list-container {

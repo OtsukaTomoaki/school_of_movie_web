@@ -99,7 +99,10 @@ const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
 
   backgroundJobForFetchNewMovie.value = new BackgroundJob(backgroundJob)
   backgroundJobForFetchNewMovie.value.startPolling(async () => {
-    const { movies: newMovies, totalCount: newTotalCount } = await FetchMovies(null)
+    const searchConditions = store.getters[GET_MOVIE_SEARCH_CONDITIONS]
+    const { page } = getCurrentQuery()
+
+    const { movies: newMovies, totalCount: newTotalCount } = await FetchMovies(searchConditions, page)
 
     const addedCount = newTotalCount - totalCount.value
     if (addedCount) {

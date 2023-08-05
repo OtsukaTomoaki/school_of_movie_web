@@ -48,7 +48,7 @@ onMounted(async () => {
     return {
       id: movieGenre.id,
       name: movieGenre.name,
-      selected: alreadySettingMovieSearchConditions?.movieGenreIds ?? alreadySettingMovieSearchConditions.movieGenreIds.includes(movieGenre?.id)
+      selected: alreadySettingMovieSearchConditions?.movieGenreIds ? alreadySettingMovieSearchConditions.movieGenreIds.includes(movieGenre?.id) : false
     }
   })
   if (alreadySettingMovieSearchConditions.value?.movieGenreIds?.length > 0) {

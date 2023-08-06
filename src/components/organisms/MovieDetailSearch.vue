@@ -3,8 +3,13 @@
     <legend>ジャンル</legend>
     <div class="genre-checkbox-list-wrapper">
       <div v-for="movieGenre in movieGenres" :key="movieGenre.id" class="genre-content">
-        <input type="checkbox" :id="movieGenre.id" :value="movieGenre.id" v-model="selectedMovieGenres" />
-        {{ movieGenre.name }}
+        <CustomCheckBox
+          :id="movieGenre.id"
+          :checked="movieGenre.selected"
+          :text="movieGenre.name"
+          @change="movieGenre.selected = $event"
+          @input="onChangeCheckBox(movieGenre.id, $event)"
+        />
       </div>
     </div>
 
@@ -29,6 +34,7 @@ import { useStore } from 'vuex'
 import { FetchMovieGenres } from '@/apis/movie_genres'
 import CustomButton from '@/components/atoms/CustomButton.vue'
 import { GET_MOVIE_SEARCH_CONDITIONS } from '@/store/mutation-types'
+import CustomCheckBox from '@/components/atoms/CustomCheckBox.vue'
 
 export interface MovieDetailSearchType {
   movieGenreIds: string[]
@@ -65,6 +71,16 @@ const onSubmit = () => {
     searchGenreAnd: searchGenreAnd.value
   }
   emits('result', result)
+}
+
+const onChangeCheckBox = (genreId: string, e: Event) => {
+  if ((e.target as HTMLInputElement).checked) {
+    selectedMovieGenres.value.push(genreId)
+  } else {
+    selectedMovieGenres.value = selectedMovieGenres.value.filter(
+      (selectedMovieGenreId: string) => selectedMovieGenreId !== genreId
+    )
+  }
 }
 
 </script>

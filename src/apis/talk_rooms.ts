@@ -1,9 +1,8 @@
 import axios from 'axios'
+import { API_V1_BASE_URL } from './base'
 
 axios.defaults.headers.withCredentials = true
 axios.defaults.headers.crossorigin = true
-
-const BASE_URL = 'http://localhost:3000/api/v1'
 
 export interface TalkRoomBodyToCreate {
   name: string,
@@ -28,7 +27,7 @@ export const FetchTalkRooms = async (): Promise<TalkRoom[]> => {
     crossorigin: true
   }
 
-  const talkRooms: Promise<TalkRoom[]> = axios.get(BASE_URL + '/talk_rooms', headerParam).then((response) => {
+  const talkRooms: Promise<TalkRoom[]> = axios.get(API_V1_BASE_URL + '/talk_rooms', headerParam).then((response) => {
     return response.data.talk_rooms.map((talkRoom: any) => {
       const res:TalkRoom = {
         id: talkRoom.id,
@@ -52,7 +51,7 @@ export const CreateTalkRooms = async (body: TalkRoomBodyToCreate): Promise<TalkR
     withCredentials: true,
     crossorigin: true
   }
-  const talkRoom: Promise<TalkRoom> = axios.post(BASE_URL + '/talk_rooms', body, params).then((response) => {
+  const talkRoom: Promise<TalkRoom> = axios.post(API_V1_BASE_URL + '/talk_rooms', body, params).then((response) => {
     const result: TalkRoom = {
       id: response.data.id,
       name: response.data.name,

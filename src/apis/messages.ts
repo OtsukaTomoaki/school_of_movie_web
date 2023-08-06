@@ -1,9 +1,8 @@
 import axios from 'axios'
+import { API_V1_BASE_URL } from './base'
 
 axios.defaults.headers.withCredentials = true
 axios.defaults.headers.crossorigin = true
-
-const BASE_URL = 'http://localhost:3000/api/v1'
 
 interface MessageOwner {
   id: string,
@@ -30,7 +29,7 @@ export const FetchMessages = async (talkRoomId: string): Promise<Message[]> => {
     crossorigin: true
   }
 
-  const messages: Promise<Message[]> = axios.get(BASE_URL + '/messages', params).then((response) => {
+  const messages: Promise<Message[]> = axios.get(API_V1_BASE_URL + '/messages', params).then((response) => {
     return response.data.messages.map((message: any) => {
       const res: Message = {
         id: message.id,

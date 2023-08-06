@@ -34,7 +34,7 @@ const emit = defineEmits(['change', 'input'])
 const emitChecked = (e: Event) => {
   console.log('emitChecked', (e.target as HTMLInputElement).checked)
   emit('change', (e.target as HTMLInputElement).checked)
-  emit('input', (e.target as HTMLInputElement).checked)
+  emit('input', e)
 }
 </script>
 
@@ -50,8 +50,9 @@ const emitChecked = (e: Event) => {
   align-items: center;
   width: 15px;
   height: 15px;
-  border: 1px solid #2c3e50;
+  border: 2px solid #2c3e50;
   border-radius: 3px;
+  margin-top: 3px;
   margin-right: 5px;
 }
 .custom-checkbox-container .checkbox-label:hover {
@@ -60,9 +61,10 @@ const emitChecked = (e: Event) => {
 }
 
 .check-icon {
+  margin-top: 3px;
   color: #2c3e50;
   animation-name: fadein;
-  animation-duration: 1s;
+  animation-duration: 0.3s;
 }
 
 .checkbox-text {
@@ -76,7 +78,7 @@ const emitChecked = (e: Event) => {
 @keyframes fadein{
   from {
     opacity: 0;
-    transform: translateX(3px);
+    transform: translateX(-3px);
   }
   to {
     opacity: 1;

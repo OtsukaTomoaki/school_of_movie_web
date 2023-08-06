@@ -117,8 +117,6 @@ const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slic
   height: auto;
   z-index: 1;
   border-radius: 0 0 0 4px;
-  margin-right: -5px;
-  margin-top: -5px;
   display: inline-block;
 }
 

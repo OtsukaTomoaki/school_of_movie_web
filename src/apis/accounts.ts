@@ -81,15 +81,16 @@ export const SignUpWithSocialAccounts = async (email: string, onetimeToken: stri
   return token
 }
 
-export const FetchProfile = async (store: any): Promise<Profile> => {
-  const headerParam = {
+export const FetchProfile = async (): Promise<Profile> => {
+  const params = {
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `bearer ${store.getters[GET_AUTHORIZATION_TOKEN]}`
-    }
+      'Content-Type': 'application/json'
+    },
+    withCredentials: true,
+    crossorigin: true
   }
 
-  const profile = axios.get(API_V1_BASE_URL + '/users/profile', headerParam).then((response) => {
+  const profile = axios.get(API_V1_BASE_URL + '/users/profile', params).then((response) => {
     const res: Profile = {
       id: response.data.id,
       name: response.data.name,

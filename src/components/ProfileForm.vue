@@ -48,9 +48,7 @@ export default {
     return res
   },
   async mounted (this: Profile) {
-    const store = useStore()
-    const profile = await FetchProfile(store)
-    console.log(profile)
+    const profile = await FetchProfile()
     this.email = profile.email
     this.name = profile.name
   }

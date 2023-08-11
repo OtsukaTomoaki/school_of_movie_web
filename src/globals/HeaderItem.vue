@@ -29,15 +29,11 @@ import {
   UPDATE_PROFILE
 } from '@/store/mutation-types'
 import CardModal from '@/components/organisms/CardModal.vue'
+import { Profile } from '@/profileTypes'
 
 const store = useStore()
 const profile = ref<Profile>(null)
 const showCardModal = ref(false)
-
-interface Profile {
-  name: string;
-  email: string;
-}
 
 onMounted(async function () {
   if (store.getters[GET_AUTHORIZATION_TOKEN] === '') {

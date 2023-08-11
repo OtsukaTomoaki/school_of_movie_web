@@ -84,7 +84,7 @@ export const FetchProfile = async (): Promise<Profile> => {
     crossorigin: true
   }
 
-  const profile = axios.get(API_V1_BASE_URL + '/users/profile', params).then((response) => {
+  const profile = await axios.get(API_V1_BASE_URL + '/users/profile', params).then((response) => {
     const res: Profile = {
       id: response.data.id,
       name: response.data.name,

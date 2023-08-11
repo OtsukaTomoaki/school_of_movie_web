@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { GET_AUTHORIZATION_TOKEN } from '@/store/mutation-types'
 import { API_V1_BASE_URL } from './base'
+import { Profile } from '@/profileTypes'
 
 axios.defaults.headers.withCredentials = true
 axios.defaults.headers.crossorigin = true
@@ -8,13 +9,6 @@ axios.defaults.headers.crossorigin = true
 interface AuthorizationTokenObj {
   authorizationToken: string;
   rememberToken: string;
-}
-
-interface Profile {
-  id: string;
-  name: string;
-  email: string;
-  tags: string[];
 }
 
 export const FetchAuthToken = async (email: string, password: string): Promise<AuthorizationTokenObj> => {

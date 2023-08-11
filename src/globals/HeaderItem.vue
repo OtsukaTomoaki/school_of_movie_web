@@ -10,7 +10,7 @@
         </a>
       </div>
       <CardModal v-if="showCardModal" @update:show="(event) => showCardModal = event">
-        <div>my profile</div>
+        <ProfileCard></ProfileCard>
       </CardModal>
     </div>
   </div>
@@ -30,6 +30,7 @@ import {
 } from '@/store/mutation-types'
 import CardModal from '@/components/organisms/CardModal.vue'
 import { Profile } from '@/profileTypes'
+import ProfileCard from '@/components/organisms/ProfileCard.vue'
 
 const store = useStore()
 const profile = ref<Profile>(null)

@@ -5,10 +5,13 @@
     </div>
     <div class="header-right-profile" v-if="profile">
       <div class="profile-wrapper">
-        <a href="/profile">
+        <a href="#" @click="() => showCardModal = true">
           <img class="profile-avatar-image" src="http://localhost:3000/api/v1/users/download_avatar_image" />
         </a>
       </div>
+      <CardModal v-if="showCardModal" @update:show="(event) => showCardModal = event">
+        <div>my profile</div>
+      </CardModal>
     </div>
   </div>
 </template>
@@ -19,10 +22,17 @@ import { useStore } from 'vuex'
 
 import { FetchProfile } from '@/apis/accounts'
 
-import { UPDATE_MOVIE_SEARCH_CONDITIONS, GET_AUTHORIZATION_TOKEN } from '@/store/mutation-types'
+import {
+  UPDATE_MOVIE_SEARCH_CONDITIONS,
+  GET_AUTHORIZATION_TOKEN,
+  GET_PROFILE,
+  UPDATE_PROFILE
+} from '@/store/mutation-types'
+import CardModal from '@/components/organisms/CardModal.vue'
 
 const store = useStore()
 const profile = ref<Profile>(null)
+const showCardModal = ref(false)
 
 interface Profile {
   name: string;
@@ -33,13 +43,17 @@ onMounted(async function () {
   if (store.getters[GET_AUTHORIZATION_TOKEN] === '') {
     return
   }
-  profile.value = await FetchProfile()
-  console.log(profile.value)
+  if (store.getters[GET_PROFILE] == null) {
+    store.commit(UPDATE_PROFILE, await FetchProfile())
+    console.log(store.getters[GET_PROFILE])
+  }
+  profile.value = store.getters[GET_PROFILE]
 })
 
 const onTitleClicked = () => {
   store.commit(UPDATE_MOVIE_SEARCH_CONDITIONS, null )
 }
+
 </script>
 
 <style scoped>

@@ -18,6 +18,14 @@
         </div>
       </Transition>
     </div>
+    <div class="profile-buttons-wrapper">
+      <div class="profile-button-content">
+        <IconText type="edit" text="edit" />
+      </div>
+      <div class="profile-button-content">
+        <IconText type="log-out" text="signout" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -26,6 +34,7 @@ import { onMounted, onBeforeMount, ref } from 'vue'
 import { useStore } from 'vuex'
 import { FetchProfile } from '@/apis/accounts'
 import { Profile as ProfileType } from '@/profileTypes'
+import IconText from '@/components/molecules/IconText.vue'
 
 const profile = ref<ProfileType>(null)
 
@@ -71,5 +80,15 @@ onMounted(async function () {
 
 .v-enter-from, .v-leave-to {
   opacity: 0;
+}
+
+.profile-buttons-wrapper {
+  text-align: left;
+  padding: 15px;
+  margin-left: 15px;
+}
+
+.profile-button-content {
+  padding: 5px;
 }
 </style>

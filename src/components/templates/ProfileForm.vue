@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
-import { FetchProfile } from '@/apis/accounts'
+import { FetchProfile, UpdateProfile } from '@/apis/accounts'
 import { Profile } from '@/profileTypes'
 import CustomButton from '@/components/atoms/CustomButton.vue'
 
@@ -39,7 +39,8 @@ onMounted(async function () {
   profile.value = await FetchProfile()
 })
 
-const onSaveClicked = () => {
+const onSaveClicked = async () => {
+  profile.value = await UpdateProfile(profile.value.id, profile.value)
   console.log('onSaveClicked')
 }
 </script>

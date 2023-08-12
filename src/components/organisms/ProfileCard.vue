@@ -5,12 +5,14 @@
       <div class="profile-card-avatar">
         <img class="profile-avatar-image" src="http://localhost:3000/api/v1/users/download_avatar_image" />
       </div>
-      <div class="profile-content" v-if="profile">
-        <div class="profile-card-email">
-          {{ profile.email }}
-        </div>
-        <div class="profile-card-name">
-          {{ profile.name }}
+      <div class="profile-container" v-if="profile">
+        <div class="profile-content">
+          <div class="profile-card-name">
+            {{ profile.name }}
+          </div>
+          <div class="profile-card-email">
+            {{ profile.email }}
+          </div>
         </div>
       </div>
     </div>
@@ -30,3 +32,35 @@ onMounted(async function () {
 })
 
 </script>
+
+<style scoped>
+.profile-wrapper {
+  display: flex;
+  padding: 15px;
+}
+.profile-card-avatar {
+  display: flex;
+  width: 20%;
+  height: auto;
+}
+
+.profile-card-avatar img {
+  display: flex;
+  max-width: 100%;
+  height: auto;
+  border-radius: 75%;
+
+}
+
+.profile-container {
+  display: inline-block;
+  width: 80%;
+  text-align: left;
+  padding-top: 10px;
+}
+
+.profile-container .profile-content {
+  padding-left: 5px;
+}
+
+</style>

@@ -1,7 +1,7 @@
 <template>
   <div class="header-container">
     <div class="header-title">
-      <a @click="onTitleClicked">SCHOOL OF MOVIE</a>
+      <a @click="onTitleClicked" href="#">SCHOOL OF MOVIE</a>
     </div>
     <div class="header-right-profile" v-if="profile">
       <div class="profile-wrapper">
@@ -19,6 +19,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 import { FetchProfile } from '@/apis/accounts'
 
@@ -33,6 +34,8 @@ import { Profile } from '@/profileTypes'
 import ProfileCard from '@/components/organisms/ProfileCard.vue'
 
 const store = useStore()
+const router = useRouter()
+
 const profile = ref<Profile>(null)
 const showCardModal = ref(false)
 
@@ -48,7 +51,8 @@ onMounted(async function () {
 })
 
 const onTitleClicked = () => {
-  store.commit(UPDATE_MOVIE_SEARCH_CONDITIONS, null )
+  store.commit(UPDATE_MOVIE_SEARCH_CONDITIONS, null)
+  router.push('/')
 }
 
 </script>

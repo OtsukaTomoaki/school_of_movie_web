@@ -5,16 +5,18 @@
       <div class="profile-card-avatar">
         <img class="profile-avatar-image" src="http://localhost:3000/api/v1/users/download_avatar_image" />
       </div>
-      <div class="profile-container" v-if="profile">
-        <div class="profile-content">
-          <div class="profile-card-name">
-            {{ profile.name }}
-          </div>
-          <div class="profile-card-email">
-            {{ profile.email }}
+      <Transition>
+        <div class="profile-container" v-if="profile">
+          <div class="profile-content">
+            <div class="profile-card-name">
+              {{ profile.name }}
+            </div>
+            <div class="profile-card-email">
+              {{ profile.email }}
+            </div>
           </div>
         </div>
-      </div>
+      </Transition>
     </div>
   </div>
 </template>
@@ -63,4 +65,11 @@ onMounted(async function () {
   padding-left: 5px;
 }
 
+.v-enter-active, .v-leave-active {
+  transition: opacity 0.1s ease;
+}
+
+.v-enter-from, .v-leave-to {
+  opacity: 0;
+}
 </style>

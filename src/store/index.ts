@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 import log from './log'
 import Authorization from './authorization'
 import movieSearchConditions from './movieSearchConditions'
-
+import profile from './profile'
 import createPersistedState from 'vuex-persistedstate'
 
 export default createStore({
@@ -17,7 +17,8 @@ export default createStore({
   },
   modules: {
     authorization: Authorization,
-    movieSearchConditions: movieSearchConditions
+    movieSearchConditions: movieSearchConditions,
+    profile: profile
   },
   plugins: [createPersistedState(), log]
 })

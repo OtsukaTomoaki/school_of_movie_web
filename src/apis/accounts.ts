@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { GET_AUTHORIZATION_TOKEN } from '@/store/mutation-types'
 import { API_V1_BASE_URL } from './base'
+import { Profile } from '@/profileTypes'
 
 axios.defaults.headers.withCredentials = true
 axios.defaults.headers.crossorigin = true
@@ -8,13 +9,6 @@ axios.defaults.headers.crossorigin = true
 interface AuthorizationTokenObj {
   authorizationToken: string;
   rememberToken: string;
-}
-
-interface Profile {
-  id: string;
-  name: string;
-  email: string;
-  tags: string[];
 }
 
 export const FetchAuthToken = async (email: string, password: string): Promise<AuthorizationTokenObj> => {
@@ -81,15 +75,16 @@ export const SignUpWithSocialAccounts = async (email: string, onetimeToken: stri
   return token
 }
 
-export const FetchProfile = async (store: any): Promise<Profile> => {
-  const headerParam = {
+export const FetchProfile = async (): Promise<Profile> => {
+  const params = {
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `bearer ${store.getters[GET_AUTHORIZATION_TOKEN]}`
-    }
+      'Content-Type': 'application/json'
+    },
+    withCredentials: true,
+    crossorigin: true
   }
 
-  const profile = axios.get(API_V1_BASE_URL + '/users/profile', headerParam).then((response) => {
+  const profile = await axios.get(API_V1_BASE_URL + '/users/profile', params).then((response) => {
     const res: Profile = {
       id: response.data.id,
       name: response.data.name,

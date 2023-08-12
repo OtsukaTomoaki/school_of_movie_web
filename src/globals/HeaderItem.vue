@@ -1,34 +1,56 @@
 <template>
   <div class="header-container">
     <div class="header-title">
-      <a href="/" @click="onTitleClicked">SCHOOL OF MOVIE</a>
+      <a @click="onTitleClicked">SCHOOL OF MOVIE</a>
+    </div>
+    <div class="header-right-profile" v-if="profile">
+      <div class="profile-wrapper">
+        <a href="#" @click="() => showCardModal = true">
+          <img class="profile-avatar-image" src="http://localhost:3000/api/v1/users/download_avatar_image" />
+        </a>
+      </div>
+      <CardModal v-if="showCardModal" @update:show="(event) => showCardModal = event">
+        <ProfileCard></ProfileCard>
+      </CardModal>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 
 import { FetchProfile } from '@/apis/accounts'
 
-import { UPDATE_MOVIE_SEARCH_CONDITIONS } from '@/store/mutation-types'
+import {
+  UPDATE_MOVIE_SEARCH_CONDITIONS,
+  GET_AUTHORIZATION_TOKEN,
+  GET_PROFILE,
+  UPDATE_PROFILE
+} from '@/store/mutation-types'
+import CardModal from '@/components/organisms/CardModal.vue'
+import { Profile } from '@/profileTypes'
+import ProfileCard from '@/components/organisms/ProfileCard.vue'
 
 const store = useStore()
-
-interface Profile {
-  name: string;
-  email: string;
-}
+const profile = ref<Profile>(null)
+const showCardModal = ref(false)
 
 onMounted(async function () {
-  const store = useStore()
-  const profile = await FetchProfile(store)
+  if (store.getters[GET_AUTHORIZATION_TOKEN] === '') {
+    return
+  }
+  if (store.getters[GET_PROFILE] == null) {
+    store.commit(UPDATE_PROFILE, await FetchProfile())
+    console.log(store.getters[GET_PROFILE])
+  }
+  profile.value = store.getters[GET_PROFILE]
 })
 
 const onTitleClicked = () => {
   store.commit(UPDATE_MOVIE_SEARCH_CONDITIONS, null )
 }
+
 </script>
 
 <style scoped>
@@ -36,7 +58,7 @@ const onTitleClicked = () => {
   position: absolute;
   top: 0%;
   width: 100%;
-  height: 30px;
+  height: 50px;
 }
 
 .header-title {
@@ -44,7 +66,7 @@ const onTitleClicked = () => {
   font-weight: 900;
   font-size: large;
   font-family: 'Caveat', cursive;
-  font-size: 25px;
+  font-size: 30px;
   color: #F9D949;
   -webkit-text-stroke: #F9D949 1px;
 }
@@ -55,28 +77,25 @@ const onTitleClicked = () => {
   -webkit-text-stroke: #F9D949 1px;
 }
 
-.avatar-image {
-  width: 20px;
-  height: auto;
-}
-
-.background-image-container {
-  position: absolute;
-  width: 100%;
-  height: calc(100% - 15px);
-  overflow: hidden;
-}
-.background-image-container img {
-  left: 0;
-  right: 0;
-  transform: translateY(-10%);
-  width: calc(100% / 10);
-  filter: sepia(100%);
-}
-.profile {
+.header-right-profile {
   position: absolute;
   right: 0%;
-  top: 0%;
-  margin: 10px;
+  width: 50px;
+  height: 50px;
 }
+
+.profile-wrapper {
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.profile-avatar-image {
+  width: auto;
+  height: 100%;
+}
+
 </style>

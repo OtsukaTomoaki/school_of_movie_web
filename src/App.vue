@@ -40,7 +40,7 @@ input {
 }
 
 .main-container {
-  margin-top: 40px;
+  margin-top: 50px;
 }
 .footer-container {
   position: absolute;

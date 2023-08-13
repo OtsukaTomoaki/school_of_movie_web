@@ -3,7 +3,10 @@
     <div class="profile-wrapper">
 
       <div class="profile-card-avatar">
-        <img class="profile-avatar-image" src="http://localhost:3000/api/v1/users/download_avatar_image" />
+        <CustomAvatarImage
+          imageUri="http://localhost:3000/api/v1/users/download_avatar_image"
+          :size="70"
+        />
       </div>
       <Transition>
         <div class="profile-container" v-if="profile">
@@ -37,6 +40,7 @@ import { useStore } from 'vuex'
 import { FetchProfile } from '@/apis/accounts'
 import { Profile as ProfileType } from '@/profileTypes'
 import IconText from '@/components/molecules/IconText.vue'
+import CustomAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
 
 const profile = ref<ProfileType>(null)
 
@@ -55,14 +59,6 @@ onMounted(async function () {
   display: flex;
   width: 20%;
   height: auto;
-}
-
-.profile-card-avatar img {
-  display: flex;
-  max-width: 100%;
-  height: auto;
-  border-radius: 75%;
-
 }
 
 .profile-container {

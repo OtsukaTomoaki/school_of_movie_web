@@ -1,5 +1,5 @@
 <template>
-  <button class="search-button" @click="$emit('click')" v-bind:class="primary ? 'primary' : 'normal'">{{ text }}</button>
+  <button class="search-button" v-bind:class="primary ? 'primary' : 'normal'">{{ text }}</button>
 </template>
 
 <script lang="ts">

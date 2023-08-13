@@ -31,12 +31,15 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
+import { UPDATE_PROFILE } from '@/store/mutation-types'
 import { FetchProfile, UpdateProfile } from '@/apis/accounts'
 import { Profile } from '@/profileTypes'
 import CustomButton from '@/components/atoms/CustomButton.vue'
 
+const store = useStore()
 const avaterImageUri = ref('')
 const profile = ref<Profile>(null)
+
 onMounted(async function () {
   profile.value = await FetchProfile()
 })
@@ -44,7 +47,8 @@ onMounted(async function () {
 const onSaveClicked = async () => {
   const newAvaterImageUri = avaterImageUri ? avaterImageUri.value.split(',')[1] : null
   profile.value = await UpdateProfile(profile.value.id, profile.value, newAvaterImageUri)
-
+  store.commit(UPDATE_PROFILE, profile.value)
+  window.location.reload()
 }
 
 const onChangeFile = async (event: any) => {

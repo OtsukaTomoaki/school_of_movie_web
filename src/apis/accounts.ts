@@ -95,3 +95,31 @@ export const FetchProfile = async (): Promise<Profile> => {
   })
   return profile
 }
+
+export const UpdateProfile = async (id: string, profile: Profile, avatarImage: string): Promise<Profile> => {
+  const body = {
+    user: {
+      name: profile.name,
+      tags: profile.tags,
+      avatar_image: avatarImage
+    }
+  }
+  const params = {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    withCredentials: true,
+    crossorigin: true
+  }
+
+  const updatedProfile = await axios.put(API_V1_BASE_URL +  `/users/${id}`, body, params).then((response) => {
+    const res: Profile = {
+      id: response.data.id,
+      name: response.data.name,
+      email: response.data.email,
+      tags: response.data.tags
+    }
+    return res
+  })
+  return updatedProfile
+}

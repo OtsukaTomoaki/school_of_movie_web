@@ -20,7 +20,9 @@
     </div>
     <div class="profile-buttons-wrapper">
       <div class="profile-button-content">
-        <IconText type="edit" text="edit" />
+        <a href="/profile">
+          <IconText type="edit" text="edit" />
+        </a>
       </div>
       <div class="profile-button-content">
         <IconText type="log-out" text="signout" />
@@ -90,5 +92,10 @@ onMounted(async function () {
 
 .profile-button-content {
   padding: 5px;
+}
+
+.profile-button-content a {
+  text-decoration: none;
+  color: #2c3e50;
 }
 </style>

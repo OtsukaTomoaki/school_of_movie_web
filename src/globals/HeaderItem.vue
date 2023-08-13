@@ -6,7 +6,10 @@
     <div class="header-right-profile" v-if="profile">
       <div class="profile-wrapper">
         <a href="#" @click="() => showCardModal = true">
-          <img class="profile-avatar-image" src="http://localhost:3000/api/v1/users/download_avatar_image" />
+          <CustomAvatarImage
+            imageUri="http://localhost:3000/api/v1/users/download_avatar_image"
+            :size="40"
+          />
         </a>
       </div>
       <CardModal v-if="showCardModal" @update:show="(event) => showCardModal = event">
@@ -22,7 +25,7 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
 import { FetchProfile } from '@/apis/accounts'
-
+import CustomAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
 import {
   UPDATE_MOVIE_SEARCH_CONDITIONS,
   GET_AUTHORIZATION_TOKEN,
@@ -89,13 +92,12 @@ const onTitleClicked = () => {
 }
 
 .profile-wrapper {
-  width: 80%;
-  height: 80%;
-  border-radius: 50%;
-  overflow: hidden;
+  margin-top: 3px;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  border-radius: 50%;
+  border: 1px outset #F0F0F0;
 }
 .profile-avatar-image {
   width: auto;

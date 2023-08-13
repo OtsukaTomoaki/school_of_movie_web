@@ -4,11 +4,11 @@
       <v-divider class="mx-3"></v-divider>
       <div v-if="profile">
         <v-card-text>
-          <CustomeAvatarImage
+          <InputAvatarImage
             :imageUri="avaterImageUri ? avaterImageUri : 'http://localhost:3000/api/v1/users/download_avatar_image'"
-          />
-          <input type="file" class="profile-avatar-input" @change="onChangeFile"/>
-
+            :size="150"
+            @change="updateAvaterImage"
+            />
           <div class="body-1 mb-1">
             {{profile.email}}
           </div>
@@ -35,7 +35,7 @@ import { UPDATE_PROFILE } from '@/store/mutation-types'
 import { FetchProfile, UpdateProfile } from '@/apis/accounts'
 import { Profile } from '@/profileTypes'
 import CustomButton from '@/components/atoms/CustomButton.vue'
-import CustomeAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
+import InputAvatarImage from '@/components/molecules/InputAvatarImage.vue'
 
 const store = useStore()
 const avaterImageUri = ref('')
@@ -50,24 +50,6 @@ const onSaveClicked = async () => {
   profile.value = await UpdateProfile(profile.value.id, profile.value, newAvaterImageUri)
   store.commit(UPDATE_PROFILE, profile.value)
   window.location.reload()
-}
-
-const onChangeFile = async (event: any) => {
-  const file = event.target.files[0]
-  await convertBase64(file)
-}
-
-const convertBase64 = (file: any) => {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader()
-    fileReader.readAsDataURL(file)
-    fileReader.onload = () => {
-      updateAvaterImage(fileReader.result as string)
-    }
-    fileReader.onerror = (error) => {
-      reject(error)
-    }
-  })
 }
 
 const updateAvaterImage = async (base64: string) => {

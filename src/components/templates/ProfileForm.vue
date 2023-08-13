@@ -1,13 +1,14 @@
 <template>
   <div class="profile-container">
     <v-card dark>
-      <v-card-title class="headline">title</v-card-title>
       <v-divider class="mx-3"></v-divider>
       <div v-if="profile">
         <v-card-text>
           <v-avatar size="80">
-            <img class="profile-avatar-image" src="http://localhost:3000/api/v1/users/download_avatar_image" />
+            <img class="profile-avatar-image" :src="avaterImageUri ? avaterImageUri : 'http://localhost:3000/api/v1/users/download_avatar_image'" />
           </v-avatar>
+          <input type="file" @change="onChangeFile"/>
+
           <div class="body-1 mb-1">
             {{profile.email}}
           </div>
@@ -34,14 +35,38 @@ import { FetchProfile, UpdateProfile } from '@/apis/accounts'
 import { Profile } from '@/profileTypes'
 import CustomButton from '@/components/atoms/CustomButton.vue'
 
+const avaterImageUri = ref('')
 const profile = ref<Profile>(null)
 onMounted(async function () {
   profile.value = await FetchProfile()
 })
 
 const onSaveClicked = async () => {
-  profile.value = await UpdateProfile(profile.value.id, profile.value)
-  console.log('onSaveClicked')
+  const newAvaterImageUri = avaterImageUri ? avaterImageUri.value.split(',')[1] : null
+  profile.value = await UpdateProfile(profile.value.id, profile.value, newAvaterImageUri)
+
+}
+
+const onChangeFile = async (event: any) => {
+  const file = event.target.files[0]
+  await convertBase64(file)
+}
+
+const convertBase64 = (file: any) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader()
+    fileReader.readAsDataURL(file)
+    fileReader.onload = () => {
+      updateAvaterImage(fileReader.result as string)
+    }
+    fileReader.onerror = (error) => {
+      reject(error)
+    }
+  })
+}
+
+const updateAvaterImage = async (base64: string) => {
+  avaterImageUri.value = base64
 }
 </script>
 

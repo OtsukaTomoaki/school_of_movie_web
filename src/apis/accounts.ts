@@ -96,11 +96,12 @@ export const FetchProfile = async (): Promise<Profile> => {
   return profile
 }
 
-export const UpdateProfile = async (id: string, profile: Profile): Promise<Profile> => {
+export const UpdateProfile = async (id: string, profile: Profile, avatarImage: string): Promise<Profile> => {
   const body = {
     user: {
       name: profile.name,
-      tags: profile.tags
+      tags: profile.tags,
+      avatar_image: avatarImage
     }
   }
   const params = {

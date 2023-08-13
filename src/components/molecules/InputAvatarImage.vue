@@ -1,9 +1,8 @@
 <template>
-  <div class="avatar-image-content">
+  <div class="avatar-image-content" @click="onClickImage">
     <CustomAvatarImage
       :imageUri="currentImageUri"
       :size="size"
-      @click="onClickImage"
     />
     <input
       type="file"
@@ -11,6 +10,10 @@
       @change="onChangeFile"
       ref="fileInput"
     />
+    <div class="avatar-input-message">
+      <!-- todo: あとでデザインを考える -->
+      click to change image
+    </div>
   </div>
 </template>
 
@@ -77,10 +80,40 @@ const emitUpdateImage = (file: File, base64: string) => {
 </script>
 
 <style scoped>
+.avatar-image-content {
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+  background-color: #2c3e50;
+}
 .avatar-image-content :hover {
   cursor: pointer;
 }
+
+.avatar-image-content:hover .avatar-input-message {
+  opacity: .8;
+  margin-bottom: 0px;
+}
+
 .avatar-input {
   display: none;
 }
+
+.avatar-input-message {
+  position: absolute;
+  display: inline-block;
+  font-size: 12px;
+  color: #2c3e50;
+  text-align: center;
+  background-color: #2c3e50;
+  color: white;
+  opacity: 0;
+  width: 100%;
+  margin-left: -50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  transition: 0.5s;
+  margin-bottom: -10px;
+}
+
 </style>

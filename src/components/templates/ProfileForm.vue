@@ -4,10 +4,10 @@
       <v-divider class="mx-3"></v-divider>
       <div v-if="profile">
         <v-card-text>
-          <v-avatar size="80">
-            <img class="profile-avatar-image" :src="avaterImageUri ? avaterImageUri : 'http://localhost:3000/api/v1/users/download_avatar_image'" />
-          </v-avatar>
-          <input type="file" @change="onChangeFile"/>
+          <CustomeAvatarImage
+            :imageUri="avaterImageUri ? avaterImageUri : 'http://localhost:3000/api/v1/users/download_avatar_image'"
+          />
+          <input type="file" class="profile-avatar-input" @change="onChangeFile"/>
 
           <div class="body-1 mb-1">
             {{profile.email}}
@@ -35,6 +35,7 @@ import { UPDATE_PROFILE } from '@/store/mutation-types'
 import { FetchProfile, UpdateProfile } from '@/apis/accounts'
 import { Profile } from '@/profileTypes'
 import CustomButton from '@/components/atoms/CustomButton.vue'
+import CustomeAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
 
 const store = useStore()
 const avaterImageUri = ref('')

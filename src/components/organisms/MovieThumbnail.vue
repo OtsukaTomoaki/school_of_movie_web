@@ -83,6 +83,7 @@ const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slic
   margin: 0.5rem 0;
   color: #3C486B;
   padding: 0;
+  display: none;
 }
 
 .movie-thumbnail p {

@@ -3,8 +3,11 @@
     <notifications />
     <MovieSearchForm @result="updateMovies"></MovieSearchForm>
     <div class="movie-list-container">
-      <div v-for="movie in movies" :key="movie.id" class="movie-thumbnail-wrap" @click="onThumbnailClick(movie.id)">
-        <MovieThumbnail :movie="movie"></MovieThumbnail>
+      <div v-for="movie in movies" :key="movie.id" class="movie-thumbnail-wrap">
+        <MovieThumbnail
+          :movie="movie"
+          @movie_thumbnail:click="onThumbnailClick"
+        />
       </div>
     </div>
     <div class="pagenation-container">
@@ -121,8 +124,6 @@ const onThumbnailClick = (movieId: string) => {
   showMovieModal.value = true
 }
 const closeMovieModal = () => {
-  console.log('closeMovieModal')
-  selectedMovieId.value = null
   showMovieModal.value = false
 }
 </script>

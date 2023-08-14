@@ -1,9 +1,10 @@
 <template>
-  <div class="movie-thumbnail-container">
-    <div class="heart-button-wrapper">
+  <div class="movie-thumbnail-container" @click="onThumbnailClick">
+    <div class="heart-button-wrapper" @click.stop>
       <CustomHeartButton
         class="heart-icon"
         :id="'like_'+movie.id"
+        @click.stop="onLiked"
       />
     </div>
     <div class="movie-rating-wrap">
@@ -31,6 +32,7 @@ import BadgeList from '@/components/molecules/BadgeList.vue'
 import ThumbnailImage from '@/components/molecules/ThumbnailImage.vue'
 import CustomHeartButton from '@/components/atoms/CustomHeartButton.vue'
 
+const emit = defineEmits(['movie_thumbnail:click', 'like:click'])
 const props = defineProps<{
   movie: Movie;
 }>()
@@ -49,7 +51,13 @@ const posterUrl = `https://image.tmdb.org/t/p/w500${props.movie.posterPath}`
 
 const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slice(0, 20)}...` : props.movie.title
 
-// defineExpose({ onMouseEnter, onMouseLeave })
+const onLiked = (event: Event, isLiked: boolean) => {
+  emit('like:click', props.movie.id, isLiked)
+}
+
+const onThumbnailClick = () => {
+  emit('movie_thumbnail:click', props.movie.id)
+}
 
 </script>
 
@@ -140,6 +148,5 @@ const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slic
   z-index: 1;
   margin-left: -30px;
   margin-top: -30px;
-
 }
 </style>

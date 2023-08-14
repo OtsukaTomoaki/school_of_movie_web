@@ -1,5 +1,5 @@
 <template>
-  <div class="heart-button-wrapper">
+  <div class="heart-button-container">
     <input type="checkbox" class="checkbox" :id="id" />
     <label :for="id" @click="toggleLike">
       <svg class="heart-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
@@ -52,7 +52,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getUniqueStr } from '@/utils/guid';
 
 defineProps({
   isLiked: {
@@ -63,7 +62,7 @@ defineProps({
   id: {
     type: String,
     required: false,
-    default: getUniqueStr()
+    default: Math.random().toString(36).slice(-8)
   }
 })
 
@@ -75,6 +74,10 @@ const toggleLike = () => {
 </script>
 
 <style scoped>
+.heart-button-container {
+  display: inline-block;
+  overflow: hidden;
+}
 .heart-svg {
   cursor: pointer;
   overflow: visible;

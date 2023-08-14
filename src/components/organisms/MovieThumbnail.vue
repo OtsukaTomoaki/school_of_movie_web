@@ -1,5 +1,9 @@
 <template>
   <div class="movie-thumbnail-container">
+    <CustomHeartButton
+      class="heart-icon"
+      :id="'like_'+movie.id"
+    />
     <div class="movie-rating-wrap">
       <star-rating
       :increment="0.01"
@@ -23,6 +27,7 @@ import { ref } from 'vue'
 import { Movie } from '@/movieTypes'
 import BadgeList from '@/components/molecules/BadgeList.vue'
 import ThumbnailImage from '@/components/molecules/ThumbnailImage.vue'
+import CustomHeartButton from '@/components/atoms/CustomHeartButton.vue'
 
 const props = defineProps<{
   movie: Movie;
@@ -126,5 +131,13 @@ const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slic
   left: 0;
   z-index: 1;
   margin-top: -10px;
+}
+
+.heart-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  transform: translateX(25%);
 }
 </style>

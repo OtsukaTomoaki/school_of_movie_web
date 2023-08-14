@@ -1,9 +1,11 @@
 <template>
   <div class="movie-thumbnail-container">
-    <CustomHeartButton
-      class="heart-icon"
-      :id="'like_'+movie.id"
-    />
+    <div class="heart-button-wrapper">
+      <CustomHeartButton
+        class="heart-icon"
+        :id="'like_'+movie.id"
+      />
+    </div>
     <div class="movie-rating-wrap">
       <star-rating
       :increment="0.01"
@@ -41,7 +43,6 @@ const onMouseEnter = () => {
 
 const onMouseLeave = () => {
   showOverview.value = false
-  console.log('leave')
 }
 
 const posterUrl = `https://image.tmdb.org/t/p/w500${props.movie.posterPath}`
@@ -133,11 +134,11 @@ const truncatedTitle = props.movie.title.length > 20 ? `${props.movie.title.slic
   margin-top: -10px;
 }
 
-.heart-icon {
+.heart-button-wrapper {
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: 1;
-  transform: translateX(25%);
+  margin-left: -30px;
+  margin-top: -30px;
+
 }
 </style>

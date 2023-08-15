@@ -38,7 +38,7 @@ import MoviePreview from '@/components/organisms/MoviePreview.vue'
 import FormModal from '@/components/organisms/FormModal.vue'
 import { MovieSearchConditionType } from '@/movieSearchConditionType'
 import { GET_MOVIE_SEARCH_CONDITIONS, GET_PROFILE } from '@/store/mutation-types'
-import { FetchMovieUserLikes, PostMovieUserLike } from '@/apis/movie_user_likes'
+import { FetchMovieUserLikes, PostMovieUserLike, DeleteMovieUserLike } from '@/apis/movie_user_likes'
 
 const router = useRouter()
 const store = useStore()
@@ -129,9 +129,15 @@ const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
   })
 }
 
-const onLikeClick = async (movieId: string) => {
-  const response = await PostMovieUserLike(movieId)
-  movieUserLikes.value.push(response.movieId)
+const onLikeClick = async (movieId: string, isLiked: boolean) => {
+  if(isLiked) {
+    const response = await PostMovieUserLike(movieId)
+    movieUserLikes.value.push(response.movieId)
+  } else {
+    await DeleteMovieUserLike(movieId)
+    movieUserLikes.value = movieUserLikes.value.filter((movieUserLike) => movieUserLike !== movieId)
+  }
+
 }
 const onThumbnailClick = (movieId: string) => {
   selectedMovieId.value = movieId

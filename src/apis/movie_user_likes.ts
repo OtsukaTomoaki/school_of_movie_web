@@ -26,6 +26,23 @@ export const PostMovieUserLike = async (movieId: string): Promise<MovieUserLikeT
   } as MovieUserLikeType
 }
 
+export const DeleteMovieUserLike = async (movieId: string): Promise<MovieUserLikeType> => {
+  const params = {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    withCredentials: true,
+    crossorigin: true
+  }
+  const response = await axios.delete(API_V1_BASE_URL + `/movie_user_likes?movie_id=${movieId}`, params)
+  return {
+    id: response.data.id,
+    movieId: response.data.movie_id,
+    userId: response.data.user_id,
+    createdAt: response.data.created_at,
+  } as MovieUserLikeType
+}
+
 export const FetchMovieUserLikes = async (userId: string = null, movieId: string = null): Promise<MovieUserLikeType[]> => {
   const params = {
     headers: {

@@ -7,7 +7,7 @@
       <div class="profile-wrapper">
         <a href="#" @click="() => showCardModal = true">
           <CustomAvatarImage
-            imageUri="http://localhost:3000/api/v1/users/download_avatar_image"
+          :imageUri="MY_AVATAR_IMAGE_URL"
             :size="40"
           />
         </a>
@@ -24,7 +24,7 @@ import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
-import { FetchProfile } from '@/apis/accounts'
+import { FetchProfile, MY_AVATAR_IMAGE_URL } from '@/apis/accounts'
 import CustomAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
 import {
   UPDATE_MOVIE_SEARCH_CONDITIONS,

@@ -95,3 +95,5 @@ export const UpdateProfile = async (id: string, profile: Profile, avatarImage: s
   })
   return updatedProfile
 }
+
+export const MY_AVATAR_IMAGE_URL = `${API_V1_BASE_URL}/users/download_avatar_image`

@@ -5,7 +5,7 @@
       <div v-if="profile">
         <v-card-text>
           <InputAvatarImage
-            :imageUri="avaterImageUri ? avaterImageUri : 'http://localhost:3000/api/v1/users/download_avatar_image'"
+            :imageUri="avaterImageUri ? avaterImageUri : MY_AVATAR_IMAGE_URL"
             :size="150"
             @change="updateAvaterImage"
             />
@@ -32,7 +32,7 @@
 import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { UPDATE_PROFILE } from '@/store/mutation-types'
-import { FetchProfile, UpdateProfile } from '@/apis/accounts'
+import { FetchProfile, UpdateProfile, MY_AVATAR_IMAGE_URL } from '@/apis/accounts'
 import { Profile } from '@/profileTypes'
 import CustomButton from '@/components/atoms/CustomButton.vue'
 import InputAvatarImage from '@/components/molecules/InputAvatarImage.vue'

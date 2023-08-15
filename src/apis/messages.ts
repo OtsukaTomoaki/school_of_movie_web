@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { API_V1_BASE_URL } from './base'
+import { API_V1_BASE_URL, API_V1_BASE_PARAMS } from './base'
 
 axios.defaults.headers.withCredentials = true
 axios.defaults.headers.crossorigin = true
@@ -18,15 +18,9 @@ export interface Message {
 }
 
 export const FetchMessages = async (talkRoomId: string): Promise<Message[]> => {
-  const params = {
-    params: {
-      talk_room_id: talkRoomId
-    },
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    withCredentials: true,
-    crossorigin: true
+  const params = API_V1_BASE_PARAMS as any
+  params['params'] = {
+    talk_room_id: talkRoomId
   }
 
   const messages: Promise<Message[]> = axios.get(API_V1_BASE_URL + '/messages', params).then((response) => {

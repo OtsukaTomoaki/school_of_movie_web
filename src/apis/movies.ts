@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Movie } from '@/movieTypes'
 import { BackgroundJob } from '@/backgroundJobs'
-import { API_V1_BASE_URL } from './base'
+import { API_V1_BASE_URL, API_V1_BASE_PARAMS } from './base'
 import { MovieSearchConditionType } from '@/movieSearchConditionType'
 
 axios.defaults.headers.withCredentials = true
@@ -20,15 +20,7 @@ export class MovieSearchConditon implements MovieSearchConditionType {
 }
 
 export const FetchMovie = async (id: string): Promise<Movie> => {
-  const params = {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    withCredentials: true,
-    crossorigin: true
-  }
-
-  const movie: Promise<Movie> = axios.get(API_V1_BASE_URL + `/movies/${id}`, params).then((response) => {
+  const movie: Promise<Movie> = axios.get(API_V1_BASE_URL + `/movies/${id}`, API_V1_BASE_PARAMS).then((response) => {
     return {
       id: response.data.id,
       title: response.data.title,
@@ -63,15 +55,7 @@ export const FetchMovies = async (movieSearchCondition: MovieSearchConditionType
   query.append('page', page.toString())
   query.append('per_page', perPage.toString())
 
-  const params = {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    withCredentials: true,
-    crossorigin: true
-  }
-
-  const movies: Promise<{movies: Movie[], totalCount: number, backgroundJob: BackgroundJob}> = axios.get(API_V1_BASE_URL + `/movies?${query.toString()}`, params).then((response) => {
+  const movies: Promise<{movies: Movie[], totalCount: number, backgroundJob: BackgroundJob}> = axios.get(API_V1_BASE_URL + `/movies?${query.toString()}`, API_V1_BASE_PARAMS).then((response) => {
     return {
       movies: response.data.movies.map((movie: any) => {
         const res: Movie = {

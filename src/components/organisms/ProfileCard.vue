@@ -4,7 +4,7 @@
 
       <div class="profile-card-avatar">
         <CustomAvatarImage
-          imageUri="http://localhost:3000/api/v1/users/download_avatar_image"
+          :imageUri="MY_AVATAR_IMAGE_URL"
           :size="70"
         />
       </div>
@@ -41,6 +41,7 @@ import { FetchProfile } from '@/apis/accounts'
 import { Profile as ProfileType } from '@/profileTypes'
 import IconText from '@/components/molecules/IconText.vue'
 import CustomAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
+import { MY_AVATAR_IMAGE_URL } from '@/apis/accounts'
 
 const profile = ref<ProfileType>(null)
 

@@ -1,7 +1,7 @@
 <template>
   <div class="heart-button-container">
-    <input type="checkbox" class="checkbox" :id="id" v-model="isLiked" :value="isLiked"/>
-    <label :for="id" @click="toggleLike">
+    <input type="checkbox" class="checkbox" :id="id" v-model="isLiked" @change="toggleLike"/>
+    <label :for="id">
       <svg class="heart-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
         <g class="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
           <path class="heart"
@@ -70,7 +70,6 @@ const emit = defineEmits(['click', 'change', 'input'])
 const isLiked = ref(props.isLiked) // いいねの状態を保持
 
 const toggleLike = (event: Event) => {
-  isLiked.value = !isLiked.value // いいねの状態をトグル
   emit('click', event, isLiked.value)
   emit('change', event, isLiked.value)
   emit('input', event, isLiked.value)

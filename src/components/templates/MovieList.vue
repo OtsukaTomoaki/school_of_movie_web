@@ -7,6 +7,7 @@
         <MovieThumbnail
           :movie="movie"
           @movie_thumbnail:click="onThumbnailClick"
+          @like:click="onLikeClick"
         />
       </div>
     </div>
@@ -36,6 +37,7 @@ import MoviePreview from '@/components/organisms/MoviePreview.vue'
 import FormModal from '@/components/organisms/FormModal.vue'
 import { MovieSearchConditionType } from '@/movieSearchConditionType'
 import { GET_MOVIE_SEARCH_CONDITIONS } from '@/store/mutation-types'
+import { PostMovieUserLike } from '@/apis/movie_user_likes'
 
 const router = useRouter()
 const store = useStore()
@@ -119,6 +121,10 @@ const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
   })
 }
 
+const onLikeClick = async (movieId: string) => {
+  const response = await PostMovieUserLike(movieId)
+  console.log(response)
+}
 const onThumbnailClick = (movieId: string) => {
   selectedMovieId.value = movieId
   showMovieModal.value = true

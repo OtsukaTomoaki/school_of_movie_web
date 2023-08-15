@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { GET_AUTHORIZATION_TOKEN } from '@/store/mutation-types'
-import { API_V1_BASE_URL } from './base'
+import { API_V1_BASE_URL, API_V1_BASE_PARAMS } from './base'
 import { Profile } from '@/profileTypes'
 
 axios.defaults.headers.withCredentials = true
@@ -16,12 +15,7 @@ export const FetchAuthToken = async (email: string, password: string): Promise<A
     email: email,
     password: password
   }
-  const headers = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }
-  const token = axios.post(API_V1_BASE_URL + '/sessions', body, headers).then((response) => {
+  const token = axios.post(API_V1_BASE_URL + '/sessions', body, API_V1_BASE_PARAMS).then((response) => {
     const res: AuthorizationTokenObj = {
       authorizationToken: response.data.token,
       rememberToken: response.data.remember_token
@@ -36,12 +30,8 @@ export const FetchAuthTokenWithRememberToken = async (email: string, rememberTok
     email: email,
     remember_token: rememberToken
   }
-  const headers = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }
-  const token = axios.post(API_V1_BASE_URL + '/sessions/remember_me', body, headers).then((response) => {
+
+  const token = axios.post(API_V1_BASE_URL + '/sessions/remember_me', body, API_V1_BASE_PARAMS).then((response) => {
     const res: AuthorizationTokenObj = {
       authorizationToken: response.data.token,
       rememberToken: response.data.remember_token
@@ -55,17 +45,13 @@ export const SignUpWithSocialAccounts = async (email: string, onetimeToken: stri
   const body = {
     email: email
   }
-  const headerParam = {
-    params: {
-      onetime_token: onetimeToken,
-      type: 'google'
-    },
-    headers: {
-      'Content-Type': 'application/json'
-    }
+  const params = API_V1_BASE_PARAMS as any
+  params['params'] = {
+    onetime_token: onetimeToken,
+    type: 'google'
   }
 
-  const token = axios.post(API_V1_BASE_URL + '/users/create_with_social_accounts', body, headerParam).then((response) => {
+  const token = axios.post(API_V1_BASE_URL + '/users/create_with_social_accounts', body, params).then((response) => {
     const res: AuthorizationTokenObj = {
       authorizationToken: response.data.token,
       rememberToken: response.data.remember_token
@@ -76,15 +62,8 @@ export const SignUpWithSocialAccounts = async (email: string, onetimeToken: stri
 }
 
 export const FetchProfile = async (): Promise<Profile> => {
-  const params = {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    withCredentials: true,
-    crossorigin: true
-  }
 
-  const profile = await axios.get(API_V1_BASE_URL + '/users/profile', params).then((response) => {
+  const profile = await axios.get(API_V1_BASE_URL + '/users/profile', API_V1_BASE_PARAMS).then((response) => {
     const res: Profile = {
       id: response.data.id,
       name: response.data.name,
@@ -104,15 +83,8 @@ export const UpdateProfile = async (id: string, profile: Profile, avatarImage: s
       avatar_image: avatarImage
     }
   }
-  const params = {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    withCredentials: true,
-    crossorigin: true
-  }
 
-  const updatedProfile = await axios.put(API_V1_BASE_URL +  `/users/${id}`, body, params).then((response) => {
+  const updatedProfile = await axios.put(API_V1_BASE_URL +  `/users/${id}`, body, API_V1_BASE_PARAMS).then((response) => {
     const res: Profile = {
       id: response.data.id,
       name: response.data.name,

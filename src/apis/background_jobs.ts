@@ -1,17 +1,9 @@
 import axios from 'axios'
 import { BackgroundJob } from '@/backgroundJobs'
-import { API_V1_BASE_URL } from './base'
+import { API_V1_BASE_URL, API_V1_BASE_PARAMS } from './base'
 
 export const FetchBackgroundJob = async (id: string): Promise<BackgroundJob> => {
-  const params = {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    withCredentials: true,
-    crossorigin: true
-  }
-
-  const backgroundJob: Promise<BackgroundJob> = axios.get(API_V1_BASE_URL + `/background_jobs/${id}`, params).then((response) => {
+  const backgroundJob: Promise<BackgroundJob> = axios.get(API_V1_BASE_URL + `/background_jobs/${id}`, API_V1_BASE_PARAMS).then((response) => {
     return {
       id: response.data.id,
       status: response.data.status,

@@ -36,8 +36,8 @@ import { useRouter } from 'vue-router'
 import MoviePreview from '@/components/organisms/MoviePreview.vue'
 import FormModal from '@/components/organisms/FormModal.vue'
 import { MovieSearchConditionType } from '@/movieSearchConditionType'
-import { GET_MOVIE_SEARCH_CONDITIONS } from '@/store/mutation-types'
-import { PostMovieUserLike } from '@/apis/movie_user_likes'
+import { GET_MOVIE_SEARCH_CONDITIONS, GET_PROFILE } from '@/store/mutation-types'
+import { FetchMovieUserLikes, PostMovieUserLike } from '@/apis/movie_user_likes'
 
 const router = useRouter()
 const store = useStore()
@@ -53,6 +53,7 @@ defineProps({
 onMounted(async function () {
   const { page } = getCurrentQuery()
   RefreshMovies(page)
+  await RefreshMovieUserLikes()
 })
 const updateMovies = async (searchConditions: MovieSearchConditionType) => {
   console.log('searchConditions', searchConditions)
@@ -76,6 +77,12 @@ const RefreshMovies = async (page = 1) => {
   if (newBackgroundJob) {
     setBackgroundJobPolling(newBackgroundJob)
   }
+}
+
+const RefreshMovieUserLikes = async () => {
+  const profile = store.getters[GET_PROFILE]
+  const movieUserLikes = await FetchMovieUserLikes(profile.id)
+  console.log(movieUserLikes)
 }
 
 const tatalPages = computed(() => {

@@ -4,6 +4,7 @@
       <CustomHeartButton
         class="heart-icon"
         :id="'like_'+movie.id"
+        :isLiked="isLiked"
         @click.stop="onLiked"
       />
     </div>
@@ -34,7 +35,8 @@ import CustomHeartButton from '@/components/atoms/CustomHeartButton.vue'
 
 const emit = defineEmits(['movie_thumbnail:click', 'like:click'])
 const props = defineProps<{
-  movie: Movie;
+  movie: Movie,
+  isLiked: boolean
 }>()
 
 const showOverview = ref(false)

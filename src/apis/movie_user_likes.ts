@@ -25,3 +25,29 @@ export const PostMovieUserLike = async (movieId: string): Promise<MovieUserLikeT
     createdAt: response.data.created_at,
   } as MovieUserLikeType
 }
+
+export const FetchMovieUserLikes = async (userId: string = null, movieId: string = null): Promise<MovieUserLikeType[]> => {
+  const params = {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    withCredentials: true,
+    crossorigin: true
+  }
+  const query = new URLSearchParams()
+  if (userId) {
+    query.append('user_id', userId)
+  }
+  if (movieId) {
+    query.append('movie_id', movieId)
+  }
+  const response = await axios.get(API_V1_BASE_URL + `/movie_user_likes?${query.toString()}`, params)
+  return response.data.movie_user_likes.map((movieUserLike: any) => {
+    return {
+      id: movieUserLike.id,
+      movieId: movieUserLike.movie_id,
+      userId: movieUserLike.user_id,
+      createdAt: movieUserLike.created_at,
+    } as MovieUserLikeType
+  })
+}

@@ -6,6 +6,7 @@
       <div v-for="movie in movies" :key="movie.id" class="movie-thumbnail-wrap">
         <MovieThumbnail
           :movie="movie"
+          :isLiked="movieUserLikes.includes(movie.id)"
           @movie_thumbnail:click="onThumbnailClick"
           @like:click="onLikeClick"
         />
@@ -36,12 +37,13 @@ import { useRouter } from 'vue-router'
 import MoviePreview from '@/components/organisms/MoviePreview.vue'
 import FormModal from '@/components/organisms/FormModal.vue'
 import { MovieSearchConditionType } from '@/movieSearchConditionType'
-import { GET_MOVIE_SEARCH_CONDITIONS } from '@/store/mutation-types'
-import { PostMovieUserLike } from '@/apis/movie_user_likes'
+import { GET_MOVIE_SEARCH_CONDITIONS, GET_PROFILE } from '@/store/mutation-types'
+import { FetchMovieUserLikes, PostMovieUserLike } from '@/apis/movie_user_likes'
 
 const router = useRouter()
 const store = useStore()
 const movies = ref([])
+const movieUserLikes = ref([])
 const totalCount = ref(0)
 const backgroundJobForFetchNewMovie = ref<BackgroundJob>(null)
 const showMovieModal = ref(false)
@@ -52,7 +54,8 @@ defineProps({
 })
 onMounted(async function () {
   const { page } = getCurrentQuery()
-  RefreshMovies(page)
+  await RefreshMovieUserLikes()
+  await RefreshMovies(page)
 })
 const updateMovies = async (searchConditions: MovieSearchConditionType) => {
   console.log('searchConditions', searchConditions)
@@ -76,6 +79,11 @@ const RefreshMovies = async (page = 1) => {
   if (newBackgroundJob) {
     setBackgroundJobPolling(newBackgroundJob)
   }
+}
+
+const RefreshMovieUserLikes = async () => {
+  const profile = store.getters[GET_PROFILE]
+  movieUserLikes.value = (await FetchMovieUserLikes(profile.id)).map((movieUserLike) => movieUserLike.movieId)
 }
 
 const tatalPages = computed(() => {
@@ -123,7 +131,7 @@ const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
 
 const onLikeClick = async (movieId: string) => {
   const response = await PostMovieUserLike(movieId)
-  console.log(response)
+  movieUserLikes.value.push(response.movieId)
 }
 const onThumbnailClick = (movieId: string) => {
   selectedMovieId.value = movieId

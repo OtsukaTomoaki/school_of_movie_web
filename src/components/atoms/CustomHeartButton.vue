@@ -1,7 +1,7 @@
 <template>
   <div class="heart-button-container">
-    <input type="checkbox" class="checkbox" :id="id" />
-    <label :for="id" @click.stop="toggleLike">
+    <input type="checkbox" class="checkbox" :id="id" v-model="isLiked" @change="toggleLike"/>
+    <label :for="id">
       <svg class="heart-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
         <g class="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
           <path class="heart"
@@ -53,7 +53,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-defineProps({
+const props = defineProps({
   isLiked: {
     type: Boolean,
     required: false,
@@ -67,10 +67,9 @@ defineProps({
 })
 const emit = defineEmits(['click', 'change', 'input'])
 
-const isLiked = ref(false) // いいねの状態を保持
+const isLiked = ref(props.isLiked) // いいねの状態を保持
 
 const toggleLike = (event: Event) => {
-  isLiked.value = !isLiked.value // いいねの状態をトグル
   emit('click', event, isLiked.value)
   emit('change', event, isLiked.value)
   emit('input', event, isLiked.value)

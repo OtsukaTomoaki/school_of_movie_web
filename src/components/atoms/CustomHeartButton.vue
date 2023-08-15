@@ -85,8 +85,9 @@ const toggleLike = (event: Event) => {
 .heart-svg {
   cursor: pointer;
   overflow: visible;
-  width: 50px;
-  margin: 20px;
+  width: 40px;
+  margin-top: 22px;
+  margin-left: 22px;
 }
 
 svg .heart {

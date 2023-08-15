@@ -6,6 +6,7 @@
       <div v-for="movie in movies" :key="movie.id" class="movie-thumbnail-wrap">
         <MovieThumbnail
           :movie="movie"
+          :isLiked="movieUserLikes.includes(movie.id)"
           @movie_thumbnail:click="onThumbnailClick"
           @like:click="onLikeClick"
         />
@@ -42,6 +43,7 @@ import { FetchMovieUserLikes, PostMovieUserLike } from '@/apis/movie_user_likes'
 const router = useRouter()
 const store = useStore()
 const movies = ref([])
+const movieUserLikes = ref([])
 const totalCount = ref(0)
 const backgroundJobForFetchNewMovie = ref<BackgroundJob>(null)
 const showMovieModal = ref(false)
@@ -52,8 +54,8 @@ defineProps({
 })
 onMounted(async function () {
   const { page } = getCurrentQuery()
-  RefreshMovies(page)
   await RefreshMovieUserLikes()
+  await RefreshMovies(page)
 })
 const updateMovies = async (searchConditions: MovieSearchConditionType) => {
   console.log('searchConditions', searchConditions)
@@ -81,8 +83,7 @@ const RefreshMovies = async (page = 1) => {
 
 const RefreshMovieUserLikes = async () => {
   const profile = store.getters[GET_PROFILE]
-  const movieUserLikes = await FetchMovieUserLikes(profile.id)
-  console.log(movieUserLikes)
+  movieUserLikes.value = (await FetchMovieUserLikes(profile.id)).map((movieUserLike) => movieUserLike.movieId)
 }
 
 const tatalPages = computed(() => {

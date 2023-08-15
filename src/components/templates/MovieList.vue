@@ -131,7 +131,7 @@ const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
 
 const onLikeClick = async (movieId: string) => {
   const response = await PostMovieUserLike(movieId)
-  console.log(response)
+  movieUserLikes.value.push(response.movieId)
 }
 const onThumbnailClick = (movieId: string) => {
   selectedMovieId.value = movieId

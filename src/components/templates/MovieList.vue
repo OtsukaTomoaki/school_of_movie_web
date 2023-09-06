@@ -13,9 +13,6 @@
       </div>
       <VueEternalLoading :load="load"></VueEternalLoading>
     </div>
-    <div class="pagenation-container">
-      <CustomPagination :totalPages="tatalPages" @page-changed="changePage"></CustomPagination>
-    </div>
     <!-- <MovieModal v-if="showMovieModal" @close="closeMovieModal" class="movie_modal"></MovieModal> -->
     <FormModal v-bind:show=showMovieModal @close="closeMovieModal">
       <MoviePreview :movieId="selectedMovieId" />
@@ -65,9 +62,10 @@ defineProps({
   movies: []
 })
 onMounted(async function () {
-  const { page } = getCurrentQuery()
+  // const { page } = getCurrentQuery()
+  changePage(0)
   await RefreshMovieUserLikes()
-  await RefreshMovies(page)
+  await RefreshMovies()
 })
 const updateMovies = async (searchConditions: MovieSearchConditionType) => {
   console.log('searchConditions', searchConditions)
@@ -110,15 +108,6 @@ const getCurrentQuery = () => {
   const page = query.page ? Number(query.page) : 1
   return { page }
 }
-watch(router.currentRoute.value.query, async (to, from) => {
-  const { page } = getCurrentQuery()
-  RefreshMovies(page)
-  console.log('to.page', to.page)
-  console.log('from.page', from.page)
-  if (to.page !== from.page) {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-})
 
 const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
   if (backgroundJobForFetchNewMovie.value) {
@@ -170,7 +159,7 @@ const closeMovieModal = () => {
 
 .movie-list-container {
   padding: 20px 0;
-  height: calc(100% - 100px);
+  height: calc(100% - 30px);
   overflow: scroll;
   display: block;
   text-align: left;

@@ -79,11 +79,6 @@ const onThumbnailClick = () => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   overflow: visible;
 }
 

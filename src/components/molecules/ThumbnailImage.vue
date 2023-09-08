@@ -19,9 +19,9 @@ defineProps({
 
 <style scoped>
 .movie-poster-image-wrap {
-  position: relative;
+  position: absolute;
   width: 100%;
-  height: calc(100% - 2rem);
+  height: 100%;
   text-align: center;
 }
 

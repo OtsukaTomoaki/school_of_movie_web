@@ -11,9 +11,7 @@
           @like:click="onLikeClick"
         />
       </div>
-    </div>
-    <div class="pagenation-container">
-      <CustomPagination :totalPages="tatalPages" @page-changed="changePage"></CustomPagination>
+      <VueEternalLoading :load="load"></VueEternalLoading>
     </div>
     <!-- <MovieModal v-if="showMovieModal" @close="closeMovieModal" class="movie_modal"></MovieModal> -->
     <FormModal v-bind:show=showMovieModal @close="closeMovieModal">
@@ -39,6 +37,7 @@ import FormModal from '@/components/organisms/FormModal.vue'
 import { MovieSearchConditionType } from '@/movieSearchConditionType'
 import { GET_MOVIE_SEARCH_CONDITIONS, GET_PROFILE } from '@/store/mutation-types'
 import { FetchMovieUserLikes, PostMovieUserLike, DeleteMovieUserLike } from '@/apis/movie_user_likes'
+import { VueEternalLoading, LoadAction } from '@ts-pro/vue-eternal-loading';
 
 const router = useRouter()
 const store = useStore()
@@ -49,13 +48,24 @@ const backgroundJobForFetchNewMovie = ref<BackgroundJob>(null)
 const showMovieModal = ref(false)
 const selectedMovieId = ref(null)
 
+async function load({ loaded }: LoadAction) {
+  console.log('loaded', loaded)
+  const { page } = getCurrentQuery()
+  const nextPage = page + 1
+  changePage(nextPage)
+  const { movies : nextMovies } = await LoadMovies(page);
+  movies.value.push(...nextMovies);
+  loaded(nextMovies.length, 50);
+}
+
 defineProps({
   movies: []
 })
 onMounted(async function () {
-  const { page } = getCurrentQuery()
+  // const { page } = getCurrentQuery()
+  changePage(0)
   await RefreshMovieUserLikes()
-  await RefreshMovies(page)
+  await RefreshMovies()
 })
 const updateMovies = async (searchConditions: MovieSearchConditionType) => {
   console.log('searchConditions', searchConditions)
@@ -68,17 +78,20 @@ const changePage = (page: number) => {
       page: page
     }
   })
-  RefreshMovies(page)
+  // RefreshMovies(page)
 }
 const RefreshMovies = async (page = 1) => {
-  const searchConditions = store.getters[GET_MOVIE_SEARCH_CONDITIONS]
-  console.log('searchConditions', searchConditions)
-  const { movies: newMovies, totalCount: newTotalCount, backgroundJob: newBackgroundJob } = await FetchMovies(searchConditions, page)
+  const { movies: newMovies, totalCount: newTotalCount, backgroundJob: newBackgroundJob } = await LoadMovies(page)
   movies.value = newMovies
   totalCount.value = newTotalCount
   if (newBackgroundJob) {
     setBackgroundJobPolling(newBackgroundJob)
   }
+}
+
+const LoadMovies = async (page = 1) => {
+  const searchConditions = store.getters[GET_MOVIE_SEARCH_CONDITIONS]
+  return await FetchMovies(searchConditions, page)
 }
 
 const RefreshMovieUserLikes = async () => {
@@ -95,15 +108,6 @@ const getCurrentQuery = () => {
   const page = query.page ? Number(query.page) : 1
   return { page }
 }
-watch(router.currentRoute.value.query, async (to, from) => {
-  const { page } = getCurrentQuery()
-  RefreshMovies(page)
-  console.log('to.page', to.page)
-  console.log('from.page', from.page)
-  if (to.page !== from.page) {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-})
 
 const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
   if (backgroundJobForFetchNewMovie.value) {
@@ -112,11 +116,9 @@ const setBackgroundJobPolling = (backgroundJob: BackgroundJobType) => {
 
   backgroundJobForFetchNewMovie.value = new BackgroundJob(backgroundJob)
   backgroundJobForFetchNewMovie.value.startPolling(async () => {
-    const searchConditions = store.getters[GET_MOVIE_SEARCH_CONDITIONS]
     const { page } = getCurrentQuery()
 
-    const { movies: newMovies, totalCount: newTotalCount } = await FetchMovies(searchConditions, page)
-
+    const { movies: newMovies, totalCount: newTotalCount } = await LoadMovies(page)
     const addedCount = newTotalCount - totalCount.value
     if (addedCount) {
       notify({
@@ -137,7 +139,6 @@ const onLikeClick = async (movieId: string, isLiked: boolean) => {
     await DeleteMovieUserLike(movieId)
     movieUserLikes.value = movieUserLikes.value.filter((movieUserLike) => movieUserLike !== movieId)
   }
-
 }
 const onThumbnailClick = (movieId: string) => {
   selectedMovieId.value = movieId
@@ -158,7 +159,7 @@ const closeMovieModal = () => {
 
 .movie-list-container {
   padding: 20px 0;
-  height: calc(100% - 100px);
+  height: calc(100% - 30px);
   overflow: scroll;
   display: block;
   text-align: left;

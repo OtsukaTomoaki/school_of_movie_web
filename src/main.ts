@@ -8,6 +8,7 @@ import ActionCableVue from 'actioncable-vue'
 import Notifications from '@kyvg/vue3-notification'
 import VueStarRating from 'vue-star-rating'
 import VueFeather from 'vue-feather'
+import { VueEternalLoading, LoadAction } from '@ts-pro/vue-eternal-loading';
 
 const actionCableVueOptions = {
   debug: true,
@@ -24,6 +25,8 @@ createApp(App)
   .use(vuetify)
   .use(ActionCableVue, actionCableVueOptions)
   .use(Notifications)
+  .use(VueEternalLoading)
+  .use(LoadAction)
   .component('star-rating', VueStarRating)
   .component('vue-feather', VueFeather)
   .mount('#app')

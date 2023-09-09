@@ -61,10 +61,8 @@ defineProps({
   movies: []
 })
 onMounted(async function () {
-  // const { page } = getCurrentQuery()
   changePage(0)
   await RefreshMovieUserLikes()
-  // await RefreshMovies()
 })
 const updateMovies = async (searchConditions: MovieSearchConditionType) => {
   console.log('searchConditions', searchConditions)
@@ -77,7 +75,6 @@ const changePage = (page: number) => {
       page: page
     }
   })
-  // RefreshMovies(page)
 }
 const RefreshMovies = async (page = 1) => {
   const { movies: newMovies, totalCount: newTotalCount, backgroundJob: newBackgroundJob } = await LoadMovies(page)

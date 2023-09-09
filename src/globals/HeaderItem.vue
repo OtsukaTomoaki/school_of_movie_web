@@ -1,7 +1,10 @@
 <template>
   <div class="header-container">
     <div class="header-title">
-      <a @click="onTitleClicked" href="#">SCHOOL OF MOVIE</a>
+      <!-- assets logo.pngを表示-->
+      <a @click="onTitleClicked" href="#">
+        <img :src="logoUrl" width="300" height="50" alt="logo">
+      </a>
     </div>
     <div class="header-right-profile" v-if="profile">
       <div class="profile-wrapper">
@@ -24,6 +27,7 @@ import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
+import logoUrl from '@/assets/service_logo.png'
 import { FetchProfile, MY_AVATAR_IMAGE_URL } from '@/apis/accounts'
 import CustomAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
 import {

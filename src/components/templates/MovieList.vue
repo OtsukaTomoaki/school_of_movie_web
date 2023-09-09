@@ -49,7 +49,6 @@ const showMovieModal = ref(false)
 const selectedMovieId = ref(null)
 
 async function load({ loaded }: LoadAction) {
-  console.log('loaded', loaded)
   const { page } = getCurrentQuery()
   const nextPage = page + 1
   changePage(nextPage)

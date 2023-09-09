@@ -11,7 +11,7 @@
           @like:click="onLikeClick"
         />
       </div>
-      <VueEternalLoading :load="load"></VueEternalLoading>
+      <VueEternalLoading :load="load" class="loading"></VueEternalLoading>
     </div>
     <!-- <MovieModal v-if="showMovieModal" @close="closeMovieModal" class="movie_modal"></MovieModal> -->
     <FormModal v-bind:show=showMovieModal @close="closeMovieModal">
@@ -53,7 +53,7 @@ async function load({ loaded }: LoadAction) {
   const { page } = getCurrentQuery()
   const nextPage = page + 1
   changePage(nextPage)
-  const { movies : nextMovies } = await LoadMovies(page);
+  const { movies : nextMovies } = await LoadMovies(nextPage);
   movies.value.push(...nextMovies);
   loaded(nextMovies.length, 50);
 }
@@ -65,7 +65,7 @@ onMounted(async function () {
   // const { page } = getCurrentQuery()
   changePage(0)
   await RefreshMovieUserLikes()
-  await RefreshMovies()
+  // await RefreshMovies()
 })
 const updateMovies = async (searchConditions: MovieSearchConditionType) => {
   console.log('searchConditions', searchConditions)
@@ -173,19 +173,19 @@ const closeMovieModal = () => {
     width: calc((100% / 2) - 10px);
   };
   @media screen and (min-width:600px) {
-    width: calc((100% / 3) - 10px);
+    width: calc((100% / 2) - 10px);
   };
   @media screen and (min-width:800px) {
-    width: calc((100% / 4) - 10px);
+    width: calc((100% / 3) - 10px);
   };
   @media screen and (min-width:1280px) {
+    width: calc((100% / 4) - 10px);
+  };
+  @media screen and (min-width:1600px) {
     width: calc((100% / 5) - 10px);
   };
-  @media screen and (min-width:1800px) {
-    width: calc((100% / 6) - 10px);
-  };
   @media screen and (min-width:1900px) {
-    width: 300px;
+    width: calc((100% / 6) - 10px);
   };
 }
 .movie-thumbnail-wrap :hover {
@@ -197,5 +197,11 @@ const closeMovieModal = () => {
   bottom: 0;
   width: 100%;
   height: 30px;
+}
+
+.loading {
+  bottom: 0;
+  width: 100%;
+  text-align: center;
 }
 </style>

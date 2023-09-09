@@ -4,14 +4,14 @@
   <div class="main-container">
     <router-view/>
   </div>
-  <div class="footer-container">
+  <!-- <div class="footer-container">
     <FooterItem></FooterItem>
-  </div>
+  </div> -->
 </template>
 
 <script setup lang="ts">
 import HeaderItem from '@/globals/HeaderItem.vue' // @ is an alias to /src
-import FooterItem from '@/globals/FooterItem.vue' // @ is an alias to /src
+// import FooterItem from '@/globals/FooterItem.vue' // @ is an alias to /src
 </script>
 
 <style>

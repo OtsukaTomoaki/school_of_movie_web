@@ -26,6 +26,7 @@
       </div>
     </div>
     <img :src="`https://image.tmdb.org/t/p/w500${movie.backdropPath}`" alt="">
+    <MessageList talk-room-id="f8c38692-a333-430a-8297-fde53b18d790" />
   </div>
 </template>
 
@@ -34,6 +35,7 @@ import { onMounted, ref, watch } from 'vue'
 import { FetchMovie } from '@/apis/movies'
 import BadgeList from '@/components/molecules/BadgeList.vue'
 import PreviewImage from '@/components/molecules/PreviewImage.vue'
+import MessageList from '@/components/talk_room/MessageList.vue'
 
 const props = defineProps({
   movieId: {

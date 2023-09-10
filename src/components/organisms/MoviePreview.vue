@@ -26,7 +26,7 @@
       </div>
     </div>
     <img :src="`https://image.tmdb.org/t/p/w500${movie.backdropPath}`" alt="">
-    <MessageList talk-room-id="f8c38692-a333-430a-8297-fde53b18d790" />
+    <MessageList v-if="talkRoomId" :talk-room-id="talkRoomId" />
   </div>
 </template>
 
@@ -36,6 +36,7 @@ import { FetchMovie } from '@/apis/movies'
 import BadgeList from '@/components/molecules/BadgeList.vue'
 import PreviewImage from '@/components/molecules/PreviewImage.vue'
 import MessageList from '@/components/talk_room/MessageList.vue'
+import { FetchMovieTalkRoom } from '@/apis/movie_talk_rooms'
 
 const props = defineProps({
   movieId: {
@@ -44,6 +45,7 @@ const props = defineProps({
   }
 })
 const movie = ref(null)
+const talkRoomId = ref(null)
 
 onMounted(async function () {
   if (!props.movieId) {
@@ -57,7 +59,10 @@ watch(() => props.movieId, async (newVal, oldVal) => {
     return
   }
   movie.value = await FetchMovie(newVal)
+  talkRoomId.value = (await FetchMovieTalkRoom(props.movieId)).talkRoomId
   console.log(movie.value)
+  console.log(talkRoomId.value)
+
 })
 
 </script>

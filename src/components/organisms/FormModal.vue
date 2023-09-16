@@ -49,7 +49,8 @@ const onclick = function () {
   justify-content: center;
 
   background-color: white;
-  width: 600px;
+  width: 90%;
+  max-width: 1400px;
   height: auto;
   max-height: 100%;
   border-radius: 20px;

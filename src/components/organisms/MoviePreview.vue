@@ -51,7 +51,6 @@ onMounted(async function () {
   if (!props.movieId) {
     return
   }
-  console.log('MovieDetailModal mounted')
 })
 
 watch(() => props.movieId, async (newVal, oldVal) => {
@@ -59,10 +58,8 @@ watch(() => props.movieId, async (newVal, oldVal) => {
     return
   }
   movie.value = await FetchMovie(newVal)
+  talkRoomId.value = null // ここでnullにしないと、v-ifの条件が変わらないので再描画されない
   talkRoomId.value = (await FetchMovieTalkRoom(props.movieId)).talkRoomId
-  console.log(movie.value)
-  console.log(talkRoomId.value)
-
 })
 
 </script>

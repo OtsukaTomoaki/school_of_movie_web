@@ -14,9 +14,8 @@
         </div>
       </div>
       <div class="send-message-form">
-        <label>Speak:</label>
-        <input v-model="speak" type="text" />
-        <button v-on:click=onclick>Send Message</button>
+        <SearchForm :text="speak" @submit="onclick">
+        </SearchForm>
       </div>
   </div>
 </template>
@@ -25,6 +24,7 @@
 import { FetchMessages, Message } from '@/apis/messages'
 import { ref, watch, onMounted } from 'vue'
 import ActionCable from 'actioncable'
+import SearchForm from '@/components/molecules/SearchForm.vue'
 
 const props = defineProps<{talkRoomId: string}>()
 const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
@@ -69,10 +69,11 @@ onMounted(async function () {
   })
 })
 
-const onclick = function () {
+const onclick = function (newMessage: string) {
   chatChannel.perform('speak', {
-    message: speak.value
+    message: newMessage
   })
+  speak.value = ''
 }
 
 </script>
@@ -83,8 +84,8 @@ const onclick = function () {
 }
 
 .message-list {
-  height: calc(100vh - 160px);
   overflow-y: scroll;
+  height: 400px;
 }
 
 .message-content {
@@ -92,8 +93,9 @@ const onclick = function () {
 }
 
 .send-message-form {
-  border: 1px solid #999;
-  padding: 10px;
+  padding-bottom: 10px;
   height: 60px;
+  bottom: 0;
+  position: absolute;
 }
 </style>

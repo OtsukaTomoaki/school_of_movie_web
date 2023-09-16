@@ -1,32 +1,38 @@
 <template>
-  <div class="modal-content" v-if="movie">
-    <PreviewImage
-      :src="`https://image.tmdb.org/t/p/w500${movie.posterPath}`"
-      :alt="movie.title" />
-    <!-- <img :src="`https://image.tmdb.org/t/p/w500${movie.posterPath}`" alt=""> -->
-    <div class="movie-description">
-      <div class="movie-description-title">
-        {{ movie.title }}
+  <div class="modal-contentainer" v-if="movie">
+    <div class="content-left">
+      <div class="preview-image-wrapper">
+        <PreviewImage
+          :src="`https://image.tmdb.org/t/p/w500${movie.posterPath}`"
+          :alt="movie.title" />
       </div>
-      <div class="movie-description-release-date">
-        {{ movie.releaseDate.split('T')[0] }}
+      <!-- <img :src="`https://image.tmdb.org/t/p/w500${movie.posterPath}`" alt=""> -->
+      <div class="movie-description">
+        <div class="movie-description-title">
+          {{ movie.title }}
+        </div>
+        <div class="movie-description-release-date">
+          {{ movie.releaseDate.split('T')[0] }}
+        </div>
+        <div class="movie-description-vote-average">
+          <star-rating
+          :increment="0.01"
+          :rating="(movie.voteAverage / 2)"
+          :star-size="20"
+          :read-only="true"></star-rating>
+        </div>
+        <div class="movie-description-genres">
+          <BadgeList :badges="movie.movieGenres.map((genre: any) => genre.name)"></BadgeList>
+        </div>
+        <div class="movie-description-overview">
+          {{ movie.overview }}
+        </div>
       </div>
-      <div class="movie-description-vote-average">
-        <star-rating
-        :increment="0.01"
-        :rating="(movie.voteAverage / 2)"
-        :star-size="20"
-        :read-only="true"></star-rating>
-      </div>
-      <div class="movie-description-genres">
-        <BadgeList :badges="movie.movieGenres.map((genre: any) => genre.name)"></BadgeList>
-      </div>
-      <div class="movie-description-overview">
-        {{ movie.overview }}
-      </div>
+      <img :src="`https://image.tmdb.org/t/p/w500${movie.backdropPath}`" alt="">
     </div>
-    <img :src="`https://image.tmdb.org/t/p/w500${movie.backdropPath}`" alt="">
-    <MessageList v-if="talkRoomId" :talk-room-id="talkRoomId" />
+    <div class="content-right">
+      <MessageList v-if="talkRoomId" :talk-room-id="talkRoomId"/>
+    </div>
   </div>
 </template>
 
@@ -65,19 +71,29 @@ watch(() => props.movieId, async (newVal, oldVal) => {
 </script>
 
 <style scoped>
-.modal-content {
+.modal-contentainer {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
-.modal-content img {
-  width: 100%;
-  height: 100%;
+.modal-contentainer img {
+  width: auto;
+  height: 300px;
   object-fit: cover;
+}
+
+.content-left {
+  padding: 0px 10px;
+  width: 50%;
+  overflow-y: auto;
+}
+
+.content-right {
+  padding: 0px 10px;
+  width: 50%;
+  overflow-y: auto;
 }
 
 </style>

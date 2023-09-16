@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import CustomSearchText from '@/components/atoms/CustomSearchText.vue'
 import CustomButton from '@/components/atoms/CustomButton.vue'
 
@@ -26,6 +26,7 @@ const emits = defineEmits<{(e: 'submit', text: string): void}>()
 const submitSearch = () => {
   console.log('submitSearch', searchQuery.value)
   emits('submit', searchQuery.value)
+  searchQuery.value = ''
 }
 </script>
 

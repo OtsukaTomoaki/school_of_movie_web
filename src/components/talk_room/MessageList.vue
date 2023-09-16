@@ -4,15 +4,23 @@
       <div ref="messageList" class="message-list">
         <div v-for="message in messages" v-bind:key="message.id">
           <div class="message-content">
-            <v-card dark>
+            <div class="talker-avatar">
+              <!-- todo: 喋った人のアバターが表示されるようにする -->
+              <CustomAvatarImage
+              :imageUri="MY_AVATAR_IMAGE_URL"
+                :size="50"
+              />
+            </div>
+            <div class="balloon1-left">
               <div class="font-weight-normal">
                 <strong>{{ message.user.name }}</strong> @{{ message.createdAt }}
               </div>
               <div>{{ message.content }}</div>
-            </v-card>
+            </div>
           </div>
         </div>
       </div>
+      <!-- todo: ボタンテキストが「Search」になっているので、汎用的なボタンコンポーネントを作成する -->
       <div class="send-message-form">
         <SearchForm :text="speak" @submit="onclick">
         </SearchForm>
@@ -25,6 +33,8 @@ import { FetchMessages, Message } from '@/apis/messages'
 import { ref, watch, onMounted } from 'vue'
 import ActionCable from 'actioncable'
 import SearchForm from '@/components/molecules/SearchForm.vue'
+import CustomAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
+import { MY_AVATAR_IMAGE_URL } from '@/apis/accounts'
 
 const props = defineProps<{talkRoomId: string}>()
 const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
@@ -88,11 +98,12 @@ const onclick = function (newMessage: string) {
 
 .message-list {
   overflow-y: scroll;
-  height: 400px;
+  height: calc(100% - 60px);
 }
 
 .message-content {
-  padding: 5px;
+  display: flex;
+  height: auto;
 }
 
 .send-message-form {
@@ -101,5 +112,36 @@ const onclick = function (newMessage: string) {
   bottom: 0;
   position: absolute;
   width: 100%;
+}
+.message-content .talker-avatar {
+  display: inline-block;
+  margin: 2px 0 15px 15px;
+  padding: 7px 10px;
+  width: 80px;
+}
+
+.balloon1-left {
+  position: relative;
+  display: inline-block;
+  margin: 2px 0 15px 15px;
+  padding: 7px 10px;
+  width: calc(100% - 60px);
+  color: #555;
+  background: #e0edff;
+}
+
+.balloon1-left:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -30px;
+  margin-top: -15px;
+  border: 15px solid transparent;
+  border-right: 15px solid #e0edff;
+}
+
+.balloon1-left p {
+  margin: 0;
+  padding: 0;
 }
 </style>

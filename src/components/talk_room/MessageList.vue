@@ -81,6 +81,9 @@ const onclick = function (newMessage: string) {
 <style scoped>
 .message-container {
   display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 .message-list {
@@ -97,5 +100,6 @@ const onclick = function (newMessage: string) {
   height: 60px;
   bottom: 0;
   position: absolute;
+  width: 100%;
 }
 </style>

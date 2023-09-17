@@ -22,8 +22,8 @@
       </div>
       <!-- todo: ボタンテキストが「Search」になっているので、汎用的なボタンコンポーネントを作成する -->
       <div class="send-message-form">
-        <SearchForm :text="speak" @submit="onclick">
-        </SearchForm>
+        <TextButtonForm :text="speak" @submit="onclick" :clearOnClick="true" buttonText="Comment">
+        </TextButtonForm>
       </div>
   </div>
 </template>
@@ -32,7 +32,7 @@
 import { FetchMessages, Message } from '@/apis/messages'
 import { ref, watch, onMounted } from 'vue'
 import ActionCable from 'actioncable'
-import SearchForm from '@/components/molecules/SearchForm.vue'
+import TextButtonForm from '@/components/molecules/TextButtonForm.vue'
 import CustomAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
 import { MY_AVATAR_IMAGE_URL } from '@/apis/accounts'
 

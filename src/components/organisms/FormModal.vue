@@ -29,7 +29,7 @@ const onclick = function () {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, .7);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,19 +42,21 @@ const onclick = function () {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, .5);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  background-color: white;
-  width: 600px;
+  background-color: #2c3e50;
+  width: 90%;
+  max-width: 1200px;
   height: auto;
-  max-height: 100%;
+  max-height: 99%;
   border-radius: 20px;
   padding: 20px;
   z-index: 100;
   overflow: scroll;
+
+  color: #F0F0F0;
 }
 </style>

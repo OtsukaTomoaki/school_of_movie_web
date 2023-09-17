@@ -1,8 +1,8 @@
 <template>
   <div class="search-form-container">
     <div class="search-form">
-      <SearchForm :text="searchText" @submit="onSubmit">
-      </SearchForm>
+      <TextButtonForm :text="searchText" @submit="onSubmit">
+      </TextButtonForm>
     </div>
     <div class="custom-search-form">
       <CustomIconButton :type="'settings'" @click="openMovieDetailSearchModal"></CustomIconButton>
@@ -17,7 +17,7 @@
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 
-import SearchForm from '@/components/molecules/SearchForm.vue'
+import TextButtonForm from '@/components/molecules/TextButtonForm.vue'
 import { useRouter } from 'vue-router'
 import CustomIconButton from '@/components/atoms/CustomIconButton.vue'
 import MovieDetailSearch, { MovieDetailSearchType } from '@/components/organisms/MovieDetailSearch.vue'

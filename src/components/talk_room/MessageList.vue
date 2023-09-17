@@ -4,19 +4,26 @@
       <div ref="messageList" class="message-list">
         <div v-for="message in messages" v-bind:key="message.id">
           <div class="message-content">
-            <v-card dark>
+            <div class="talker-avatar">
+              <!-- todo: 喋った人のアバターが表示されるようにする -->
+              <CustomAvatarImage
+              :imageUri="`${MY_AVATAR_IMAGE_URL}/${message.user.id}`"
+                :size="50"
+              />
+            </div>
+            <div class="balloon1-left">
               <div class="font-weight-normal">
                 <strong>{{ message.user.name }}</strong> @{{ message.createdAt }}
               </div>
               <div>{{ message.content }}</div>
-            </v-card>
+            </div>
           </div>
         </div>
       </div>
+      <!-- todo: ボタンテキストが「Search」になっているので、汎用的なボタンコンポーネントを作成する -->
       <div class="send-message-form">
-        <label>Speak:</label>
-        <input v-model="speak" type="text" />
-        <button v-on:click=onclick>Send Message</button>
+        <TextButtonForm :text="speak" @submit="onclick" :clearOnClick="true" buttonText="Comment">
+        </TextButtonForm>
       </div>
   </div>
 </template>
@@ -25,6 +32,9 @@
 import { FetchMessages, Message } from '@/apis/messages'
 import { ref, watch, onMounted } from 'vue'
 import ActionCable from 'actioncable'
+import TextButtonForm from '@/components/molecules/TextButtonForm.vue'
+import CustomAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
+import { MY_AVATAR_IMAGE_URL } from '@/apis/accounts'
 
 const props = defineProps<{talkRoomId: string}>()
 const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
@@ -69,10 +79,11 @@ onMounted(async function () {
   })
 })
 
-const onclick = function () {
+const onclick = function (newMessage: string) {
   chatChannel.perform('speak', {
-    message: speak.value
+    message: newMessage
   })
+  speak.value = ''
 }
 
 </script>
@@ -80,20 +91,57 @@ const onclick = function () {
 <style scoped>
 .message-container {
   display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 .message-list {
-  height: calc(100vh - 160px);
   overflow-y: scroll;
+  height: calc(100% - 60px);
 }
 
 .message-content {
-  padding: 5px;
+  display: flex;
+  height: auto;
 }
 
 .send-message-form {
-  border: 1px solid #999;
-  padding: 10px;
+  padding-bottom: 10px;
   height: 60px;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+}
+.message-content .talker-avatar {
+  display: inline-block;
+  margin: 2px 0 15px 15px;
+  padding: 7px 10px;
+  width: 80px;
+}
+
+.balloon1-left {
+  position: relative;
+  display: inline-block;
+  margin: 2px 0 15px 15px;
+  padding: 7px 10px;
+  width: calc(100% - 60px);
+  color: #555;
+  background: #e0edff;
+}
+
+.balloon1-left:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -30px;
+  margin-top: -15px;
+  border: 15px solid transparent;
+  border-right: 15px solid #e0edff;
+}
+
+.balloon1-left p {
+  margin: 0;
+  padding: 0;
 }
 </style>

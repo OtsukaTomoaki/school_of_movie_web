@@ -22,17 +22,21 @@
             </div>
           </div>
           <div class="message-contentainer" v-else>
-            <div class="talker-avatar">
-              <CustomAvatarImage
-              :imageUri="`${MY_AVATAR_IMAGE_URL}/${message.user.id}`"
-                :size="50"
-              />
-            </div>
-            <div class="balloon1-left">
-              <div class="font-weight-normal">
-                <strong>{{ message.user.name }}</strong> @{{ message.createdAt }}
+            <div class="messag-content">
+              <div class="talker-avatar">
+                <CustomAvatarImage
+                :imageUri="`${MY_AVATAR_IMAGE_URL}/${message.user.id}`"
+                  :size="50"
+                />
               </div>
-              <div>{{ message.content }}</div>
+              <div class="balloon1-left">
+                <div>{{ message.content }}</div>
+              </div>
+            </div>
+            <div class="message-meta left">
+              <p>
+                <strong>{{ message.user.name }}</strong> @{{ message.createdAt }}
+              </p>
             </div>
           </div>
         </div>
@@ -151,7 +155,8 @@ const onclick = function (newMessage: string) {
   display: inline-block;
   margin: 2px 0 15px 15px;
   padding: 7px 10px;
-  width: calc(100% - 200px);
+  width: calc(100% - 120px);
+  min-height: 3em;
   color: #555;
   background: #e0edff;
 }
@@ -174,9 +179,9 @@ const onclick = function (newMessage: string) {
 .balloon1-right {
   position: relative;
   display: inline-block;
-  margin: 2px 20px 15px 100px;
+  margin: 2px 20px 15px 60px;
   padding: 7px 10px;
-  width: calc(100% - 160px);
+  width: calc(100% - 120px);
   min-height: 3em;
   color: #555;
   font-size: 16px;
@@ -206,6 +211,11 @@ const onclick = function (newMessage: string) {
 }
 .message-meta.right p {
   margin: -10px 0 10px auto;
+  padding: 0;
+}
+
+.message-meta.left p {
+  margin: -10px auto 10px 0;
   padding: 0;
 }
 </style>

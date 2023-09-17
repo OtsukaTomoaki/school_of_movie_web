@@ -1,11 +1,28 @@
 <!-- eslint-disable no-redeclare -->
 <template>
-  <div class="message-container">
+  <div class="message-wrapper">
       <div ref="messageList" class="message-list">
         <div v-for="message in messages" v-bind:key="message.id">
-          <div class="message-content">
+          <div class="message-contenteiner" v-if="signined_user_id == message.user.id">
+            <div class="messag-content">
+              <div class="balloon1-right">
+                <div>{{ message.content }}</div>
+              </div>
+              <div class="talker-avatar">
+                <CustomAvatarImage
+                :imageUri="`${MY_AVATAR_IMAGE_URL}/${message.user.id}`"
+                  :size="50"
+                />
+              </div>
+            </div>
+            <div class="message-meta right">
+              <p>
+                <strong>{{ message.user.name }}</strong> @{{ message.createdAt }}
+              </p>
+            </div>
+          </div>
+          <div class="message-contentainer" v-else>
             <div class="talker-avatar">
-              <!-- todo: 喋った人のアバターが表示されるようにする -->
               <CustomAvatarImage
               :imageUri="`${MY_AVATAR_IMAGE_URL}/${message.user.id}`"
                 :size="50"
@@ -31,10 +48,12 @@
 <script setup lang="ts">
 import { FetchMessages, Message } from '@/apis/messages'
 import { ref, watch, onMounted } from 'vue'
+import { useStore } from 'vuex'
 import ActionCable from 'actioncable'
 import TextButtonForm from '@/components/molecules/TextButtonForm.vue'
 import CustomAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
 import { MY_AVATAR_IMAGE_URL } from '@/apis/accounts'
+import { GET_PROFILE } from '@/store/mutation-types'
 
 const props = defineProps<{talkRoomId: string}>()
 const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
@@ -46,6 +65,8 @@ const chatChannel = cable.subscriptions.create(
   }
 )
 const speak = ref('')
+const store = useStore()
+const signined_user_id = store.getters[GET_PROFILE].id
 
 chatChannel.received = function (data) {
   const broadcastMessage = data.message
@@ -89,7 +110,7 @@ const onclick = function (newMessage: string) {
 </script>
 
 <style scoped>
-.message-container {
+.message-wrapper {
   display: block;
   width: 100%;
   height: 100%;
@@ -101,9 +122,14 @@ const onclick = function (newMessage: string) {
   height: calc(100% - 60px);
 }
 
-.message-content {
-  display: flex;
+.message-contenteiner {
   height: auto;
+  width: 100%;
+}
+
+.messag-content {
+  display: flex;
+  width: 100%;
 }
 
 .send-message-form {
@@ -125,7 +151,7 @@ const onclick = function (newMessage: string) {
   display: inline-block;
   margin: 2px 0 15px 15px;
   padding: 7px 10px;
-  width: calc(100% - 60px);
+  width: calc(100% - 200px);
   color: #555;
   background: #e0edff;
 }
@@ -142,6 +168,44 @@ const onclick = function (newMessage: string) {
 
 .balloon1-left p {
   margin: 0;
+  padding: 0;
+}
+
+.balloon1-right {
+  position: relative;
+  display: inline-block;
+  margin: 2px 20px 15px 100px;
+  padding: 7px 10px;
+  width: calc(100% - 160px);
+  min-height: 3em;
+  color: #555;
+  font-size: 16px;
+  background: #F9D949;
+}
+
+.balloon1-right:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -15px;
+  border: 15px solid transparent;
+  border-left: 15px solid #F9D949;
+}
+
+.balloon1-right p {
+  margin: 0;
+  padding: 0;
+}
+.message-meta {
+  width: 100%;
+  display: flex;
+  font-size: 12px;
+  color: #e0edff;
+  right: 0;
+}
+.message-meta.right p {
+  margin: -10px 0 10px auto;
   padding: 0;
 }
 </style>

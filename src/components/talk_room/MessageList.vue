@@ -7,7 +7,7 @@
             <div class="talker-avatar">
               <!-- todo: 喋った人のアバターが表示されるようにする -->
               <CustomAvatarImage
-              :imageUri="MY_AVATAR_IMAGE_URL"
+              :imageUri="`${MY_AVATAR_IMAGE_URL}/${message.user.id}`"
                 :size="50"
               />
             </div>

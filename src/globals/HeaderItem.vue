@@ -10,7 +10,7 @@
       <div class="profile-wrapper">
         <a href="#" @click="() => showCardModal = true">
           <CustomAvatarImage
-          :imageUri="MY_AVATAR_IMAGE_URL"
+          :imageUri="`${MY_AVATAR_IMAGE_URL}/${store.getters[GET_PROFILE].id}`"
             :size="40"
           />
         </a>

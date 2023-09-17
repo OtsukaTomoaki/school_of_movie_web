@@ -4,7 +4,7 @@
 
       <div class="profile-card-avatar">
         <CustomAvatarImage
-          :imageUri="MY_AVATAR_IMAGE_URL"
+          :imageUri="`${MY_AVATAR_IMAGE_URL}/${store.getters[GET_PROFILE].id}`"
           :size="70"
         />
       </div>
@@ -42,8 +42,10 @@ import { Profile as ProfileType } from '@/profileTypes'
 import IconText from '@/components/molecules/IconText.vue'
 import CustomAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
 import { MY_AVATAR_IMAGE_URL } from '@/apis/accounts'
+import { GET_PROFILE } from '@/store/mutation-types'
 
 const profile = ref<ProfileType>(null)
+const store = useStore()
 
 onMounted(async function () {
   profile.value = await FetchProfile()

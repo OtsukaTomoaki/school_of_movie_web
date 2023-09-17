@@ -185,7 +185,7 @@ const onclick = function (newMessage: string) {
   min-height: 3em;
   color: #555;
   font-size: 16px;
-  background: #F9D949;
+  background: #e0edff;
 }
 
 .balloon1-right:before {
@@ -195,7 +195,7 @@ const onclick = function (newMessage: string) {
   left: 100%;
   margin-top: -15px;
   border: 15px solid transparent;
-  border-left: 15px solid #F9D949;
+  border-left: 15px solid #e0edff;
 }
 
 .balloon1-right p {

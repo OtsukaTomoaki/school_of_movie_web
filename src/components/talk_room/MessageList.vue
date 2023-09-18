@@ -41,7 +41,6 @@
           </div>
         </div>
       </div>
-      <!-- todo: ボタンテキストが「Search」になっているので、汎用的なボタンコンポーネントを作成する -->
       <div class="send-message-form">
         <TextButtonForm :text="speak" @submit="onclick" :clearOnClick="true" buttonText="Comment">
         </TextButtonForm>

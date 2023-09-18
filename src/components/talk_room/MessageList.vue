@@ -1,26 +1,37 @@
 <!-- eslint-disable no-redeclare -->
 <template>
-  <div class="message-container">
+  <div class="message-wrapper">
       <div ref="messageList" class="message-list">
         <div v-for="message in messages" v-bind:key="message.id">
-          <div class="message-content">
-            <div class="talker-avatar">
-              <!-- todo: 喋った人のアバターが表示されるようにする -->
-              <CustomAvatarImage
-              :imageUri="`${MY_AVATAR_IMAGE_URL}/${message.user.id}`"
-                :size="50"
-              />
-            </div>
-            <div class="balloon1-left">
-              <div class="font-weight-normal">
-                <strong>{{ message.user.name }}</strong> @{{ message.createdAt }}
-              </div>
-              <div>{{ message.content }}</div>
-            </div>
+          <div class="message-contenteiner">
+            <MessageWithAvator
+              :message="message.content"
+              :userName="message.user.name"
+              :createdAt="message.createdAt"
+              :userAvatarUrl="`${MY_AVATAR_IMAGE_URL}/${message.user.id}`"
+              :position="signined_user_id == message.user.id ? 'right' : 'left'"
+            />
           </div>
+          <!-- <div class="message-contentainer" v-else>
+            <div class="messag-content">
+              <div class="talker-avatar">
+                <CustomAvatarImage
+                :imageUri="`${MY_AVATAR_IMAGE_URL}/${message.user.id}`"
+                  :size="50"
+                />
+              </div>
+              <div class="balloon1-left">
+                <div>{{ message.content }}</div>
+              </div>
+            </div>
+            <div class="message-meta left">
+              <p>
+                <strong>{{ message.user.name }}</strong> @{{ message.createdAt }}
+              </p>
+            </div>
+          </div> -->
         </div>
       </div>
-      <!-- todo: ボタンテキストが「Search」になっているので、汎用的なボタンコンポーネントを作成する -->
       <div class="send-message-form">
         <TextButtonForm :text="speak" @submit="onclick" :clearOnClick="true" buttonText="Comment">
         </TextButtonForm>
@@ -31,10 +42,13 @@
 <script setup lang="ts">
 import { FetchMessages, Message } from '@/apis/messages'
 import { ref, watch, onMounted } from 'vue'
+import { useStore } from 'vuex'
 import ActionCable from 'actioncable'
 import TextButtonForm from '@/components/molecules/TextButtonForm.vue'
 import CustomAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
 import { MY_AVATAR_IMAGE_URL } from '@/apis/accounts'
+import { GET_PROFILE } from '@/store/mutation-types'
+import MessageWithAvator from '../molecules/ MessageWithAvator.vue'
 
 const props = defineProps<{talkRoomId: string}>()
 const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
@@ -46,6 +60,8 @@ const chatChannel = cable.subscriptions.create(
   }
 )
 const speak = ref('')
+const store = useStore()
+const signined_user_id = store.getters[GET_PROFILE].id
 
 chatChannel.received = function (data) {
   const broadcastMessage = data.message
@@ -89,7 +105,7 @@ const onclick = function (newMessage: string) {
 </script>
 
 <style scoped>
-.message-container {
+.message-wrapper {
   display: block;
   width: 100%;
   height: 100%;
@@ -101,9 +117,9 @@ const onclick = function (newMessage: string) {
   height: calc(100% - 60px);
 }
 
-.message-content {
-  display: flex;
+.message-contenteiner {
   height: auto;
+  width: 100%;
 }
 
 .send-message-form {
@@ -112,36 +128,5 @@ const onclick = function (newMessage: string) {
   bottom: 0;
   position: absolute;
   width: 100%;
-}
-.message-content .talker-avatar {
-  display: inline-block;
-  margin: 2px 0 15px 15px;
-  padding: 7px 10px;
-  width: 80px;
-}
-
-.balloon1-left {
-  position: relative;
-  display: inline-block;
-  margin: 2px 0 15px 15px;
-  padding: 7px 10px;
-  width: calc(100% - 60px);
-  color: #555;
-  background: #e0edff;
-}
-
-.balloon1-left:before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: -30px;
-  margin-top: -15px;
-  border: 15px solid transparent;
-  border-right: 15px solid #e0edff;
-}
-
-.balloon1-left p {
-  margin: 0;
-  padding: 0;
 }
 </style>

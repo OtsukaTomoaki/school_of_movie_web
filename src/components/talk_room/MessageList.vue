@@ -3,25 +3,16 @@
   <div class="message-wrapper">
       <div ref="messageList" class="message-list">
         <div v-for="message in messages" v-bind:key="message.id">
-          <div class="message-contenteiner" v-if="signined_user_id == message.user.id">
-            <div class="messag-content">
-              <div class="balloon1-right">
-                <div>{{ message.content }}</div>
-              </div>
-              <div class="talker-avatar">
-                <CustomAvatarImage
-                :imageUri="`${MY_AVATAR_IMAGE_URL}/${message.user.id}`"
-                  :size="50"
-                />
-              </div>
-            </div>
-            <div class="message-meta right">
-              <p>
-                <strong>{{ message.user.name }}</strong> @{{ message.createdAt }}
-              </p>
-            </div>
+          <div class="message-contenteiner">
+            <MessageWithAvator
+              :message="message.content"
+              :userName="message.user.name"
+              :createdAt="message.createdAt"
+              :userAvatarUrl="`${MY_AVATAR_IMAGE_URL}/${message.user.id}`"
+              :position="signined_user_id == message.user.id ? 'right' : 'left'"
+            />
           </div>
-          <div class="message-contentainer" v-else>
+          <!-- <div class="message-contentainer" v-else>
             <div class="messag-content">
               <div class="talker-avatar">
                 <CustomAvatarImage
@@ -38,7 +29,7 @@
                 <strong>{{ message.user.name }}</strong> @{{ message.createdAt }}
               </p>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="send-message-form">
@@ -57,6 +48,7 @@ import TextButtonForm from '@/components/molecules/TextButtonForm.vue'
 import CustomAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
 import { MY_AVATAR_IMAGE_URL } from '@/apis/accounts'
 import { GET_PROFILE } from '@/store/mutation-types'
+import MessageWithAvator from '../molecules/ MessageWithAvator.vue'
 
 const props = defineProps<{talkRoomId: string}>()
 const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
@@ -130,91 +122,11 @@ const onclick = function (newMessage: string) {
   width: 100%;
 }
 
-.messag-content {
-  display: flex;
-  width: 100%;
-}
-
 .send-message-form {
   padding-bottom: 10px;
   height: 60px;
   bottom: 0;
   position: absolute;
   width: 100%;
-}
-.message-content .talker-avatar {
-  display: inline-block;
-  margin: 2px 0 15px 15px;
-  padding: 7px 10px;
-  width: 80px;
-}
-
-.balloon1-left {
-  position: relative;
-  display: inline-block;
-  margin: 2px 0 15px 15px;
-  padding: 7px 10px;
-  width: calc(100% - 120px);
-  min-height: 3em;
-  color: #555;
-  background: #e0edff;
-}
-
-.balloon1-left:before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: -30px;
-  margin-top: -15px;
-  border: 15px solid transparent;
-  border-right: 15px solid #e0edff;
-}
-
-.balloon1-left p {
-  margin: 0;
-  padding: 0;
-}
-
-.balloon1-right {
-  position: relative;
-  display: inline-block;
-  margin: 2px 20px 15px 60px;
-  padding: 7px 10px;
-  width: calc(100% - 120px);
-  min-height: 3em;
-  color: #555;
-  font-size: 16px;
-  background: #e0edff;
-}
-
-.balloon1-right:before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  margin-top: -15px;
-  border: 15px solid transparent;
-  border-left: 15px solid #e0edff;
-}
-
-.balloon1-right p {
-  margin: 0;
-  padding: 0;
-}
-.message-meta {
-  width: 100%;
-  display: flex;
-  font-size: 12px;
-  color: #e0edff;
-  right: 0;
-}
-.message-meta.right p {
-  margin: -10px 0 10px auto;
-  padding: 0;
-}
-
-.message-meta.left p {
-  margin: -10px auto 10px 0;
-  padding: 0;
 }
 </style>

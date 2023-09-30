@@ -99,6 +99,9 @@
     "not ie 11"
   ],
   "jest": {
+    "testMatch": ["**/*.spec.js", "**/*.test.js", "**/*.spec.ts", "**/*.test.ts"],
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
     "preset": "@vue/cli-plugin-unit-jest/presets/typescript-and-babel"
   },
   "gitHooks": {

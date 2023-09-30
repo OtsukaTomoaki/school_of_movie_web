@@ -1,6 +1,6 @@
 # school_of_movie
 
-<img width="1172" alt="image" src="https://github.com/OtsukaTomoaki/funny_cats_web/assets/77523913/013f8200-36fa-4a85-a14f-27ea3aa980f9">
+<img width="1172" alt="image" src="https://github.com/OtsukaTomoaki/school_of_movie_web/assets/77523913/013f8200-36fa-4a85-a14f-27ea3aa980f9">
 
 
 ## Project setup

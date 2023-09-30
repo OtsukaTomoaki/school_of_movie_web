@@ -5,7 +5,7 @@ import {
   SignUpWithSocialAccounts,
   FetchProfile,
   UpdateProfile
-} from '@/apis/accounts' // 実際のファイルのパスを入れてください
+} from '@/apis/accounts'
 
 // axiosのモックを作成
 jest.mock('axios')

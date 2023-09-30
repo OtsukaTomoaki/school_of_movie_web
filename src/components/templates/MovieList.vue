@@ -165,6 +165,8 @@ const closeMovieModal = () => {
   display: inline-block;
   margin: 5px;
   padding: 10px;
+  aspect-ratio: 2 / 3;
+
   @media screen and (min-width:420px) {
     width: calc((100% / 2) - 10px);
   };

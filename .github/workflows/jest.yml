@@ -22,7 +22,7 @@ jobs:
         node-version: '16' # 任意のバージョンを指定してください
 
     - name: Install dependencies
-      run: npm install
+      run: yarn install
 
     - name: Run Jest tests
       run: yarn jest

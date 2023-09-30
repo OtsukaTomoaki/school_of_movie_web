@@ -36,12 +36,6 @@ describe('FetchBackgroundJob 関数', () => {
 
     const result = await FetchBackgroundJob(testId)
     expect(result).toEqual(expectedBackgroundJob)
-    expect(mockedAxios.get).toHaveBeenCalledWith(`${API_V1_BASE_URL}/background_jobs/${testId}`,  {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      withCredentials: true,
-      crossorigin: true
-    })  // APIのベースURLとパラメータを適切に置き換えてください
+    expect(mockedAxios.get).toHaveBeenCalledWith(`${API_V1_BASE_URL}/background_jobs/${testId}`, API_V1_BASE_PARAMS)  // APIのベースURLとパラメータを適切に置き換えてください
   })
 })

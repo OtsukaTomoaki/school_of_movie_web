@@ -8,7 +8,7 @@
 import CustomButton from '../atoms/CustomButton.vue'
 
 const redirectToSignInWithOaAuth = () => {
-  window.location.href = 'http://localhost:3000/auth/google_oauth2'
+  window.location.href = 'http://192.168.32.138.nip.io:3000/auth/google_oauth2'
 }
 </script>
 

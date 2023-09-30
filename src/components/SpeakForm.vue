@@ -19,7 +19,7 @@ interface Talk {
   message: string;
 }
 
-const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
+const cable = ActionCable.createConsumer('ws://192.168.32.138.nip.io:3000/cable')
 const chatChannel = cable.subscriptions.create(
   {
     channel: 'RoomChannel',

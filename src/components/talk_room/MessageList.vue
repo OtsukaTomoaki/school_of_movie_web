@@ -61,7 +61,7 @@ const chatChannel = cable.subscriptions.create(
 )
 const speak = ref('')
 const store = useStore()
-const signined_user_id = store.getters[GET_PROFILE].id
+const signined_user_id = ref('')
 
 chatChannel.received = function (data) {
   const broadcastMessage = data.message
@@ -85,7 +85,7 @@ const messageList = ref()
 
 onMounted(async function () {
   messages.value = await FetchMessages(props.talkRoomId)
-
+  signined_user_id.value = store.getters[GET_PROFILE].id
   watch(messages.value, () => {
     setTimeout(() => {
       messageList.value.scrollTop = messageList.value.scrollHeight

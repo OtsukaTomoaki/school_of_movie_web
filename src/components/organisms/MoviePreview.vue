@@ -1,6 +1,15 @@
 <template>
   <div class="modal-contentainer" v-if="movie">
     <div class="content-left">
+      <div class="heart-icon-wrapper">
+        <CustomHeartButton
+          class="heart-icon"
+          :id="'like_'+movie.id"
+          :isLiked="isLiked"
+          @click.stop="onLiked"
+        />
+      </div>
+
       <div class="preview-image-wrapper">
         <PreviewImage
           :src="`https://image.tmdb.org/t/p/w500${movie.posterPath}`"
@@ -43,15 +52,23 @@ import BadgeList from '@/components/molecules/BadgeList.vue'
 import PreviewImage from '@/components/molecules/PreviewImage.vue'
 import MessageList from '@/components/talk_room/MessageList.vue'
 import { FetchMovieTalkRoom } from '@/apis/movie_talk_rooms'
+import CustomHeartButton from '@/components/atoms/CustomHeartButton.vue'
 
 const props = defineProps({
   movieId: {
     type: String,
     required: true
+  },
+  isLiked: {
+    type: Boolean,
+    required: true
   }
 })
+const emit = defineEmits(['like:click'])
+
 const movie = ref(null)
 const talkRoomId = ref(null)
+const isLiked = ref(false)
 
 onMounted(async function () {
   if (!props.movieId) {
@@ -64,9 +81,21 @@ watch(() => props.movieId, async (newVal, oldVal) => {
     return
   }
   movie.value = await FetchMovie(newVal)
+
   talkRoomId.value = null // ここでnullにしないと、v-ifの条件が変わらないので再描画されない
   talkRoomId.value = (await FetchMovieTalkRoom(props.movieId)).talkRoomId
 })
+
+watch(() => props.isLiked, (newVal, oldVal) => {
+  if (newVal === oldVal) {
+    return
+  }
+  isLiked.value = newVal
+})
+
+const onLiked = async (event: Event, liked: boolean) => {
+  emit('like:click', props.movieId, liked)
+}
 
 </script>
 
@@ -76,6 +105,12 @@ watch(() => props.movieId, async (newVal, oldVal) => {
   height: 100%;
   display: flex;
   overflow-y: hidden;
+}
+
+.heart-icon-wrapper {
+  position: absolute;
+  margin-left: -40px;
+  margin-top: -40px;
 }
 
 .modal-contentainer img {

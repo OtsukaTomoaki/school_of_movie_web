@@ -111,20 +111,27 @@
       "**/*.spec.ts",
       "**/*.test.ts"
     ],
+    "setupFilesAfterEnv": ["./jest.setup.js"],
     "collectCoverage": true,
     "coverageDirectory": "coverage",
     "transform": {
       "node_modules/three/examples/.+.(j|t)sx?$": "ts-jest",
-      "^.+\\.vue$": "vue-jest"
+      "^.+\\.vue$": "vue-jest",
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.mjs$": "babel-jest"
     },
     "testEnvironment": "jsdom",
     "transformIgnorePatterns": [
-      "/node_modules"
+      "/node_modules/(?!vuetify)"
     ],
+    "extensionsToTreatAsEsm": [".mjs", ".js", ".jsx", ".ts", ".tsx"],
     "moduleNameMapper": {
       "^axios$": "axios/dist/node/axios.cjs",
-      "^@/(.*)$": "<rootDir>/src/$1"
-    }
+      "^@/(.*)$": "<rootDir>/src/$1",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|css)$": "<rootDir>/__mocks__/styleMock.js",
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    },
+    "moduleFileExtensions": ["js", "mjs", "json", "vue", "ts", "tsx", "node"]
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

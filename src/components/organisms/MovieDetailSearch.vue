@@ -18,8 +18,6 @@
       <label>いづれかのジャンルに一致したもの全てを結果に含める</label>
     </div>
     <div class="search_by_movie_genre_optional_containar">
-      <!-- <input type="checkbox" :value="searchGenreAnd" v-model="searchGenreAnd" />
-      <label>全てのジャンルに一致したもののみ結果に含める</label> -->
       <input type="radio" :value="true" v-model="searchGenreAnd" />
       <label>全てのジャンルに一致したもののみ結果に含める</label>
     </div>
@@ -57,7 +55,7 @@ onMounted(async () => {
       selected: alreadySettingMovieSearchConditions?.movieGenreIds ? alreadySettingMovieSearchConditions.movieGenreIds.includes(movieGenre?.id) : false
     }
   })
-  if (alreadySettingMovieSearchConditions.value?.movieGenreIds?.length > 0) {
+  if (alreadySettingMovieSearchConditions?.value?.movieGenreIds?.length > 0) {
     selectedMovieGenres.value = alreadySettingMovieSearchConditions?.movieGenreIds
     searchGenreAnd.value = alreadySettingMovieSearchConditions?.searchGenreAnd
   } else {

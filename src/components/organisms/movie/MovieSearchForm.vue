@@ -7,7 +7,7 @@
     <div class="custom-search-form">
       <CustomIconButton :type="'settings'" @click="openMovieDetailSearchModal"></CustomIconButton>
     </div>
-    <FormModal v-bind:show=showMovieDetailSearchModal @close="closeMovieDetailSearchModal">
+    <FormModal v-if=showMovieDetailSearchModal v-bind:show=showMovieDetailSearchModal @close="closeMovieDetailSearchModal">
       <MovieDetailSearch @result="searchDetailResult" />
     </FormModal>
   </div>

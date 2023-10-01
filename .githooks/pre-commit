@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# 禁止するブランチ名をリストアップ
+FORBIDDEN_BRANCHES=("master" "develop")
+
+# 現在のブランチ名を取得
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+for branch in "${FORBIDDEN_BRANCHES[@]}"; do
+    if [[ "$CURRENT_BRANCH" == "$branch" ]]; then
+        echo "直接 $branch ブランチにコミットすることは禁止されています。"
+        exit 1
+    fi
+done
+
+# 問題がなければコミットを許可
+exit 0

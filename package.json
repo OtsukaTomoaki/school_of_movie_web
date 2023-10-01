@@ -117,7 +117,7 @@
       "node_modules/three/examples/.+.(j|t)sx?$": "ts-jest",
       "^.+\\.vue$": "vue-jest"
     },
-    "testEnvironment": "node",
+    "testEnvironment": "jsdom",
     "transformIgnorePatterns": [
       "/node_modules"
     ],

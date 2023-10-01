@@ -32,7 +32,6 @@ defineProps({
 const emit = defineEmits(['change', 'input'])
 
 const emitChecked = (e: Event) => {
-  console.log('emitChecked', (e.target as HTMLInputElement).checked)
   emit('change', (e.target as HTMLInputElement).checked)
   emit('input', e)
 }
@@ -50,27 +49,29 @@ const emitChecked = (e: Event) => {
   align-items: center;
   width: 15px;
   height: 15px;
-  border: 2px solid #2c3e50;
+  border: 2px solid #F0F0F0;
   border-radius: 3px;
   margin-top: 3px;
   margin-right: 5px;
 }
 .custom-checkbox-container .checkbox-label:hover {
-  background-color: #F0F0F0;
+  background-color: #2c3e50;
   cursor: pointer;
+  opacity: 0.9;
 }
 
 .check-icon {
   margin-top: 3px;
-  color: #2c3e50;
+  color: #F9D949;
   animation-name: fadein;
   animation-duration: 0.3s;
 }
 
 .checkbox-text {
   margin-left: 1px;
-  color: #2c3e50;
+  color: #F0F0F0;
 }
+
 .custom-checkbox-container input[type="checkbox"] {
   display: none;
 }

@@ -15,7 +15,7 @@
     </div>
     <!-- <MovieModal v-if="showMovieModal" @close="closeMovieModal" class="movie_modal"></MovieModal> -->
     <FormModal v-bind:show=showMovieModal @close="closeMovieModal">
-      <MoviePreview :movieId="selectedMovieId" />
+      <MoviePreview :movieId="selectedMovieId" :isLiked="movieUserLikes.includes(selectedMovieId)" like:click="onLikeClick" />
     </FormModal>
   </div>
 </template>

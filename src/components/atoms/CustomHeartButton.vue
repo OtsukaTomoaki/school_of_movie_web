@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = defineProps({
   isLiked: {
@@ -74,6 +74,10 @@ const toggleLike = (event: Event) => {
   emit('change', event, isLiked.value)
   emit('input', event, isLiked.value)
 }
+
+watch(() => props.isLiked, (newVal) => {
+  isLiked.value = newVal;
+});
 
 </script>
 

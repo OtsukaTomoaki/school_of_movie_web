@@ -40,18 +40,18 @@
 </template>
 
 <script setup lang="ts">
-import { FetchMessages, Message } from '@/apis/messages'
 import { ref, watch, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import ActionCable from 'actioncable'
+import { FetchMessages, Message } from '@/apis/messages'
+import { WEB_SOCKET_BASE_URL } from '@/apis/base'
 import TextButtonForm from '@/components/molecules/TextButtonForm.vue'
-import CustomAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
 import { MY_AVATAR_IMAGE_URL } from '@/apis/accounts'
 import { GET_PROFILE } from '@/store/mutation-types'
 import MessageWithAvator from '../molecules/ MessageWithAvator.vue'
 
 const props = defineProps<{talkRoomId: string}>()
-const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
+const cable = ActionCable.createConsumer(WEB_SOCKET_BASE_URL)
 const chatChannel = cable.subscriptions.create(
   {
     channel: 'RoomChannel',

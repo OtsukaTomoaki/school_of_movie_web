@@ -14,12 +14,13 @@
 <script lang="ts">
 import { ref, defineComponent } from 'vue'
 import ActionCable from 'actioncable'
+import { WEB_SOCKET_BASE_URL } from '@/apis/base';
 
 interface Talk {
   message: string;
 }
 
-const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
+const cable = ActionCable.createConsumer(WEB_SOCKET_BASE_URL)
 const chatChannel = cable.subscriptions.create(
   {
     channel: 'RoomChannel',

@@ -13,7 +13,7 @@ import { VueEternalLoading, LoadAction } from '@ts-pro/vue-eternal-loading';
 const actionCableVueOptions = {
   debug: true,
   debugLevel: 'error',
-  connectionUrl: 'ws://localhost:3000/cable',
+  connectionUrl: `${process.env.VUE_APP_WEB_SOCKET_URL}/cable`,
   connectImmediately: true
 }
 

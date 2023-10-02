@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import Signup from '@/components/SignUpConfirm.vue'
 import { SignUpWithSocialAccounts } from '@/apis/accounts'
@@ -23,7 +23,6 @@ export default {
   },
   setup () {
     const store = useStore()
-    const router = useRouter()
     const encodedState: string = useRoute().query.signup_state as string
     const decodedData: string = decodeURIComponent(escape(window.atob(encodedState)))
 
@@ -37,7 +36,7 @@ export default {
 
       store.commit(UPDATE_AUTHORIZATION_TOKEN, result.authorizationToken)
       store.commit(UPDATE_REMEMBER_TOKEN, result.rememberToken)
-      router.push('/')
+      location.href = '/'
     }
 
     return {

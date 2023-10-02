@@ -1,10 +1,21 @@
+<!-- todo: css全体的におかしいので後で修正 -->
 <template>
   <div class="header-container">
     <div class="header-title">
       <!-- assets logo.pngを表示-->
-      <a @click="onTitleClicked" href="#">
-        <img :src="logoUrl" width="300" height="50" alt="logo">
-      </a>
+      <div class="logo-title-content">
+        <a @click="onTitleClicked" href="#">
+          <div class="logo-title">
+            <div class="logo-container">
+              <img :src="logoUrl" width="50" height="50" alt="logo">
+            </div>
+            <p>
+              School Of Movie
+            </p>
+          </div>
+        </a>
+      </div>
+
     </div>
     <div class="header-right-profile" v-if="profile">
       <div class="profile-wrapper">
@@ -27,7 +38,8 @@ import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
-import logoUrl from '@/assets/service_logo.png'
+import logoUrl from '@/assets/logo.png'
+
 import { FetchProfile, MY_AVATAR_IMAGE_URL } from '@/apis/accounts'
 import CustomAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
 import {
@@ -82,10 +94,29 @@ const onTitleClicked = () => {
   -webkit-text-stroke: #F9D949 1px;
 }
 
+.logo-title-content {
+  position: relative;
+  display: inline-block;
+}
+
 .header-title a {
   text-decoration: none;
   color: #F9D949;
   -webkit-text-stroke: #F9D949 1px;
+  margin-top: 0px;
+  display: inline-block;
+}
+.logo-container {
+  position: relative;
+  display: inline-block;
+  margin-left: auto;
+}
+
+
+.logo-title p {
+  font-size: 40px;
+  display: inline-block;
+  transform: translateY(-10px);
 }
 
 .header-right-profile {

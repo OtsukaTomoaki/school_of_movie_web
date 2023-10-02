@@ -51,5 +51,6 @@ const submitSearch = () => {
   border-radius: 25px;
   padding: 0;
   background-color: #F0F0F0;
+  font-family: 'Caveat', cursive;
 }
 </style>

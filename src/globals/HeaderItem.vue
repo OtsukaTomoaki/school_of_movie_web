@@ -36,7 +36,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
 
 import logoUrl from '@/assets/logo.png'
 
@@ -53,7 +52,6 @@ import { Profile } from '@/profileTypes'
 import ProfileCard from '@/components/organisms/ProfileCard.vue'
 
 const store = useStore()
-const router = useRouter()
 
 const profile = ref<Profile>(null)
 const showCardModal = ref(false)
@@ -71,7 +69,7 @@ onMounted(async function () {
 
 const onTitleClicked = () => {
   store.commit(UPDATE_MOVIE_SEARCH_CONDITIONS, null)
-  router.push('/')
+  location.href = '/'
 }
 
 </script>

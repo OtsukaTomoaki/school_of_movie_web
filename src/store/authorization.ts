@@ -7,7 +7,8 @@ export default {
   namespaced: true,
   state: {
     auth_token: '',
-    remember_token: ''
+    remember_token: '',
+    identity: null
   },
   getters: {
     getAuthorizationToken (state: any) {
@@ -15,6 +16,9 @@ export default {
     },
     getRememberToken (state: any) {
       return state.remember_token
+    },
+    getIdentity (state: any) {
+      return state.identity
     }
   },
   mutations: {
@@ -23,6 +27,10 @@ export default {
     },
     setRememberToken (state: any, payload: object) {
       state.remember_token = payload
+    },
+    setIdentity (state: any, payload: object) {
+      console.log('setIdentity', payload)
+      state.identity = payload
     }
   }
 }

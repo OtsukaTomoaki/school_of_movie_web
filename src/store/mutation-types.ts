@@ -8,3 +8,6 @@ export const GET_MOVIE_SEARCH_CONDITIONS = 'movieSearchConditions/getMovieSearch
 
 export const UPDATE_PROFILE = 'profile/updateProfile'
 export const GET_PROFILE = 'profile/getProfile'
+
+export const UPDATE_IDENTITY = 'authorization/setIdentity'
+export const GET_IDENTITY = 'authorization/getIdentity'

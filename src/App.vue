@@ -1,5 +1,5 @@
 <template>
-  <HeaderItem></HeaderItem>
+  <HeaderItem @unauthorized="HandleUnauthorized"></HeaderItem>
 
   <div class="main-container">
     <router-view/>
@@ -10,8 +10,63 @@
 </template>
 
 <script setup lang="ts">
+import { useStore } from 'vuex'
+import { onMounted } from 'vue'
 import HeaderItem from '@/globals/HeaderItem.vue' // @ is an alias to /src
-// import FooterItem from '@/globals/FooterItem.vue' // @ is an alias to /src
+import { getIdentity } from './apis/sessions';
+import {
+  GET_PROFILE,
+  UPDATE_PROFILE,
+  UPDATE_IDENTITY,
+  GET_IDENTITY
+} from '@/store/mutation-types'
+import { FetchProfile } from '@/apis/accounts'
+
+const allowAnonymousPaths = [
+  '/signin',
+  '/signup',
+  '/signin_with_token',
+  '/signup_with_oauth_provider'
+]
+
+const store = useStore()
+
+const HandleUnauthorized = () => {
+  if (allowAnonymousPaths.includes(location.pathname)) {
+    return
+  }
+  location.href = '/signin'
+}
+
+const setIdentity = async () => {
+  const identity = await getIdentity()
+  store.commit(UPDATE_IDENTITY, identity)
+}
+
+const setProfile = async () => {
+  const profile = await FetchProfile()
+  store.commit(UPDATE_PROFILE, profile)
+}
+
+onMounted(async () => {
+  if (!store.getters[GET_PROFILE] || !store.getters[GET_IDENTITY]) {
+    try {
+      await setProfile()
+      await setIdentity()
+    } catch (e) {
+      console.warn(e)
+      HandleUnauthorized()
+    }
+  }
+
+  const session_expires_at = store.getters[GET_IDENTITY].expires_at
+  const now = new Date()
+  if (session_expires_at > now) {
+    store.commit(UPDATE_IDENTITY, null)
+    store.commit(UPDATE_PROFILE, null)
+    HandleUnauthorized()
+  }
+})
 </script>
 
 <style>

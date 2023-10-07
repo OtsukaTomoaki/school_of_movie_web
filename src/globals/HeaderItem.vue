@@ -6,7 +6,7 @@
       <div class="logo-title-content">
         <a @click="onTitleClicked" href="#">
           <div class="logo-title">
-            <div class="logo-container">
+            <div class="logo-container" v-if="profile">
               <img :src="logoUrl" width="50" height="50" alt="logo">
             </div>
             <p>
@@ -39,13 +39,13 @@ import { useStore } from 'vuex'
 
 import logoUrl from '@/assets/logo.png'
 
-import { FetchProfile, MY_AVATAR_IMAGE_URL } from '@/apis/accounts'
+import { MY_AVATAR_IMAGE_URL } from '@/apis/accounts'
 import CustomAvatarImage from '@/components/atoms/CustomAvatarImage.vue'
 import {
   UPDATE_MOVIE_SEARCH_CONDITIONS,
   GET_AUTHORIZATION_TOKEN,
-  GET_PROFILE,
-  UPDATE_PROFILE
+  GET_PROFILE
+  
 } from '@/store/mutation-types'
 import CardModal from '@/components/organisms/CardModal.vue'
 import { Profile } from '@/profileTypes'
@@ -60,11 +60,10 @@ onMounted(async function () {
   if (store.getters[GET_AUTHORIZATION_TOKEN] === '') {
     return
   }
-  if (store.getters[GET_PROFILE] == null) {
-    store.commit(UPDATE_PROFILE, await FetchProfile())
-    console.log(store.getters[GET_PROFILE])
+
+  if (store.getters[GET_PROFILE] != null) {
+    profile.value = store.getters[GET_PROFILE]
   }
-  profile.value = store.getters[GET_PROFILE]
 })
 
 const onTitleClicked = () => {

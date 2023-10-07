@@ -6,7 +6,7 @@
       <div class="logo-title-content">
         <a @click="onTitleClicked" href="#">
           <div class="logo-title">
-            <div class="logo-container" v-if="profile">
+            <div class="logo-container">
               <img :src="logoUrl" width="50" height="50" alt="logo">
             </div>
             <p>

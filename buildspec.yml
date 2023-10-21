@@ -1,0 +1,27 @@
+version: 0.2
+
+env:
+  variables:
+    S3_BUCKET: "school-of-movie-web"
+
+phases:
+  install:
+    commands:
+      - echo Installing Yarn dependencies...
+      - yarn install
+  pre_build:
+    commands:
+      - echo Starting build on `date`
+  build:
+    commands:
+      - echo Building Vue app...
+      - yarn build
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - aws s3 sync dist/ s3://$S3_BUCKET/
+
+artifacts:
+  files:
+    - dist/**/*
+  base-directory: 'dist'

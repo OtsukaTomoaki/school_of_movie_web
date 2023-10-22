@@ -22,6 +22,7 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
+      - echo Uploading to S3... s3://$S3_BUCKET/
       - aws s3 sync dist/ s3://$S3_BUCKET/
 
 artifacts:

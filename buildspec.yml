@@ -6,7 +6,10 @@ env:
 
 phases:
   install:
+    runtime-versions:
+      nodejs: 16
     commands:
+      - n 16.13.1
       - echo Installing Yarn dependencies...
       - yarn install
   pre_build:

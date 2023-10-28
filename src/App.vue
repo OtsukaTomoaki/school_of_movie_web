@@ -60,9 +60,9 @@ onMounted(async () => {
     }
   }
 
-  const session_expires_at = store.getters[GET_IDENTITY].expires_at
+  const session_expires_at = store.getters[GET_IDENTITY]?.expires_at
   const now = new Date()
-  if (session_expires_at > now) {
+  if (!session_expires_at || session_expires_at > now) {
     store.commit(UPDATE_IDENTITY, null)
     store.commit(UPDATE_PROFILE, null)
     HandleUnauthorized()

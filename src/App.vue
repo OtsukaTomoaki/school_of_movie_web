@@ -25,6 +25,7 @@ import { FetchProfile } from '@/apis/accounts'
 const allowAnonymousPaths = [
   '/signin',
   '/signup',
+  '/signup_google',
   '/signin_with_token',
   '/signup_with_oauth_provider'
 ]

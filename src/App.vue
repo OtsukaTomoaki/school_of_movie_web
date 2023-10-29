@@ -60,7 +60,7 @@ onMounted(async () => {
     }
   }
 
-  const session_expires_at = store.getters[GET_IDENTITY]?.expires_at
+  const session_expires_at = store.getters[GET_IDENTITY]?.expiresAt
   const now = new Date()
   if (!session_expires_at || session_expires_at > now) {
     store.commit(UPDATE_IDENTITY, null)

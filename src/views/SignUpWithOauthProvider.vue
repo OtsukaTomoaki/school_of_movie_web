@@ -1,8 +1,7 @@
 <!-- eslint-disable vue/no-multiple-template-root -->
 <template>
-  <label>ユーザを作成する</label>
   <div>
-    <Signup v-bind:email="email" v-bind:name="name" v-bind:onclick="onclick">
+    <Signup v-bind:email="email" v-bind:name="name" v-bind:image="image" v-bind:onclick="onclick">
     </Signup>
   </div>
 </template>
@@ -30,6 +29,7 @@ export default {
     const email = signUpState.email
     const name = signUpState.name
     const onetimeToken = signUpState.onetime_token
+    const image = signUpState.image
 
     const onclick:(payload: MouseEvent) => void = async (): Promise<void> => {
       const result = await SignUpWithSocialAccounts(email, onetimeToken)
@@ -42,8 +42,11 @@ export default {
     return {
       email,
       name,
-      onclick
+      onclick,
+      image
     }
   }
 }
 </script>
+<style scoped>
+</style>

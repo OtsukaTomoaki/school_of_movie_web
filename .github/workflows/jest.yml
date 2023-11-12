@@ -22,7 +22,11 @@ jobs:
         node-version: '16' # 任意のバージョンを指定してください
 
     - name: Install dependencies
-      run: yarn install
+      run: |
+        echo "yarn install"
+        echo node version $(node -v)
+        echo yarn version $(yarn -v)
+        yarn install
 
     - name: Run Jest tests
       run: yarn jest

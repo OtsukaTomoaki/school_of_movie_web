@@ -13,10 +13,13 @@ interface Identity {
 export const getIdentity = async (): Promise<Identity> => {
   const data = await axios.get(`${API_V1_BASE_URL}/sessions/identity`, API_V1_BASE_PARAMS).then((response) => {
     return {
-      sub: response.data.sub,
-      userName: response.data.user_name,
-      expiresAt: response.data.expires_at
+      sub: response.data?.sub,
+      userName: response.data?.user_name,
+      expiresAt: response.data?.expires_at
     } as Identity
+  }).catch((error) => {
+    console.warn(error)
+    return null
   })
   return data
 }

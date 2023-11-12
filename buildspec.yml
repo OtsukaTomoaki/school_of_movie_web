@@ -1,0 +1,26 @@
+version: 0.2
+
+env:
+  variables:
+    S3_BUCKET: "school-of-movie-web"
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - n 16.13.1
+      - echo Installing Yarn dependencies...
+      - yarn install
+  pre_build:
+    commands:
+      - echo Starting build on `date`
+  build:
+    commands:
+      - echo Building Vue app...
+      - yarn build
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Uploading to S3... s3://$S3_BUCKET/
+      - aws s3 sync dist/ s3://$S3_BUCKET/

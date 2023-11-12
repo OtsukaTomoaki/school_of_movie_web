@@ -41,7 +41,7 @@ export const FetchAuthTokenWithRememberToken = async (email: string, rememberTok
   return token
 }
 
-export const SignUpWithSocialAccounts = async (email: string, onetimeToken: string): Promise<AuthorizationTokenObj> => {
+export const SignUpWithSocialAccounts = async (email: string, onetimeToken: string): Promise<boolean> => {
   const body = {
     email: email
   }
@@ -51,14 +51,8 @@ export const SignUpWithSocialAccounts = async (email: string, onetimeToken: stri
     type: 'google'
   }
 
-  const token = axios.post(API_V1_BASE_URL + '/users/create_with_social_accounts', body, params).then((response) => {
-    const res: AuthorizationTokenObj = {
-      authorizationToken: response.data.token,
-      rememberToken: response.data.remember_token
-    }
-    return res
-  })
-  return token
+  axios.post(API_V1_BASE_URL + '/users/create_with_social_accounts', body, params)
+  return true
 }
 
 export const FetchProfile = async (): Promise<Profile> => {

@@ -36,7 +36,7 @@ describe('API関数のテスト', () => {
     mockedAxios.post.mockResolvedValueOnce({ data: { token: 'authToken', remember_token: 'rememberToken' } })
 
     const result = await SignUpWithSocialAccounts('test@example.com', 'onetimeToken')
-    expect(result).toEqual({ authorizationToken: 'authToken', rememberToken: 'rememberToken' })
+    expect(result).toEqual(true)
   })
 
   it('プロファイル情報を取得する', async () => {

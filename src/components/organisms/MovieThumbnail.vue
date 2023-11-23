@@ -71,7 +71,7 @@ const onThumbnailClick = () => {
   width: 100%;
 }
 .movie-thumbnail {
-  min-width: 130px;
+  min-width: 200px;
   width: 100%;
   aspect-ratio: 2 / 3;
   display: flex;

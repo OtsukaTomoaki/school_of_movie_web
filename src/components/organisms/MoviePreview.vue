@@ -37,7 +37,9 @@
           {{ movie.overview }}
         </div>
       </div>
-      <img :src="`https://image.tmdb.org/t/p/w500${movie.backdropPath}`" alt="">
+      <div class="movie-backdrop-image-wrapper">
+        <img :src="`https://image.tmdb.org/t/p/w500${movie.backdropPath}`" alt="">
+      </div>
     </div>
     <div class="content-right">
       <MessageList v-if="talkRoomId" :talk-room-id="talkRoomId"/>
@@ -131,4 +133,27 @@ const onLiked = async (event: Event, liked: boolean) => {
   overflow-y: auto;
 }
 
+.movie-backdrop-image-wrapper img {
+  max-width: 100%;
+}
+
+@media (max-width: 800px) {
+  .modal-contentainer {
+    flex-direction: column; /* フレックスコンテナの方向を縦に変更 */
+    height: auto;
+    display: inline-block;
+    overflow-y: auto;
+  }
+
+  .content-left,
+  .content-right {
+    width: 100%;
+    padding: 0;
+  }
+
+  .content-right {
+    height: 100%;
+    visibility: hidden;
+  }
+}
 </style>

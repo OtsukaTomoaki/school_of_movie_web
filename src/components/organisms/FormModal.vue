@@ -59,12 +59,4 @@ const onclick = function () {
 
   color: #F0F0F0;
 }
-
-@media (max-width: 800px) {
-  .modal-content {
-
-    padding: 20px;
-    max-width: 99%;
-  }
-}
 </style>

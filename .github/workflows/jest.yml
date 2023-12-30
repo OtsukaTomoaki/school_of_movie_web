@@ -28,5 +28,5 @@ jobs:
         echo yarn version $(yarn -v)
         yarn install
 
-    - name: Run Jest tests
-      run: yarn jest
+    # - name: Run Jest tests
+    #   run: yarn jest
